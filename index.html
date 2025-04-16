@@ -17,7 +17,7 @@
 
   <script type="module">
     import { historicEvents } from './historicEvents.js';
-    import { createAccordionSection, moveAccordionItem } from './accordionSection.js';
+    import './accordionSection.js'; // Import the Web Component
 
     function initializeAccordion() {
       const eventAccordion = document.getElementById('eventAccordion');
@@ -28,12 +28,9 @@
       const selectedEvents = shuffledEvents.slice(0, 2);
       selectedEvents.sort((a, b) => a.year - b.year); // Sort by year
       selectedEvents.forEach(event => {
-        const accordionSection = createAccordionSection(event);
+        const accordionSection = document.createElement('accordion-section');
+        accordionSection.setAttribute('data-event', JSON.stringify(event));
         eventAccordion.appendChild(accordionSection);
-      });
-      const accordionItemSpans = eventAccordion.querySelectorAll('.accordion-title span.display-none');
-      accordionItemSpans.forEach(span => {
-        span.classList.remove('display-none');
       });
     }
 
@@ -54,18 +51,11 @@
 
     // Function to check the order of accordion items
     function checkOrder() {
-
       const eventAccordion = document.getElementById('eventAccordion');
       const accordionItems = Array.from(eventAccordion.children);
-      const accordionItemSpans = eventAccordion.querySelectorAll('.accordion-title span.display-none');
-      accordionItemSpans.forEach(span => {
-        span.classList.remove('display-none');
-      });
-
-      // Create a copy of the array for sorting
       const sortedItems = [...accordionItems].sort((a, b) => {
-        const yearA = parseInt(a.querySelector('.accordion-title').textContent.split('-')[1]);
-        const yearB = parseInt(b.querySelector('.accordion-title').textContent.split('-')[1]);
+        const yearA = parseInt(JSON.parse(a.getAttribute('data-event')).year);
+        const yearB = parseInt(JSON.parse(b.getAttribute('data-event')).year);
         return yearA - yearB;
       });
 
@@ -83,11 +73,10 @@
       }
     }
 
-        // Function to display a random historic event
+    // Function to display a random historic event
     function displayRandomEvent() {
-      // Only pick random events which are not displayed already
-      const displayedEvents = Array.from(document.querySelectorAll('.accordion-section')).map(section => {
-        return section.querySelector('.accordion-title').textContent.split('-')[0].trim();
+      const displayedEvents = Array.from(document.querySelectorAll('accordion-section')).map(section => {
+        return JSON.parse(section.getAttribute('data-event')).title;
       });
       const availableEvents = historicEvents.filter(event => !displayedEvents.includes(event.title));
       if (availableEvents.length === 0) {
@@ -100,7 +89,8 @@
       const eventAccordion = document.getElementById('eventAccordion');
 
       // Create a new accordion section for the new event
-      const accordionSection = createAccordionSection(event);
+      const accordionSection = document.createElement('accordion-section');
+      accordionSection.setAttribute('data-event', JSON.stringify(event));
       eventAccordion.insertBefore(accordionSection, eventAccordion.firstChild);
 
       // Highlight the new accordion item in blue
