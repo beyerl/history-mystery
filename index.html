@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles.css">
+  <title>History Mystery</title>
+</head>
+<body>
+
+  <div class="container">
+    <h1>History Mystery</h1>
+    <div id="eventAccordion" class="accordion"></div>
+    <button id="checkButton" class="button">Check</button>
+    <div id="messageBox" class="message-box"></div>
+  </div>
+
+  <script type="module">
+    import { historicEvents } from './historicEvents.js';
+    import { createAccordionSection, moveAccordionItem } from './accordionSection.js';
+
+    function initializeAccordion() {
+      const eventAccordion = document.getElementById('eventAccordion');
+      eventAccordion.innerHTML = ''; // Clear existing content
+
+      // Pick two random events and create accordion sections for them
+      const shuffledEvents = [...historicEvents].sort(() => 0.5 - Math.random());
+      const selectedEvents = shuffledEvents.slice(0, 2);
+      selectedEvents.sort((a, b) => a.year - b.year); // Sort by year
+      selectedEvents.forEach(event => {
+        const accordionSection = createAccordionSection(event);
+        eventAccordion.appendChild(accordionSection);
+      });
+      const accordionItemSpans = eventAccordion.querySelectorAll('.accordion-title span.display-none');
+      accordionItemSpans.forEach(span => {
+        span.classList.remove('display-none');
+      });
+    }
+
+    // Initialize the accordion with two random events
+    initializeAccordion(); 
+
+    // Display an initial event
+    displayRandomEvent();
+
+    // Add click event listener to the Check button
+    document.getElementById('checkButton').addEventListener('click', checkAndDisplay);
+
+    // Function to call checkOrder and displayRandomEvent
+    function checkAndDisplay() {
+      checkOrder();
+      displayRandomEvent();
+    }
+
+    // Function to check the order of accordion items
+    function checkOrder() {
+
+      const eventAccordion = document.getElementById('eventAccordion');
+      const accordionItems = Array.from(eventAccordion.children);
+      const accordionItemSpans = eventAccordion.querySelectorAll('.accordion-title span.display-none');
+      accordionItemSpans.forEach(span => {
+        span.classList.remove('display-none');
+      });
+
+      // Create a copy of the array for sorting
+      const sortedItems = [...accordionItems].sort((a, b) => {
+        const yearA = parseInt(a.querySelector('.accordion-title').textContent.split('-')[1]);
+        const yearB = parseInt(b.querySelector('.accordion-title').textContent.split('-')[1]);
+        return yearA - yearB;
+      });
+
+      const isCorrectOrder = accordionItems.every((item, index) => item === sortedItems[index]);
+
+      const messageBox = document.getElementById('messageBox');
+
+      if (isCorrectOrder) {
+        messageBox.textContent = 'Correct!';
+      } else {
+        messageBox.textContent = 'Wrong!';
+
+        // Put the items in the correct order
+        sortedItems.forEach(item => eventAccordion.appendChild(item));
+      }
+    }
+
+        // Function to display a random historic event
+    function displayRandomEvent() {
+      // Only pick random events which are not displayed already
+      const displayedEvents = Array.from(document.querySelectorAll('.accordion-section')).map(section => {
+        return section.querySelector('.accordion-title').textContent.split('-')[0].trim();
+      });
+      const availableEvents = historicEvents.filter(event => !displayedEvents.includes(event.title));
+      if (availableEvents.length === 0) {
+        alert('All events have been displayed!');
+        return;
+      }
+      const randomIndex = Math.floor(Math.random() * availableEvents.length);
+      const event = availableEvents[randomIndex];
+
+      const eventAccordion = document.getElementById('eventAccordion');
+
+      // Create a new accordion section for the new event
+      const accordionSection = createAccordionSection(event);
+      eventAccordion.insertBefore(accordionSection, eventAccordion.firstChild);
+
+      // Highlight the new accordion item in blue
+      accordionSection.style.backgroundColor = 'lightblue';
+    }
+  </script>
+
+</body>
+</html>
