@@ -9,23 +9,6 @@
   width: 100%;
 }
 
-.accordion-section {
-  background-color: #f4f4f4;
-  margin-bottom: 5px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-.accordion-title {
-  padding: 10px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.accordion-content {
-  padding: 10px;
-}
 
 /* Style for the next button */
 .button {
