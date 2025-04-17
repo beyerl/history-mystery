@@ -6,49 +6,67 @@ class AccordionSection extends HTMLElement {
 
   connectedCallback() {
     const event = JSON.parse(this.getAttribute('data-event'));
-    this.render(event);
+    const isMoveable = this.hasAttribute('is-active') && this.getAttribute('is-active') === 'true';
+    this.render(event, isMoveable);
   }
 
-  render(event) {
+  render(event, isMoveable) {
     this.shadowRoot.innerHTML = `
       <style>
-        .accordion-section {
-          border: 1px solid #ccc;
-          margin-bottom: 10px;
+      .accordion-section {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        border: ${isMoveable ? '2px solid red-block' : 'inherit'}
+      }
+
+      .accordion-title {
+        cursor: pointer;
+        padding: 10px;        
+        background-color: ${isMoveable ? 'lightblue' : '#f0f0f0'};
+        animation: ${isMoveable ? 'pulse 1s infinite' : 'none'};
+      }
+
+      @keyframes pulse {
+        0% {
+        box-shadow: 0 0 5px blue;
         }
-        .accordion-title {
-          cursor: pointer;
-          padding: 10px;
-          background: #f0f0f0;
+        50% {
+        box-shadow: 0 0 15px blue;
         }
-        .accordion-content {
-          padding: 10px;
+        100% {
+        box-shadow: 0 0 5px blue;
         }
-        .arrow-button {
-          margin-left: 10px;
-          cursor: pointer;
-        }
+      }
+      .accordion-content {
+        padding: 10px;
+      }
+      .arrow-button {
+        margin-left: 10px;
+        cursor: pointer;
+        display: ${isMoveable ? 'inline-block' : 'none'};
+      }
       </style>
       <details class="accordion-section">
-        <summary class="accordion-title">
-          <strong>${event.title}</strong>
-          <span class="display-none"> - ${event.year}</span>
-          <button class="arrow-button up-button">🔼 Up</button>
-          <button class="arrow-button down-button">🔽 Down</button>
-        </summary>
-        <div class="accordion-content">
-          <p><strong>Description:</strong> ${event.description}</p>
-        </div>
+      <summary class="accordion-title">
+        <strong>${event.title}</strong>
+        <span class="display-none"> - ${event.year}</span>
+        <button class="arrow-button up-button">🔼 Up</button>
+        <button class="arrow-button down-button">🔽 Down</button>
+      </summary>
+      <div class="accordion-content">
+        <p><strong>Description:</strong> ${event.description}</p>
+      </div>
       </details>
     `;
 
-    this.addEventListeners();
+    if (isMoveable) {
+      this.addEventListeners();
+    }
   }
 
   addEventListeners() {
     const upButton = this.shadowRoot.querySelector('.up-button');
     const downButton = this.shadowRoot.querySelector('.down-button');
-    const accordionSection = this;
 
     upButton.addEventListener('click', () => this.moveAccordionItem('up'));
     downButton.addEventListener('click', () => this.moveAccordionItem('down'));
@@ -68,6 +86,12 @@ class AccordionSection extends HTMLElement {
         eventAccordion.insertBefore(sibling, this);
       }
     }
+  }
+
+  requestUpdate() {
+    const event = JSON.parse(this.getAttribute('data-event'));
+    const isMoveable = this.hasAttribute('is-active') && this.getAttribute('is-active') === 'true';
+    this.render(event, isMoveable);
   }
 }
 

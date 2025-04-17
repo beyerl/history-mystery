@@ -51,8 +51,17 @@
 
     // Function to check the order of accordion items
     function checkOrder() {
+     
       const eventAccordion = document.getElementById('eventAccordion');
+
       const accordionItems = Array.from(eventAccordion.children);
+      accordionItems.forEach(section => {
+        section.removeAttribute('is-active');
+        if (typeof section.requestUpdate === 'function') {
+          section.requestUpdate(); // Trigger a rerender on the component
+        }
+      });
+
       const sortedItems = [...accordionItems].sort((a, b) => {
         const yearA = parseInt(JSON.parse(a.getAttribute('data-event')).year);
         const yearB = parseInt(JSON.parse(b.getAttribute('data-event')).year);
@@ -70,6 +79,7 @@
 
         // Put the items in the correct order
         sortedItems.forEach(item => eventAccordion.appendChild(item));
+
       }
     }
 
@@ -91,10 +101,8 @@
       // Create a new accordion section for the new event
       const accordionSection = document.createElement('accordion-section');
       accordionSection.setAttribute('data-event', JSON.stringify(event));
-      eventAccordion.insertBefore(accordionSection, eventAccordion.firstChild);
-
-      // Highlight the new accordion item in blue
-      accordionSection.style.backgroundColor = 'lightblue';
+      accordionSection.setAttribute('is-active', 'true'); // Set is-active only on the new section
+      eventAccordion.insertBefore(accordionSection, eventAccordion.firstChild);     
     }
   </script>
 
