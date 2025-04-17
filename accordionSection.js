@@ -7,16 +7,17 @@ class AccordionSection extends HTMLElement {
   connectedCallback() {
     const event = JSON.parse(this.getAttribute('data-event'));
     const isMoveable = this.hasAttribute('is-active') && this.getAttribute('is-active') === 'true';
-    this.render(event, isMoveable);
+    const isCorrect = this.hasAttribute('is-correct') && this.getAttribute('is-correct') === 'true';
+    const isIncorrect = this.hasAttribute('is-incorrect') && this.getAttribute('is-incorrect') === 'true';
+    this.render(event, isMoveable, isCorrect, isIncorrect);
   }
 
-  render(event, isMoveable) {
+  render(event, isMoveable, isCorrect, isIncorrect) {
     this.shadowRoot.innerHTML = `
       <style>
       .accordion-section {
         border: 1px solid #ccc;
         margin-bottom: 10px;
-        border: ${isMoveable ? '2px solid red-block' : 'inherit'}
       }
 
       .accordion-title {
@@ -24,6 +25,14 @@ class AccordionSection extends HTMLElement {
         padding: 10px;        
         background-color: ${isMoveable ? 'lightblue' : '#f0f0f0'};
         animation: ${isMoveable ? 'pulse 1s infinite' : 'none'};
+      }
+
+      .accordion-title.is-correct {
+        background-color: green;
+      }
+
+      .accordion-title.is-incorrect {
+        background-color: red;
       }
 
       @keyframes pulse {
@@ -47,15 +56,15 @@ class AccordionSection extends HTMLElement {
       }
       </style>
       <details class="accordion-section">
-      <summary class="accordion-title">
-        <strong>${event.title}</strong>
-        <span class="display-none"> - ${event.year}</span>
-        <button class="arrow-button up-button">🔼 Up</button>
-        <button class="arrow-button down-button">🔽 Down</button>
-      </summary>
-      <div class="accordion-content">
-        <p><strong>Description:</strong> ${event.description}</p>
-      </div>
+        <summary class="accordion-title ${isCorrect ? 'is-correct' : ''} ${isIncorrect ? 'is-incorrect' : ''}">
+          <strong>${event.title}</strong>
+          <span class="display-none"> - ${event.year}</span>
+          <button class="arrow-button up-button">🔼 Up</button>
+          <button class="arrow-button down-button">🔽 Down</button>
+        </summary>
+        <div class="accordion-content">
+          <p><strong>Description:</strong> ${event.description}</p>
+        </div>
       </details>
     `;
 
@@ -91,7 +100,9 @@ class AccordionSection extends HTMLElement {
   requestUpdate() {
     const event = JSON.parse(this.getAttribute('data-event'));
     const isMoveable = this.hasAttribute('is-active') && this.getAttribute('is-active') === 'true';
-    this.render(event, isMoveable);
+    const isCorrect = this.hasAttribute('is-correct') && this.getAttribute('is-correct') === 'true';
+    const isIncorrect = this.hasAttribute('is-incorrect') && this.getAttribute('is-incorrect') === 'true';
+    this.render(event, isMoveable, isCorrect, isIncorrect);
   }
 }
 
