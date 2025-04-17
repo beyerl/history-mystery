@@ -23,7 +23,7 @@ class AccordionSection extends HTMLElement {
         }
         .accordion-content {
           padding: 10px;
-          display: none;
+          /* Removed display: none to allow native <details> behavior */
         }
         .arrow-button {
           margin-left: 10px;
