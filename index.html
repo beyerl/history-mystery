@@ -17,7 +17,7 @@
 
   <script type="module">
     import { historicEvents } from './historicEvents.js';
-    import { createAccordionSection, moveAccordionItem } from './accordionSection.js';
+    import './accordionSection.js'; // Import the Web Component
 
     function initializeAccordion() {
       const eventAccordion = document.getElementById('eventAccordion');
@@ -28,12 +28,9 @@
       const selectedEvents = shuffledEvents.slice(0, 2);
       selectedEvents.sort((a, b) => a.year - b.year); // Sort by year
       selectedEvents.forEach(event => {
-        const accordionSection = createAccordionSection(event);
+        const accordionSection = document.createElement('accordion-section');
+        accordionSection.setAttribute('data-event', JSON.stringify(event));
         eventAccordion.appendChild(accordionSection);
-      });
-      const accordionItemSpans = eventAccordion.querySelectorAll('.accordion-title span.display-none');
-      accordionItemSpans.forEach(span => {
-        span.classList.remove('display-none');
       });
     }
 
@@ -54,40 +51,60 @@
 
     // Function to check the order of accordion items
     function checkOrder() {
-
       const eventAccordion = document.getElementById('eventAccordion');
       const accordionItems = Array.from(eventAccordion.children);
-      const accordionItemSpans = eventAccordion.querySelectorAll('.accordion-title span.display-none');
-      accordionItemSpans.forEach(span => {
-        span.classList.remove('display-none');
+
+      // Remove highlighting from all existing accordion sections
+      accordionItems.forEach(section => {
+        if(section.hasAttribute('is-correct')) section.removeAttribute('is-correct');
+        if(section.hasAttribute('is-incorrect')) section.removeAttribute('is-incorrect');
+        if (typeof section.requestUpdate === 'function') {
+          section.requestUpdate(); // Trigger a rerender on the component
+        }
       });
 
-      // Create a copy of the array for sorting
       const sortedItems = [...accordionItems].sort((a, b) => {
-        const yearA = parseInt(a.querySelector('.accordion-title').textContent.split('-')[1]);
-        const yearB = parseInt(b.querySelector('.accordion-title').textContent.split('-')[1]);
+        const yearA = parseInt(JSON.parse(a.getAttribute('data-event')).year);
+        const yearB = parseInt(JSON.parse(b.getAttribute('data-event')).year);
         return yearA - yearB;
       });
 
       const isCorrectOrder = accordionItems.every((item, index) => item === sortedItems[index]);
 
       const messageBox = document.getElementById('messageBox');
+      const activeItem = accordionItems.find(item => item.hasAttribute('is-active'));
+      activeItem.removeAttribute('is-active');
 
       if (isCorrectOrder) {
         messageBox.textContent = 'Correct!';
+        if (activeItem) {
+          activeItem.setAttribute('is-correct', 'true');
+          if (typeof activeItem.requestUpdate === 'function') {
+            activeItem.requestUpdate(); // Trigger a rerender on the component
+          }
+        }
       } else {
         messageBox.textContent = 'Wrong!';
+        if (activeItem) {
+          activeItem.setAttribute('is-incorrect', 'true');
+          if (typeof activeItem.requestUpdate === 'function') {
+            activeItem.requestUpdate(); // Trigger a rerender on the component
+          }
+        }
 
-        // Put the items in the correct order
         sortedItems.forEach(item => eventAccordion.appendChild(item));
+
+        // Wait for 0.5 seconds and remove wrongly placed item
+        setTimeout(() => {          
+          eventAccordion.removeChild(activeItem);
+        }, 1000)
       }
     }
 
-        // Function to display a random historic event
+    // Function to display a random historic event
     function displayRandomEvent() {
-      // Only pick random events which are not displayed already
-      const displayedEvents = Array.from(document.querySelectorAll('.accordion-section')).map(section => {
-        return section.querySelector('.accordion-title').textContent.split('-')[0].trim();
+      const displayedEvents = Array.from(document.querySelectorAll('accordion-section')).map(section => {
+        return JSON.parse(section.getAttribute('data-event')).title;
       });
       const availableEvents = historicEvents.filter(event => !displayedEvents.includes(event.title));
       if (availableEvents.length === 0) {
@@ -100,11 +117,10 @@
       const eventAccordion = document.getElementById('eventAccordion');
 
       // Create a new accordion section for the new event
-      const accordionSection = createAccordionSection(event);
-      eventAccordion.insertBefore(accordionSection, eventAccordion.firstChild);
-
-      // Highlight the new accordion item in blue
-      accordionSection.style.backgroundColor = 'lightblue';
+      const accordionSection = document.createElement('accordion-section');
+      accordionSection.setAttribute('data-event', JSON.stringify(event));
+      accordionSection.setAttribute('is-active', 'true'); // Set is-active only on the new section
+      eventAccordion.insertBefore(accordionSection, eventAccordion.firstChild);     
     }
   </script>
 

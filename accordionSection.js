@@ -1,58 +1,116 @@
-export function createAccordionSection(event) {
-  const accordionSection = document.createElement('details');
-  accordionSection.classList.add('accordion-section');
+class AccordionSection extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
 
-  const accordionTitle = document.createElement('summary');
-  accordionTitle.classList.add('accordion-title');
-  accordionTitle.innerHTML = `<strong>${event.title}</strong><span class="display-none"> - ${event.year}</span>`;
+  connectedCallback() {
+    const event = JSON.parse(this.getAttribute('data-event'));
+    const isMoveable = this.hasAttribute('is-active') && this.getAttribute('is-active') === 'true';
+    const isCorrect = this.hasAttribute('is-correct') && this.getAttribute('is-correct') === 'true';
+    const isIncorrect = this.hasAttribute('is-incorrect') && this.getAttribute('is-incorrect') === 'true';
+    this.render(event, isMoveable, isCorrect, isIncorrect);
+  }
 
-  const accordionContent = document.createElement('div');
-  accordionContent.classList.add('accordion-content');
-  accordionContent.innerHTML = `<p><strong>Description:</strong> ${event.description}</p>`;
+  render(event, isMoveable, isCorrect, isIncorrect) {
+    this.shadowRoot.innerHTML = `
+      <style>
+      .accordion-section {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+      }
 
-  // Create up and down buttons
-  const upButton = document.createElement('button');
-  upButton.textContent = '🔼 Up';
-  upButton.classList.add('arrow-button', 'up-button');
-  upButton.addEventListener('click', () => moveAccordionItem(accordionSection, 'up'));
+      .accordion-title {
+        cursor: pointer;
+        padding: 10px;        
+        background-color: ${isMoveable ? 'lightblue' : '#f0f0f0'};
+        animation: ${isMoveable ? 'pulse 1s infinite' : 'none'};
+      }
 
-  const downButton = document.createElement('button');
-  downButton.textContent = '🔽 Down';
-  downButton.classList.add('arrow-button', 'down-button');
-  downButton.addEventListener('click', () => moveAccordionItem(accordionSection, 'down'));
+      .accordion-title.is-correct {
+        background-color: green;
+      }
 
-  // Append buttons to the accordion section
-  accordionTitle.appendChild(upButton);
-  accordionTitle.appendChild(downButton);
-  accordionSection.appendChild(accordionTitle);
-  accordionSection.appendChild(accordionContent);
+      .accordion-title.is-incorrect {
+        background-color: red;
+      }
 
-  // Append the new accordion section to the container
-  const eventAccordion = document.getElementById('eventAccordion');
-  eventAccordion.appendChild(accordionSection);
+      @keyframes pulse {
+        0% {
+        box-shadow: 0 0 5px blue;
+        }
+        50% {
+        box-shadow: 0 0 15px blue;
+        }
+        100% {
+        box-shadow: 0 0 5px blue;
+        }
+      }
+      .accordion-content {
+        padding: 10px;
+      }
+      .arrow-button {
+        margin-left: 10px;
+        cursor: pointer;
+        display: ${isMoveable ? 'inline-block' : 'none'};
+      }
+      </style>
+      <details class="accordion-section">
+        <summary class="accordion-title ${isCorrect ? 'is-correct' : ''} ${isIncorrect ? 'is-incorrect' : ''}">
+          <strong>${event.title}</strong>
+          <span class="display-none"> - ${event.year}</span>
+          <button class="arrow-button up-button">🔼 Up</button>
+          <button class="arrow-button down-button">🔽 Down</button>
+        </summary>
+        <div class="accordion-content">
+          <p><strong>Description:</strong> ${event.description}</p>
+        </div>
+      </details>
+    `;
 
-  // Hide buttons for all other sections except the last one
-  const allSections = eventAccordion.querySelectorAll('.accordion-section');
-  allSections.forEach((section, index) => {
-    const buttons = section.querySelectorAll('.arrow-button');
-    buttons.forEach(button => {
-      button.style.display = index === allSections.length - 1 ? 'inline-block' : 'none';
-    });
-  });
-
-  return accordionSection;
-}
-
-export function moveAccordionItem(item, direction) {
-  const eventAccordion = document.getElementById('eventAccordion');
-  const sibling = direction === 'up' ? item.previousElementSibling : item.nextElementSibling;
-
-  if (sibling) {
-    if (direction === 'up') {
-      // Swap the positions of the current item and its sibling
-      eventAccordion.insertBefore(item, sibling);
-    } else {
-      eventAccordion.insertBefore(sibling, item);
+    if (isMoveable) {
+      this.addEventListeners();
     }
   }
+
+  addEventListeners() {
+    const upButton = this.shadowRoot.querySelector('.up-button');
+    const downButton = this.shadowRoot.querySelector('.down-button');
+
+    upButton.addEventListener('click', () => this.moveAccordionItem('up'));
+    downButton.addEventListener('click', () => this.moveAccordionItem('down'));
+  }
+
+  moveAccordionItem(direction) {
+    const eventAccordion = this.parentElement;
+    const sibling =
+      direction === 'up'
+        ? this.previousElementSibling
+        : this.nextElementSibling;
+
+    if (sibling) {
+      if (direction === 'up') {
+        eventAccordion.insertBefore(this, sibling);
+      } else {
+        eventAccordion.insertBefore(sibling, this);
+      }
+    }
+  }
+
+  requestUpdate() {
+    const event = JSON.parse(this.getAttribute('data-event'));
+    const isMoveable = this.hasAttribute('is-active') && this.getAttribute('is-active') === 'true';
+    const isCorrect = this.hasAttribute('is-correct') && this.getAttribute('is-correct') === 'true';
+    const isIncorrect = this.hasAttribute('is-incorrect') && this.getAttribute('is-incorrect') === 'true';
+    this.render(event, isMoveable, isCorrect, isIncorrect);
+  }
 }
+
+customElements.define('accordion-section', AccordionSection);
+
+// Usage example:
+// const eventAccordion = document.getElementById('eventAccordion');
+// const event = { title: 'Event Title', year: '2023', description: 'Event Description' };
+// const accordion = document.createElement('accordion-section');
+// accordion.setAttribute('data-event', JSON.stringify(event));
+// eventAccordion.appendChild(accordion);

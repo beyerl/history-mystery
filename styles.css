@@ -9,23 +9,6 @@
   width: 100%;
 }
 
-.accordion-section {
-  background-color: #f4f4f4;
-  margin-bottom: 5px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-.accordion-title {
-  padding: 10px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.accordion-content {
-  padding: 10px;
-}
 
 /* Style for the next button */
 .button {
@@ -40,3 +23,22 @@
 .display-none{
   display: none; 
 }
+
+accordion-section[is-active=true] .accordion-section {
+  border: 2px solid red;
+  background-color: red;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+  box-shadow: 0 0 5px blue;
+  }
+  50% {
+  box-shadow: 0 0 15px blue;
+  }
+  100% {
+  box-shadow: 0 0 5px blue;
+  }
+}
+
