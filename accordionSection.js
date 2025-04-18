@@ -6,15 +6,18 @@ class AccordionSection extends HTMLElement {
 
   connectedCallback() {
     const event = JSON.parse(this.getAttribute('data-event'));
-    const isMoveable = this.hasAttribute('is-active') && this.getAttribute('is-active') === 'true';
+    const isActive = this.hasAttribute('is-active') && this.getAttribute('is-active') === 'true';
     const isCorrect = this.hasAttribute('is-correct') && this.getAttribute('is-correct') === 'true';
     const isIncorrect = this.hasAttribute('is-incorrect') && this.getAttribute('is-incorrect') === 'true';
-    this.render(event, isMoveable, isCorrect, isIncorrect);
+    this.render(event, isActive, isCorrect, isIncorrect);
   }
 
-  render(event, isMoveable, isCorrect, isIncorrect) {
+  render(event, isActive, isCorrect, isIncorrect) {
     this.shadowRoot.innerHTML = `
       <style>
+      .display-none{
+        display: none; 
+      }
       .accordion-section {
         border: 1px solid #ccc;
         margin-bottom: 10px;
@@ -23,8 +26,8 @@ class AccordionSection extends HTMLElement {
       .accordion-title {
         cursor: pointer;
         padding: 10px;        
-        background-color: ${isMoveable ? 'lightblue' : '#f0f0f0'};
-        animation: ${isMoveable ? 'pulse 1s infinite' : 'none'};
+        background-color: ${isActive ? 'lightblue' : '#f0f0f0'};
+        animation: ${isActive ? 'pulse 1s infinite' : 'none'};
       }
 
       .accordion-title.is-correct {
@@ -52,13 +55,13 @@ class AccordionSection extends HTMLElement {
       .arrow-button {
         margin-left: 10px;
         cursor: pointer;
-        display: ${isMoveable ? 'inline-block' : 'none'};
+        display: ${isActive ? 'inline-block' : 'none'};
       }
       </style>
       <details class="accordion-section">
         <summary class="accordion-title ${isCorrect ? 'is-correct' : ''} ${isIncorrect ? 'is-incorrect' : ''}">
           <strong>${event.title}</strong>
-          <span class="display-none"> - ${event.year}</span>
+          <span class="${isActive ? 'display-none' : ''}"> - ${event.year}</span>
           <button class="arrow-button up-button">🔼 Up</button>
           <button class="arrow-button down-button">🔽 Down</button>
         </summary>
@@ -68,7 +71,7 @@ class AccordionSection extends HTMLElement {
       </details>
     `;
 
-    if (isMoveable) {
+    if (isActive) {
       this.addEventListeners();
     }
   }
@@ -99,10 +102,10 @@ class AccordionSection extends HTMLElement {
 
   requestUpdate() {
     const event = JSON.parse(this.getAttribute('data-event'));
-    const isMoveable = this.hasAttribute('is-active') && this.getAttribute('is-active') === 'true';
+    const isActive = this.hasAttribute('is-active') && this.getAttribute('is-active') === 'true';
     const isCorrect = this.hasAttribute('is-correct') && this.getAttribute('is-correct') === 'true';
     const isIncorrect = this.hasAttribute('is-incorrect') && this.getAttribute('is-incorrect') === 'true';
-    this.render(event, isMoveable, isCorrect, isIncorrect);
+    this.render(event, isActive, isCorrect, isIncorrect);
   }
 }
 
