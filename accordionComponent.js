@@ -55,23 +55,12 @@ class AccordionComponent extends HTMLElement {
 
     async checkEventOrderAndCreateEvent() {
         await this.checkEventOrder();
-        setTimeout(() => {
-            this.createEvent();
-        }, 1000);
+        this.createEvent();
     }
 
     checkEventOrder() {
         return new Promise(resolve => {
             const accordionItems = Array.from(this.children);
-
-            // Remove highlighting from all existing accordion sections
-            accordionItems.forEach(section => {
-                if (section.hasAttribute('is-correct')) section.removeAttribute('is-correct');
-                if (section.hasAttribute('is-incorrect')) section.removeAttribute('is-incorrect');
-                if (typeof section.requestUpdate === 'function') {
-                    section.requestUpdate(); // Trigger a rerender on the component
-                }
-            });
 
             const sortedItems = [...accordionItems].sort((a, b) => {
                 const yearA = parseInt(JSON.parse(a.getAttribute('data-event')).year);
@@ -93,17 +82,17 @@ class AccordionComponent extends HTMLElement {
                         activeItem.requestUpdate(); // Trigger a rerender on the component
                     }
                 }
-                resolve();
+                setTimeout(() => { resolve(); }, 1000);
             } else {
                 messageBox.textContent = 'Wrong!';
                 if (activeItem) {
                     activeItem.setAttribute('is-incorrect', 'true');
+                    sortedItems.forEach(item => this.appendChild(item));
                     if (typeof activeItem.requestUpdate === 'function') {
                         activeItem.requestUpdate(); // Trigger a rerender on the component
                     }
                 }
 
-                //sortedItems.forEach(item => this.appendChild(item));
 
                 // Wait and remove wrongly placed item
                 setTimeout(() => {
@@ -112,6 +101,16 @@ class AccordionComponent extends HTMLElement {
                     resolve();
                 }, 2000);
             }
+        }).then(() => {
+            // Remove highlighting from all existing accordion sections
+            const accordionItems = Array.from(this.children);
+            accordionItems.forEach(section => {
+                if (section.hasAttribute('is-correct')) section.removeAttribute('is-correct');
+                if (section.hasAttribute('is-incorrect')) section.removeAttribute('is-incorrect');
+                if (typeof section.requestUpdate === 'function') {
+                    section.requestUpdate(); // Trigger a rerender on the component
+                }
+            });
         });
     }
 
