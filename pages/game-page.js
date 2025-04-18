@@ -1,7 +1,10 @@
+import { GameStateService } from '../business-logic/game-state-service.js';
+
 class GamePage extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+        this.gameStateService = new GameStateService();
     }
 
     connectedCallback() {
@@ -26,11 +29,36 @@ class GamePage extends HTMLElement {
           padding: 10px 0;
           border-top: 1px solid #ccc;
         }
+        table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+        th, td {
+          border: 1px solid #ccc;
+          padding: 8px;
+          text-align: left;
+        }
+        th {
+          background-color: #f9f9f9;
+        }
       </style>
       <accordion-component id="eventAccordion"></accordion-component>
       <button id="checkButton" class="button">Check</button>
       <div id="messageBox" class="message-box"></div>
-      <footer id="footer">Game ID: ${this.gameId || 'N/A'}</footer>
+      <footer id="footer">
+        <div>Game ID: ${this.gameId || 'N/A'}</div>
+        <table id="playerScoresTable">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="2">Loading scores...</td></tr>
+          </tbody>
+        </table>
+      </footer>
     `;
     }
 
@@ -51,6 +79,8 @@ class GamePage extends HTMLElement {
                 eventAccordion.checkEventOrderAndCreateEvent();
             }
         });
+
+        this.updatePlayerScores();
     }
 
     addEventListeners() {
@@ -60,6 +90,19 @@ class GamePage extends HTMLElement {
                 messageBox.textContent = event.detail.message;
             }
         });
+    }
+
+    updatePlayerScores() {
+        const game = this.gameStateService.GetGame(this.gameId);
+        const playerScoresTable = this.shadowRoot.getElementById('playerScoresTable').querySelector('tbody');
+
+        if (game && game.playerScores.length > 0) {
+            playerScoresTable.innerHTML = game.playerScores
+                .map(player => `<tr><td>${player.playerId}</td><td>${player.score}</td></tr>`)
+                .join('');
+        } else {
+            playerScoresTable.innerHTML = `<tr><td colspan="2">No scores available</td></tr>`;
+        }
     }
 }
 
