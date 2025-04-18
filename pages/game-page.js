@@ -1,10 +1,10 @@
-import { GameStateService } from '../business-logic/game-state-service.js';
+import { gameStateService } from '../business-logic/game-state-service.js';
 
 class GamePage extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.gameStateService = new GameStateService();
+        this.gameStateService = gameStateService;
     }
 
     connectedCallback() {

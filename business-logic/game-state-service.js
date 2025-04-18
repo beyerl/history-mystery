@@ -1,7 +1,12 @@
+import { GameState, GameStateEnum } from '../models/game-state.js';
 
-export class GameStateService {
+class GameStateService {
     constructor() {
+        if (GameStateService.instance) {
+            return GameStateService.instance;
+        }
         this.games = new Map();
+        GameStateService.instance = this;
     }
 
     // Create a new game
@@ -14,6 +19,18 @@ export class GameStateService {
     // Retrieve a game by its ID
     GetGame(gameId) {
         return this.games.get(gameId);
+    }
+
+    // Add a player to a game
+    AddPlayer(gameId, playerId) {
+        const game = this.games.get(gameId);
+        if (!game || game.state !== GameStateEnum.SETUP) return false;
+
+        const playerExists = game.playerScores.some(player => player.playerId === playerId);
+        if (playerExists) return false; // Player already exists
+
+        game.playerScores.push({ playerId, score: 0 });
+        return true;
     }
 
     // Increment the score of a player by their ID
@@ -46,3 +63,5 @@ export class GameStateService {
         return true;
     }
 }
+
+export const gameStateService = new GameStateService();
