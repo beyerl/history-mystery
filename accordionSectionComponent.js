@@ -15,7 +15,7 @@ class AccordionSectionComponent extends HTMLElement {
   render(event, isActive, isCorrect, isIncorrect) {
     this.shadowRoot.innerHTML = `
       <style>
-      .display-none{
+      .display-none {
         display: none; 
       }
       .accordion-section {
@@ -51,6 +51,10 @@ class AccordionSectionComponent extends HTMLElement {
       }
       .accordion-content {
         padding: 10px;
+        display: ${isActive ? 'none' : 'block'};
+      }
+      details summary::marker {
+        content: ${isActive ? '""' : 'initial'};
       }
       .arrow-button {
         margin-left: 10px;
