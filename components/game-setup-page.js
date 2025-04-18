@@ -23,7 +23,7 @@ class GameSetupPage extends HTMLElement {
                         </tr>
                     </tbody>
                 </table>
-                <button id="start-game-button">Start Game</button>
+                <button id="start-game-button">Begin</button>
             </div>
         `;
 
