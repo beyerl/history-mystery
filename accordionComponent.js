@@ -108,6 +108,7 @@ class AccordionComponent extends HTMLElement {
                 // Wait and remove wrongly placed item
                 setTimeout(() => {
                     if (activeItem) this.removeChild(activeItem);
+                    messageBox.textContent = "";
                     resolve();
                 }, 2000);
             }
