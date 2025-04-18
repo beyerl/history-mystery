@@ -1,9 +1,10 @@
 const routes = {
-    '/': '<game-page></game-page>',
+    '/game': '<game-page></game-page>',
+    '/setup': '<game-setup-page></game-setup-page>',
 };
 
 function updateView() {
-    const path = window.location.hash.slice(1) || '/';
+    const path = window.location.hash.slice(1) || '/setup';
     const routerView = document.querySelector('router-view');
     routerView.innerHTML = routes[path] || '<div><h2>404</h2><p>Page not found.</p></div>';
 }
