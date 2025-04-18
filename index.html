@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles.css">
   <title>History Mystery</title>
 </head>
+
 <body>
 
   <div class="container">
     <h1>History Mystery</h1>
-    <div id="eventAccordion" class="accordion"></div>
+    <accordion-component id="eventAccordion"></accordion-component>
     <button id="checkButton" class="button">Check</button>
     <div id="messageBox" class="message-box"></div>
   </div>
@@ -18,111 +20,20 @@
   <script type="module">
     import { historicEvents } from './historicEvents.js';
     import './accordionSection.js'; // Import the Web Component
+    import './accordionComponent.js'; // Import the Accordion Component
 
-    function initializeAccordion() {
-      const eventAccordion = document.getElementById('eventAccordion');
-      eventAccordion.innerHTML = ''; // Clear existing content
-
-      // Pick two random events and create accordion sections for them
-      const shuffledEvents = [...historicEvents].sort(() => 0.5 - Math.random());
-      const selectedEvents = shuffledEvents.slice(0, 2);
-      selectedEvents.sort((a, b) => a.year - b.year); // Sort by year
-      selectedEvents.forEach(event => {
-        const accordionSection = document.createElement('accordion-section');
-        accordionSection.setAttribute('data-event', JSON.stringify(event));
-        eventAccordion.appendChild(accordionSection);
-      });
+    // Pass historicEvents to the accordion component
+    const eventAccordion = document.getElementById('eventAccordion');
+    if (eventAccordion) {
+      eventAccordion.setAttribute('events', JSON.stringify(historicEvents));
     }
-
-    // Initialize the accordion with two random events
-    initializeAccordion(); 
-
-    // Display an initial event
-    displayRandomEvent();
 
     // Add click event listener to the Check button
-    document.getElementById('checkButton').addEventListener('click', checkAndDisplay);
-
-    // Function to call checkOrder and displayRandomEvent
-    function checkAndDisplay() {
-      checkOrder();
-      displayRandomEvent();
-    }
-
-    // Function to check the order of accordion items
-    function checkOrder() {
-      const eventAccordion = document.getElementById('eventAccordion');
-      const accordionItems = Array.from(eventAccordion.children);
-
-      // Remove highlighting from all existing accordion sections
-      accordionItems.forEach(section => {
-        if(section.hasAttribute('is-correct')) section.removeAttribute('is-correct');
-        if(section.hasAttribute('is-incorrect')) section.removeAttribute('is-incorrect');
-        if (typeof section.requestUpdate === 'function') {
-          section.requestUpdate(); // Trigger a rerender on the component
-        }
-      });
-
-      const sortedItems = [...accordionItems].sort((a, b) => {
-        const yearA = parseInt(JSON.parse(a.getAttribute('data-event')).year);
-        const yearB = parseInt(JSON.parse(b.getAttribute('data-event')).year);
-        return yearA - yearB;
-      });
-
-      const isCorrectOrder = accordionItems.every((item, index) => item === sortedItems[index]);
-
-      const messageBox = document.getElementById('messageBox');
-      const activeItem = accordionItems.find(item => item.hasAttribute('is-active'));
-      activeItem.removeAttribute('is-active');
-
-      if (isCorrectOrder) {
-        messageBox.textContent = 'Correct!';
-        if (activeItem) {
-          activeItem.setAttribute('is-correct', 'true');
-          if (typeof activeItem.requestUpdate === 'function') {
-            activeItem.requestUpdate(); // Trigger a rerender on the component
-          }
-        }
-      } else {
-        messageBox.textContent = 'Wrong!';
-        if (activeItem) {
-          activeItem.setAttribute('is-incorrect', 'true');
-          if (typeof activeItem.requestUpdate === 'function') {
-            activeItem.requestUpdate(); // Trigger a rerender on the component
-          }
-        }
-
-        sortedItems.forEach(item => eventAccordion.appendChild(item));
-
-        // Wait for 0.5 seconds and remove wrongly placed item
-        setTimeout(() => {          
-          eventAccordion.removeChild(activeItem);
-        }, 1000)
-      }
-    }
-
-    // Function to display a random historic event
-    function displayRandomEvent() {
-      const displayedEvents = Array.from(document.querySelectorAll('accordion-section')).map(section => {
-        return JSON.parse(section.getAttribute('data-event')).title;
-      });
-      const availableEvents = historicEvents.filter(event => !displayedEvents.includes(event.title));
-      if (availableEvents.length === 0) {
-        alert('All events have been displayed!');
-        return;
-      }
-      const randomIndex = Math.floor(Math.random() * availableEvents.length);
-      const event = availableEvents[randomIndex];
-
-      const eventAccordion = document.getElementById('eventAccordion');
-
-      // Create a new accordion section for the new event
-      const accordionSection = document.createElement('accordion-section');
-      accordionSection.setAttribute('data-event', JSON.stringify(event));
-      accordionSection.setAttribute('is-active', 'true'); // Set is-active only on the new section
-      eventAccordion.insertBefore(accordionSection, eventAccordion.firstChild);     
-    }
+    document.getElementById('checkButton').addEventListener('click', () => {
+      eventAccordion.checkAndDisplay();
+    });
   </script>
 
 </body>
+
 </html>
