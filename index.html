@@ -12,26 +12,11 @@
 
   <div class="container">
     <h1>History Mystery</h1>
-    <accordion-component id="eventAccordion"></accordion-component>
-    <button id="checkButton" class="button">Check</button>
-    <div id="messageBox" class="message-box"></div>
+    <game-page></game-page>
   </div>
 
   <script type="module">
-    import { historicEvents } from './historicEvents.js';
-    import './accordionSectionComponent.js'; // Import the Accordion Section Component
-    import './accordionComponent.js'; // Import the Accordion Component
-
-    // Pass historicEvents to the accordion component
-    const eventAccordion = document.getElementById('eventAccordion');
-    if (eventAccordion) {
-      eventAccordion.setAttribute('events', JSON.stringify(historicEvents));
-    }
-
-    // Add click event listener to the Check button
-    document.getElementById('checkButton').addEventListener('click', () => {
-      eventAccordion.checkEventOrderAndCreateEvent();
-    });
+    import './gamePage.js';
   </script>
 
 </body>

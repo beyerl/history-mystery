@@ -71,12 +71,11 @@ class AccordionComponent extends HTMLElement {
 
             const isCorrectOrder = accordionItems.every((item, index) => item === sortedItems[index]);
 
-            const messageBox = document.getElementById('messageBox');
             const activeItem = accordionItems.find(item => item.hasAttribute('is-active'));
             if (activeItem) activeItem.removeAttribute('is-active');
 
             if (isCorrectOrder) {
-                messageBox.textContent = 'Correct!';
+                this.dispatchMessage('Correct!');
                 if (activeItem) {
                     activeItem.setAttribute('is-correct', 'true');
                     if (typeof activeItem.requestUpdate === 'function') {
@@ -85,7 +84,7 @@ class AccordionComponent extends HTMLElement {
                 }
                 setTimeout(() => { resolve(); }, this.delay);
             } else {
-                messageBox.textContent = 'Wrong!';
+                this.dispatchMessage('Wrong!');
                 if (activeItem) {
                     activeItem.setAttribute('is-incorrect', 'true');
                     sortedItems.forEach(item => this.appendChild(item));
@@ -94,11 +93,10 @@ class AccordionComponent extends HTMLElement {
                     }
                 }
 
-
                 // Wait and remove wrongly placed item
                 setTimeout(() => {
                     if (activeItem) this.removeChild(activeItem);
-                    messageBox.textContent = "";
+                    this.dispatchMessage('');
                     resolve();
                 }, this.delay);
             }
@@ -113,6 +111,14 @@ class AccordionComponent extends HTMLElement {
                 }
             });
         });
+    }
+
+    dispatchMessage(message) {
+        this.dispatchEvent(new CustomEvent('message-update', {
+            detail: { message },
+            bubbles: true,
+            composed: true
+        }));
     }
 
     createEvent() {
