@@ -36,7 +36,8 @@ class GameSetupPage extends HTMLElement {
         });
 
         this.querySelector('#start-game-button').addEventListener('click', () => {
-            window.location.hash = '/game';
+            const gameId = document.getElementById('game-id').textContent;
+            window.location.hash = `/game?gameId=${gameId}`;
         });
     }
 }

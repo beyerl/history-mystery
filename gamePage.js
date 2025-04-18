@@ -5,6 +5,8 @@ class GamePage extends HTMLElement {
     }
 
     connectedCallback() {
+        const urlParams = new URLSearchParams(window.location.hash.split('?')[1]);
+        this.gameId = urlParams.get('gameId');
         this.render();
         this.initialize();
         this.addEventListeners();
@@ -14,10 +16,21 @@ class GamePage extends HTMLElement {
         this.shadowRoot.innerHTML = `
       <style>
         @import './styles.css';
+        footer {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          background-color: #f1f1f1;
+          text-align: center;
+          padding: 10px 0;
+          border-top: 1px solid #ccc;
+        }
       </style>
       <accordion-component id="eventAccordion"></accordion-component>
       <button id="checkButton" class="button">Check</button>
       <div id="messageBox" class="message-box"></div>
+      <footer id="footer">Game ID: ${this.gameId || 'N/A'}</footer>
     `;
     }
 
