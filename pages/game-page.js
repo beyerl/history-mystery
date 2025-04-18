@@ -35,15 +35,15 @@ class GamePage extends HTMLElement {
     }
 
     initialize() {
-        import('./historicEvents.js').then(({ historicEvents }) => {
+        import('../data/historic-events.js').then(({ historicEvents }) => {
             const eventAccordion = this.shadowRoot.getElementById('eventAccordion');
             if (eventAccordion) {
                 eventAccordion.setAttribute('events', JSON.stringify(historicEvents));
             }
         });
 
-        import('./accordionSectionComponent.js');
-        import('./accordionComponent.js');
+        import('../components/accordion-section-component.js');
+        import('../components/accordion-component.js');
 
         this.shadowRoot.getElementById('checkButton').addEventListener('click', () => {
             const eventAccordion = this.shadowRoot.getElementById('eventAccordion');
