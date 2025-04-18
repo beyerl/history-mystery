@@ -1,4 +1,4 @@
-class AccordionSection extends HTMLElement {
+class AccordionSectionComponent extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -109,7 +109,7 @@ class AccordionSection extends HTMLElement {
   }
 }
 
-customElements.define('accordion-section', AccordionSection);
+customElements.define('accordion-section', AccordionSectionComponent);
 
 // Usage example:
 // const eventAccordion = document.getElementById('eventAccordion');

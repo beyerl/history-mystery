@@ -19,7 +19,7 @@
 
   <script type="module">
     import { historicEvents } from './historicEvents.js';
-    import './accordionSection.js'; // Import the Web Component
+    import './accordionSectionComponent.js'; // Import the Accordion Section Component
     import './accordionComponent.js'; // Import the Accordion Component
 
     // Pass historicEvents to the accordion component
@@ -30,7 +30,7 @@
 
     // Add click event listener to the Check button
     document.getElementById('checkButton').addEventListener('click', () => {
-      eventAccordion.checkAndDisplay();
+      eventAccordion.checkEventOrderAndCreateEvent();
     });
   </script>
 
