@@ -50,17 +50,17 @@ class AccordionComponent extends HTMLElement {
         });
 
         // Display an initial event
-        this.displayRandomEvent();
+        this.createEvent();
     }
 
-    async checkAndDisplay() {
-        await this.checkOrder();
+    async checkEventOrderAndCreateEvent() {
+        await this.checkEventOrder();
         setTimeout(() => {
-            this.displayRandomEvent();
+            this.createEvent();
         }, 1000);
     }
 
-    checkOrder() {
+    checkEventOrder() {
         return new Promise(resolve => {
             const accordionItems = Array.from(this.children);
 
@@ -114,7 +114,7 @@ class AccordionComponent extends HTMLElement {
         });
     }
 
-    displayRandomEvent() {
+    createEvent() {
         if (this.historicEvents.length == 0) return;
         const displayedEvents = Array.from(this.querySelectorAll('accordion-section')).map(section => {
             return JSON.parse(section.getAttribute('data-event')).title;
