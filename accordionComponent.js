@@ -103,13 +103,13 @@ class AccordionComponent extends HTMLElement {
                     }
                 }
 
-                sortedItems.forEach(item => this.appendChild(item));
+                //sortedItems.forEach(item => this.appendChild(item));
 
                 // Wait and remove wrongly placed item
                 setTimeout(() => {
                     if (activeItem) this.removeChild(activeItem);
                     resolve();
-                }, 1000);
+                }, 2000);
             }
         });
     }

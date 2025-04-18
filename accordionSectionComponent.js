@@ -109,7 +109,15 @@ class AccordionSectionComponent extends HTMLElement {
     const isActive = this.hasAttribute('is-active') && this.getAttribute('is-active') === 'true';
     const isCorrect = this.hasAttribute('is-correct') && this.getAttribute('is-correct') === 'true';
     const isIncorrect = this.hasAttribute('is-incorrect') && this.getAttribute('is-incorrect') === 'true';
+
     this.render(event, isActive, isCorrect, isIncorrect);
+
+    if (isIncorrect) {
+      const detailsElement = this.shadowRoot.querySelector('details');
+      if (detailsElement) {
+        detailsElement.open = true
+      }
+    }
   }
 }
 
