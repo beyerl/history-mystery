@@ -15,6 +15,7 @@ class AccordionComponent extends HTMLElement {
       </div>
     `;
         this.historicEvents = [];
+        this.delay = 500; // Delay in milliseconds
     }
 
     static get observedAttributes() {
@@ -55,7 +56,7 @@ class AccordionComponent extends HTMLElement {
 
     async checkEventOrderAndCreateEvent() {
         await this.checkEventOrder();
-        this.createEvent();
+        setTimeout(() => { this.createEvent(); }, this.delay);
     }
 
     checkEventOrder() {
@@ -82,7 +83,7 @@ class AccordionComponent extends HTMLElement {
                         activeItem.requestUpdate(); // Trigger a rerender on the component
                     }
                 }
-                setTimeout(() => { resolve(); }, 1000);
+                setTimeout(() => { resolve(); }, this.delay);
             } else {
                 messageBox.textContent = 'Wrong!';
                 if (activeItem) {
@@ -99,7 +100,7 @@ class AccordionComponent extends HTMLElement {
                     if (activeItem) this.removeChild(activeItem);
                     messageBox.textContent = "";
                     resolve();
-                }, 2000);
+                }, this.delay);
             }
         }).then(() => {
             // Remove highlighting from all existing accordion sections

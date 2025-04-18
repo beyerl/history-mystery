@@ -111,13 +111,6 @@ class AccordionSectionComponent extends HTMLElement {
     const isIncorrect = this.hasAttribute('is-incorrect') && this.getAttribute('is-incorrect') === 'true';
 
     this.render(event, isActive, isCorrect, isIncorrect);
-
-    if (isIncorrect) {
-      const detailsElement = this.shadowRoot.querySelector('details');
-      if (detailsElement) {
-        detailsElement.open = true
-      }
-    }
   }
 }
 
