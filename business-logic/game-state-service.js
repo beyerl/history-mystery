@@ -33,6 +33,18 @@ class GameStateService {
         return true;
     }
 
+    // Remove a player from a game
+    RemovePlayer(gameId, playerId) {
+        const game = this.games.get(gameId);
+        if (!game || game.state !== GameStateEnum.SETUP) return false;
+
+        const playerIndex = game.playerScores.findIndex(player => player.playerId === playerId);
+        if (playerIndex === -1) return false; // Player not found
+
+        game.playerScores.splice(playerIndex, 1);
+        return true;
+    }
+
     // Increment the score of a player by their ID
     IncrementPlayerScore(gameId, playerId) {
         const game = this.games.get(gameId);
