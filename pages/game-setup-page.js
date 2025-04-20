@@ -65,15 +65,11 @@ class GameSetupPage extends HTMLElement {
             const playerNameFromStorage = localStorage.getItem('playerName');
             if (playerNameFromStorage && playerNameFromStorage !== playerName) {
                 gameStateService.RemovePlayer(gameHash, playerNameFromStorage); // Remove the old player name from the game               
-                gameStateService.AddPlayer(gameHash, playerName); // Add the new player name to the game
-                localStorage.setItem('playerName', playerName); // Store the new player name in local storage
-                this.updatePlayerTable(gameStateService, gameHash); // Update the player table
             }
-            else if (!playerNameFromStorage) {
-                gameStateService.AddPlayer(gameHash, playerName); // Add the player name to the game
-                localStorage.setItem('playerName', playerName); // Store the player name in local storage
-                this.updatePlayerTable(gameStateService, gameHash); // Update the player table
-            }
+
+            gameStateService.AddPlayer(gameHash, playerName); // Add the player name to the game
+            localStorage.setItem('playerName', playerName); // Store the player name in local storage
+            this.updatePlayerTable(gameStateService, gameHash); // Update the player table
         });
 
         this.querySelector('#share-button').addEventListener('click', () => {
