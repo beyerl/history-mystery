@@ -35,13 +35,15 @@ class GameSetupPage extends HTMLElement {
             </div>
         `;
 
-        //initialize playername input field with the player name from local storage if it exists
-        const playerNameFromStorage = localStorage.getItem('playerName');
-        if (playerNameFromStorage) {
-            this.querySelector('#player-name').value = playerNameFromStorage; // Set the input field value to the stored player name
-        }
+        this.initializePlayerNameFromLocalStorage();
 
         // Add event listeners
+        this.addEventListeners(gameStateService, gameHash);
+
+        this.pollGameState(gameStateService, gameHash);
+    }
+
+    addEventListeners(gameStateService, gameHash) {
         this.querySelector('#player-name').addEventListener('input', (event) => {
             const playerName = event.target.value;
             if (!playerName) { return }
@@ -88,10 +90,15 @@ class GameSetupPage extends HTMLElement {
                 alert('Failed to start the game. Please try again.');
             }
         });
-
-        this.pollGameState(gameStateService, gameHash);
     }
 
+    initializePlayerNameFromLocalStorage() {
+        //initialize playername input field with the player name from local storage if it exists
+        const playerNameFromStorage = localStorage.getItem('playerName');
+        if (playerNameFromStorage) {
+            this.querySelector('#player-name').value = playerNameFromStorage; // Set the input field value to the stored player name
+        }
+    }
 
     pollGameState(gameStateService, gameHash) {
         setInterval(() => {
