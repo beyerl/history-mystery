@@ -13,13 +13,15 @@ class GameSetupPage extends HTMLElement {
                     <label>Game Id:</label>
                     <span id="game-id">${gameHash}</span>
                     <button id="share-button">Share</button>
+                    <br>
+                    <div id="game-id-message" style="height: 20px;"></div>
                 </div>
                 <div>
                     <label>Player Name:</label>
                     <input type="text" id="player-name" placeholder="Enter your name" />
                     <button id="update-player-button">Accept</button>
                     <br>
-                    <div id="player-name-error" style="color: red;"></div>
+                    <div id="player-name-error" style="color: red;height: 20px;"></div>
                 </div>
 
                 <table id="player-table" style="margin: 0 auto; border-collapse: collapse; border: 1px solid black; width: 100%;">
@@ -31,6 +33,7 @@ class GameSetupPage extends HTMLElement {
                     <tbody>
                     </tbody>
                 </table>
+                <div id="player-table-error" style="color: red;height: 20px;"></div>
                 <button id="start-game-button">Begin</button>
             </div>
         `;
@@ -78,14 +81,28 @@ class GameSetupPage extends HTMLElement {
             // Copy the game ID to the clipboard
             const gameId = document.getElementById('game-id').textContent;
             navigator.clipboard.writeText(gameId).then(() => {
-                alert('Game ID copied to clipboard!'); // Notify the user that the game ID has been copied
+                const messageDiv = this.querySelector('#game-id-message');
+                messageDiv.textContent = 'Game ID copied to clipboard!'; // Show a success message
+                setTimeout(() => {
+                    messageDiv.textContent = ''; // Clear the message after 2 seconds
+                }, 2000);
             }).catch(err => {
-                console.error('Failed to copy game ID: ', err); // Log any errors that occur during copying
+                console.error('Failed to copy game ID: ', err); // Log any errors
+                const messageDiv = this.querySelector('#game-id-message');
+                messageDiv.textContent = 'Failed to copy game ID.'; // Show an error message
+                setTimeout(() => {
+                    messageDiv.textContent = ''; // Clear the message after 2 seconds
+                }, 2000);
             });
         });
 
         this.querySelector('#start-game-button').addEventListener('click', () => {
             const gameId = document.getElementById('game-id').textContent;
+            const game = gameStateService.GetGame(gameId);
+            if (!game || game.playerScores.length == 0) {
+                this.querySelector('#player-table-error').textContent = 'No players have joined the game. Please add players before starting the game.';
+                return;
+            }
             if (gameStateService.StartGame(gameId)) { // Start the game
                 window.location.hash = `/game?gameId=${gameId}`;
             } else {
