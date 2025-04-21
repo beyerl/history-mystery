@@ -4,7 +4,7 @@ import { gameStateService } from '../business-logic/game-state-service.js';
 class GameSetupPage extends HTMLElement {
     connectedCallback() {
         const gameHash = HashHelper.generateGameHash();
-        const game = gameStateService.CreateGame(gameHash); // Create a new game
+        gameStateService.CreateGame(gameHash); // Create a new game
 
         this.innerHTML = `
             <div>
@@ -23,12 +23,12 @@ class GameSetupPage extends HTMLElement {
                     <br>
                     <div id="player-name-error" style="color: red;height: 20px;"></div>
                 </div>
-
                 <table id="player-table" style="margin: 0 auto; border-collapse: collapse; border: 1px solid black; width: 100%;">
                     <thead>
                         <tr>
-                            <th style="border: 1px solid black;">Player Names</th>
-                        </tr>
+                            <th style="border: 1px solid black;">Player Names</th>                         
+                        </tr>                 
+
                     </thead>
                     <tbody>
                     </tbody>
@@ -39,6 +39,12 @@ class GameSetupPage extends HTMLElement {
         `;
 
         this.initializePlayerNameFromLocalStorage();
+
+        //add 10 empty rows to the player table
+        const playerTableBody = this.querySelector('#player-table tbody');
+        for (let i = 0; i < 10; i++) {
+            playerTableBody.innerHTML += `<tr><td style="border: 1px solid black;height:20px"> /td></tr>`;
+        }
 
         // Add event listeners
         this.addEventListeners(gameStateService, gameHash);
@@ -129,9 +135,21 @@ class GameSetupPage extends HTMLElement {
         const game = gameStateService.GetGame(gameHash);
         if (game) {
             const playerTableBody = this.querySelector('#player-table tbody');
+
             playerTableBody.innerHTML = game.playerScores
                 .map(playerScore => `<tr><td style="border: 1px solid black;">${playerScore.playerId}</td></tr>`)
                 .join('');
+            //pad with empty rows if there are less than 10 players
+            const emptyRows = 10 - game.playerScores.length;
+            for (let i = 0; i < emptyRows; i++) {
+                playerTableBody.innerHTML += `<tr><td style="border: 1px solid black;height:20px;"> </td></tr>`;
+            }
+            if (emptyRows == 0) {
+                this.querySelector('#player-table-error').textContent = 'Maximum number of players reached.';
+            }
+            if (emptyRows < 0) {
+                this.querySelector('#player-table-error').textContent = 'Too many players. Please remove some players.';
+            }
         }
     }
 }
