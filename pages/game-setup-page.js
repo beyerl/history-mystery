@@ -75,11 +75,13 @@ class GameSetupPage extends HTMLElement {
         });
 
         this.querySelector('#share-button').addEventListener('click', () => {
-            const email = prompt('Enter email address:');
-            if (email) {
-                const hash = document.getElementById('game-id').textContent;
-                window.location.href = `mailto:${email}?subject=History Mystery Game Id&body=Your game id is: ${hash}`;
-            }
+            // Copy the game ID to the clipboard
+            const gameId = document.getElementById('game-id').textContent;
+            navigator.clipboard.writeText(gameId).then(() => {
+                alert('Game ID copied to clipboard!'); // Notify the user that the game ID has been copied
+            }).catch(err => {
+                console.error('Failed to copy game ID: ', err); // Log any errors that occur during copying
+            });
         });
 
         this.querySelector('#start-game-button').addEventListener('click', () => {
