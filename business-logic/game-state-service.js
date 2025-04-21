@@ -29,7 +29,7 @@ class GameStateService {
         const playerExists = game.playerScores.some(player => player.playerId === playerId);
         if (playerExists) return false; // Player already exists
 
-        game.playerScores.push({ playerId, score: 9 });
+        game.playerScores.push({ playerId, score: 0 });
         return true;
     }
 
