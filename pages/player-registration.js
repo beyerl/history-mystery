@@ -65,6 +65,10 @@ class PlayerRegistration extends HTMLElement {
     pollGameState(gameStateService, gameHash) {
         setInterval(() => {
             this.updatePlayerTable(gameStateService, gameHash);
+            var game = gameStateService.GetGame(gameHash);
+            if (game && game.state === 'RUNNING') {
+                window.location.hash = `/game?gameId=${gameHash}`;
+            }
         }, 1000);
     }
 
