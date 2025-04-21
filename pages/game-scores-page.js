@@ -32,8 +32,25 @@ class GameScoresPage extends HTMLElement {
                         `).join('')}
                     </tbody>
                 </table>
+                <div style="margin-top: 20px;display: flex; flex-direction: column; align-items: center;">
+                    <button id="back-button" style="margin-top: 20px;">Back to Main Menu</button>
+                    <button id="rematch-button" style="margin-top: 20px;">Rematch</button>
+                </div>
             </div>
         `;
+
+        this.querySelector('#back-button').addEventListener('click', () => {
+            // Go back to start page
+            window.location.hash = '#/';
+        });
+
+        this.querySelector('#rematch-button').addEventListener('click', () => {
+            // Start a new game with the same players
+            const playerNames = game.playerScores.map(player => player.playerId);
+            gameStateService.ResetScores(gameId);
+            window.location.hash = '#/game?gameId=' + gameId;
+        });
+
     }
 }
 

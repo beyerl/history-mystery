@@ -1,3 +1,5 @@
+import { AnswerResultEnum } from '../models/answer-result.js';
+
 class AccordionComponent extends HTMLElement {
     constructor() {
         super();
@@ -75,7 +77,7 @@ class AccordionComponent extends HTMLElement {
             if (activeItem) activeItem.removeAttribute('is-active');
 
             if (isCorrectOrder) {
-                this.dispatchMessage('Correct!');
+                this.dispatchMessage(AnswerResultEnum.CORRECT);
                 if (activeItem) {
                     activeItem.setAttribute('is-correct', 'true');
                     if (typeof activeItem.requestUpdate === 'function') {
@@ -84,7 +86,7 @@ class AccordionComponent extends HTMLElement {
                 }
                 setTimeout(() => { resolve(); }, this.delay);
             } else {
-                this.dispatchMessage('Wrong!');
+                this.dispatchMessage(AnswerResultEnum.WRONG);
                 if (activeItem) {
                     activeItem.setAttribute('is-incorrect', 'true');
                     sortedItems.forEach(item => this.appendChild(item));
@@ -113,9 +115,9 @@ class AccordionComponent extends HTMLElement {
         });
     }
 
-    dispatchMessage(message) {
-        this.dispatchEvent(new CustomEvent('message-update', {
-            detail: { message },
+    dispatchMessage(answerResult) {
+        this.dispatchEvent(new CustomEvent('answer-result', {
+            detail: { answerResult },
             bubbles: true,
             composed: true
         }));

@@ -29,7 +29,7 @@ class GameStateService {
         const playerExists = game.playerScores.some(player => player.playerId === playerId);
         if (playerExists) return false; // Player already exists
 
-        game.playerScores.push({ playerId, score: 0 });
+        game.playerScores.push({ playerId, score: 9 });
         return true;
     }
 
@@ -54,6 +54,16 @@ class GameStateService {
         if (!player) return false;
 
         player.score += 1;
+        return true;
+    }
+
+    // Reset the score of all players in a game
+    ResetScores(gameId) {
+        const game = this.games.get(gameId);
+        if (!game) return false;
+
+        game.playerScores.forEach(player => player.score = 0);
+        game.state = GameStateEnum.RUNNING;
         return true;
     }
 
