@@ -3,6 +3,7 @@ const routes = {
     '/game': '<game-page></game-page>',
     '/setup': '<game-setup-page></game-setup-page>',
     '/join': '<join-game-page></join-game-page>',
+    '/scores': '<game-scores-page></game-scores-page>',
 };
 
 function updateView() {
