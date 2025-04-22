@@ -52,10 +52,18 @@ namespace GameStateApi.Controllers
             return _gameStateService.EndGame(gameId) ? Ok() : BadRequest();
         }
 
+        [HttpPost("{gameId}/restart")]
+        public IActionResult RestartGame(string gameId)
+        {
+            return _gameStateService.RestartGame(gameId) ? Ok() : BadRequest();
+        }
+
         [HttpPost("{gameId}/players/{playerId}/increment")]
         public IActionResult IncrementPlayerScore(string gameId, string playerId)
         {
             return _gameStateService.IncrementPlayerScore(gameId, playerId) ? Ok() : BadRequest();
         }
+
+
     }
 }

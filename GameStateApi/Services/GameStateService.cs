@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GameStateApi.Services
 {
@@ -70,6 +71,20 @@ namespace GameStateApi.Services
                 return false;
 
             game.State = GameStateEnum.Ended;
+            return true;
+        }
+
+        public bool RestartGame(string gameId)
+        {
+            if (!_gameStates.TryGetValue(gameId, out var game))
+                return false;
+
+            foreach (var playerId in game.PlayerScores.Keys.ToList())
+            {
+                game.PlayerScores[playerId] = 0;
+            }
+
+            game.State = GameStateEnum.Running;
             return true;
         }
     }
