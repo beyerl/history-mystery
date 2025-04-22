@@ -1,6 +1,6 @@
 import { IGameStateService } from './i-game-state-service.js';
 
-export class GameStateService extends IGameStateService {
+export class GameStateApiService extends IGameStateService {
     constructor(httpClient) {
         super();
         this.httpClient = httpClient; // Assume httpClient is an instance of a library like Axios or Fetch wrapper

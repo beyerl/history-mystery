@@ -1,7 +1,7 @@
 import { GameState, GameStateEnum } from '../models/game-state.js';
 import { IGameStateService } from './i-game-state-service.js';
 
-class GameStateService {
+class GameStateService extends IGameStateService {
     constructor() {
         if (GameStateService.instance) {
             return GameStateService.instance;
