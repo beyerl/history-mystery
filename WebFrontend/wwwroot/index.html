@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles.css">
+  <title>History Mystery</title>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>History Mystery</h1>
+    <router-view></router-view>
+  </div>
+
+  <script type="module">
+    import './pages/game-page.js';
+    import './router.js'; // Import the router logic
+    import './pages/game-setup-page.js';
+    import './pages/join-game-page.js';
+    import './pages/start-page.js';
+    import './pages/game-scores-page.js'; 
+  </script>
+
+</body>
+
+</html>
