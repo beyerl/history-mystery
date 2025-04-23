@@ -3,6 +3,7 @@ class DragDropList extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this.render();
+    this.initDragAndDrop();
   }
 
   render() {
@@ -64,6 +65,54 @@ class DragDropList extends HTMLElement {
     `;
 
     this.shadowRoot.append(style, template.content.cloneNode(true));
+  }
+
+  initDragAndDrop() {
+    const dragElement = this.shadowRoot.querySelector('.drag-element');
+    let offsetX = 0, offsetY = 0;
+
+    const onDragStart = (event) => {
+      if (event.type === 'touchstart') {
+        const touch = event.touches[0];
+        offsetX = touch.clientX - dragElement.getBoundingClientRect().left;
+        offsetY = touch.clientY - dragElement.getBoundingClientRect().top;
+      } else {
+        offsetX = event.clientX - dragElement.getBoundingClientRect().left;
+        offsetY = event.clientY - dragElement.getBoundingClientRect().top;
+      }
+      dragElement.style.position = 'absolute';
+      dragElement.style.zIndex = '1000';
+    };
+
+    const onDragMove = (event) => {
+      let clientX, clientY;
+      if (event.type === 'touchmove') {
+        const touch = event.touches[0];
+        clientX = touch.clientX;
+        clientY = touch.clientY;
+      } else {
+        clientX = event.clientX;
+        clientY = event.clientY;
+      }
+      dragElement.style.left = `${clientX - offsetX}px`;
+      dragElement.style.top = `${clientY - offsetY}px`;
+    };
+
+    const onDragEnd = () => {
+      dragElement.style.zIndex = '';
+      dragElement.style.position = '';
+      dragElement.style.left = '';
+      dragElement.style.top = '';
+    };
+
+    dragElement.addEventListener('mousedown', onDragStart);
+    dragElement.addEventListener('touchstart', onDragStart, { passive: false });
+
+    document.addEventListener('mousemove', onDragMove);
+    document.addEventListener('touchmove', onDragMove, { passive: false });
+
+    document.addEventListener('mouseup', onDragEnd);
+    document.addEventListener('touchend', onDragEnd);
   }
 }
 
