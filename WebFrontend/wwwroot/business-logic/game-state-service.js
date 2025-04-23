@@ -3,6 +3,7 @@ import { IGameStateService } from './i-game-state-service.js';
 
 class GameStateService extends IGameStateService {
     constructor() {
+        super();
         if (GameStateService.instance) {
             return GameStateService.instance;
         }

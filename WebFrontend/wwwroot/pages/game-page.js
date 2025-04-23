@@ -21,11 +21,13 @@ class GamePage extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <style>
         @import './styles.css';
+        :host {
+          display: flex;
+          flex-direction: column;
+          height: 100%; /* Ensure the game-page takes full height */
+        }
         footer {
-          position: fixed;
-          bottom: 0;
-          left: 0;
-          width: 100%;
+                    width: 100%;
           background-color: #f1f1f1;
           text-align: center;
           padding: 10px 0;
@@ -43,8 +45,17 @@ class GamePage extends HTMLElement {
         th {
           background-color: #f9f9f9;
         }
+        #dragDropList {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        }
       </style>
-      <accordion-component id="eventAccordion"></accordion-component>
+      <drag-drop-list id="dragDropList"></drag-drop-list>
+      <!--<accordion-component id="eventAccordion"></accordion-component>-->
       <button id="checkButton" class="button">Check</button>
       <div id="messageBox" class="message-box"></div>
       <footer id="footer">
@@ -74,6 +85,7 @@ class GamePage extends HTMLElement {
 
     import('../components/accordion-section-component.js');
     import('../components/accordion-component.js');
+    import('../components/drag-drop-list.js');
 
     this.shadowRoot.getElementById('checkButton').addEventListener('click', () => {
       const eventAccordion = this.shadowRoot.getElementById('eventAccordion');
