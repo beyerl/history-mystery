@@ -77,6 +77,13 @@ class GamePage extends HTMLElement {
 
   initialize() {
     import('../data/historic-events.js').then(({ historicEvents }) => {
+      const dragDropList = this.shadowRoot.getElementById('dragDropList');
+      if (dragDropList) {
+        // pick two random events from the historicEvents array
+        var randomEvents = historicEvents.sort(() => 0.5 - Math.random()).slice(0, 2);
+        dragDropList.setAttribute('events', JSON.stringify(randomEvents));
+      }
+
       const eventAccordion = this.shadowRoot.getElementById('eventAccordion');
       if (eventAccordion) {
         eventAccordion.setAttribute('events', JSON.stringify(historicEvents));

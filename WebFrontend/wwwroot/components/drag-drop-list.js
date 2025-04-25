@@ -6,10 +6,34 @@ class DragDropList extends HTMLElement {
     this.initDragAndDrop();
   }
 
+  static get observedAttributes() {
+    return ['events'];
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === 'events' && newValue) {
+      this.populateSlots(JSON.parse(newValue));
+    }
+  }
+
+  populateSlots(events) {
+    const slots = this.shadowRoot.querySelectorAll('.slot');
+    slots.forEach((slot, index) => {
+      slot.innerHTML = ''; // Clear existing content
+      if (events[index]) {
+        const pill = document.createElement('div');
+        pill.className = 'pill';
+        pill.textContent = events[index].title;
+        slot.appendChild(pill);
+      }
+    });
+  }
+
   render() {
     const style = document.createElement('style');
     style.textContent = `
       :host {
+        --top-slot-margin: 5px;
         display: flex;
         flex-direction: column;
         width: 100%; /* Ensure the host element takes full width */
@@ -17,38 +41,61 @@ class DragDropList extends HTMLElement {
         max-width: 480px; /* Typical big phone width */
       }
       .container {
+        box-sizing: border-box; 
         height: 100%; /* Ensure the wrapper div takes full height */
         width: 100%; /* Ensure the wrapper div takes full width */
         display: flex;
         flex-direction: column;
       }
       .drag-element {
+        box-sizing: border-box; 
         border: 1px solid blue;
+        border-radius: 12px;
         height: 100%; /* Fixed height for the top slot */
         width: 100%; /* Ensure the top slot takes full width */
         background-color: lightblue; /* Background color for visibility */
+        padding: 5px 10px;
+        text-align: center;   
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .pill {
+        box-sizing: border-box; 
+        border: 1px solid grey;
+        border-radius: 12px;
+        background-color: lightgrey;
+        text-align: center;
+        font-size: 14px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       .slot {
+        box-sizing: border-box; 
         border: 1px solid black;
-        flex-grow: 1; /* Distribute height equally among slots */
+        height: calc((100% - var(--top-slot-margin)) / 12); /* Fixed height for each slot */
         width: 100%; /* Ensure each slot takes full width */
         box-sizing: border-box;
-        padding: 5px; /* Add some padding for aesthetics */
+        padding: 5px;
       }
       .drop-list {
+        box-sizing: border-box; 
         display: flex;
         flex-direction: column;
-        flex-grow: 12; /* Allow the drop list to grow and fill available space */
+        height: calc((100% - var(--top-slot-margin)) * 12 / 13);
         width: 100%; /* Ensure the drop list takes full width */
       }
       .top-slot {
+        box-sizing: border-box;
         border: 1px solid black;
         display: flex;
         flex-direction: column;
-        flex-grow: 1; /* Allow the top slot to grow and fill available space */
+        height: calc((100% - var(--top-slot-margin)) * 1 / 13);
         width: 100%; /* Ensure the top slot takes full width */
-        padding: 5px; /* Add some padding for aesthetics */
-        margin-bottom: 5px; 
+        margin-bottom: var(--top-slot-margin);
+        padding: 5px;
         box-sizing: border-box;
       }
     `;
