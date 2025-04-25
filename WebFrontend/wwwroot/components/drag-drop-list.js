@@ -3,16 +3,19 @@ class DragDropList extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this.render();
-    this.initDragAndDrop();
   }
 
   static get observedAttributes() {
-    return ['events'];
+    // Fix: Return an array of attribute names instead of a single string
+    return ['events', 'selected-event'];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
     if (name === 'events' && newValue) {
       this.populateSlots(JSON.parse(newValue));
+    }
+    if (name === 'selected-event' && newValue) {
+      this.populateTopSlot(JSON.parse(newValue));
     }
   }
 
@@ -27,6 +30,18 @@ class DragDropList extends HTMLElement {
         slot.appendChild(pill);
       }
     });
+  }
+
+  populateTopSlot(event) {
+    const topSlot = this.shadowRoot.querySelector('.top-slot');
+    // Add a check to ensure event and event.title are defined
+    if (event && event.title) {
+      topSlot.innerHTML = `<div class="drag-element">${event.title}</div>`;
+      this.initDragAndDrop();
+    } else {
+      console.warn('Invalid event object or missing title:', event);
+      topSlot.innerHTML = ''; // Clear the top slot if event is invalid
+    }
   }
 
   render() {
@@ -103,12 +118,11 @@ class DragDropList extends HTMLElement {
     const template = document.createElement('template');
     template.innerHTML = `
       <div class="container">
-      <div class="top-slot">
-        <div class="drag-element"></div>
-      </div>
-      <div class="drop-list">
-        ${'<div class="slot"></div>'.repeat(12)}
-      </div>
+        <div class="top-slot">
+        </div>
+        <div class="drop-list">
+          ${'<div class="slot"></div>'.repeat(12)}
+        </div>
       </div>
     `;
 
