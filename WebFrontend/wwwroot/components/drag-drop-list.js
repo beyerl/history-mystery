@@ -33,7 +33,7 @@ class DragDropList extends HTMLElement {
         flex-grow: 1; /* Distribute height equally among slots */
         width: 100%; /* Ensure each slot takes full width */
         box-sizing: border-box;
-        padding: 10px; /* Add some padding for aesthetics */
+        padding: 5px; /* Add some padding for aesthetics */
       }
       .drop-list {
         display: flex;
@@ -80,21 +80,18 @@ class DragDropList extends HTMLElement {
         offsetX = event.clientX - dragElement.getBoundingClientRect().left;
         offsetY = event.clientY - dragElement.getBoundingClientRect().top;
       }
-      dragElement.style.position = 'absolute';
+      dragElement.style.position = 'relative';
       dragElement.style.zIndex = '1000';
     };
 
     const onDragMove = (event) => {
-      let clientX, clientY;
+      let clientY;
       if (event.type === 'touchmove') {
         const touch = event.touches[0];
-        clientX = touch.clientX;
         clientY = touch.clientY;
       } else {
-        clientX = event.clientX;
         clientY = event.clientY;
       }
-      dragElement.style.left = `${clientX - offsetX}px`;
       dragElement.style.top = `${clientY - offsetY}px`;
     };
 
