@@ -48,6 +48,7 @@ class DragDropList extends HTMLElement {
         flex-grow: 1; /* Allow the top slot to grow and fill available space */
         width: 100%; /* Ensure the top slot takes full width */
         padding: 5px; /* Add some padding for aesthetics */
+        margin-bottom: 5px; 
         box-sizing: border-box;
       }
     `;
