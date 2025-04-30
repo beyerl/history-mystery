@@ -25,7 +25,7 @@ class DragDropList extends HTMLElement {
     dropList.innerHTML = ''; // Clear existing content
     events.forEach((event, index) => {
       const slot = document.createElement('div');
-      slot.className = 'slot';
+      slot.className = 'slot ignore-elements';
       const pill = document.createElement('div');
       pill.className = 'pill';
       pill.textContent = event.title;
@@ -134,18 +134,6 @@ class DragDropList extends HTMLElement {
 
     this.shadowRoot.append(style, template.content.cloneNode(true));
 
-    //prevent mouseclick events on drop-list
-    const dropList = this.shadowRoot.querySelector('.drop-list-wrapper');
-    dropList.addEventListener('mousedown', (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-    }, true); // Use capture phase
-    //prevent ontouch events on drop-list
-    dropList.addEventListener('click', (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-    }, true); // Use capture phase
-
     this.initSortable();
   }
 
@@ -157,6 +145,7 @@ class DragDropList extends HTMLElement {
     const dropList = this.shadowRoot.querySelector('.drop-list');
     Sortable.create(dropList, {
       group: 'dragDropList',
+      filter: ".ignore-elements"
     });
   }
 }
