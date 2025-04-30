@@ -8,16 +8,25 @@ class DragDropList extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['events', 'selected-event'];
+    return ['events'];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
     if (name === 'events' && newValue) {
-      this.populateSlots(JSON.parse(newValue));
+      this.initializeEvents(JSON.parse(newValue));
     }
-    if (name === 'selected-event' && newValue) {
-      this.populateTopSlot(JSON.parse(newValue));
+  }
+
+  initializeEvents(events) {
+    if (!Array.isArray(events) || events.length < 3) {
+      console.error('Invalid or insufficient events provided:', events);
+      return;
     }
+
+    const shuffledEvents = events.sort(() => 0.5 - Math.random());
+
+    this.populateSlots([shuffledEvents[1], shuffledEvents[2]]);
+    this.populateTopSlot(shuffledEvents[0]);
   }
 
   populateSlots(events) {
@@ -38,7 +47,7 @@ class DragDropList extends HTMLElement {
     const topSlot = this.shadowRoot.querySelector('.top-slot-container');
     if (event && event.title) {
       topSlot.innerHTML = `<div class="top-slot"><div class="drag-element">${event.title}</div></div>`;
-      Sortable.create(topSlot, {  
+      Sortable.create(topSlot, {
         group: 'dragDropList',
 
       });
@@ -137,7 +146,7 @@ class DragDropList extends HTMLElement {
     this.initSortable();
   }
 
-  initSortable() { 
+  initSortable() {
     if (typeof Sortable === 'undefined') {
       console.error('Sortable.js is not loaded. Please include it in your project.');
       return;
