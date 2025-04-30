@@ -53,11 +53,11 @@ class DragDropList extends HTMLElement {
     style.textContent = `
       :host {
         --top-slot-margin: 5px;
+        --container-height: 100vh;
         display: flex;
         flex-direction: column;
         width: 100%;
         height: 100%;
-        max-width: 480px;
       }
       .container {
         box-sizing: border-box;
@@ -94,19 +94,26 @@ class DragDropList extends HTMLElement {
       .slot {
         box-sizing: border-box;
         border: 1px solid black;
-        height: calc(100% / 12);
+        height: calc((var(--container-height) - var(--top-slot-margin)) / 13);
         width: 100%;
         padding: 5px;
+      }
+      .top-slot-container {
+        height: calc((var(--container-height) - var(--top-slot-margin)) / 13);
+        width: 100%;
+        margin-bottom: var(--top-slot-margin);
+        background-color: WhiteSmoke;
       }
       .top-slot {
         box-sizing: border-box;
         border: 1px solid black;
-        height: calc(100%);
+        height: calc((var(--container-height) - var(--top-slot-margin)) / 13);
         width: 100%;
         padding: 5px;
       }
       .drop-list-wrapper {
         height: calc((100% - var(--top-slot-margin)) * 12 / 13);
+        background-color: WhiteSmoke;
       }
       .drop-list {
         box-sizing: border-box;
@@ -114,11 +121,6 @@ class DragDropList extends HTMLElement {
         flex-direction: column;
         height: 100%; //calc((100% - var(--top-slot-margin)) * 12 / 13);
         width: 100%;
-      }
-      .top-slot-container {
-        height: calc((100% - var(--top-slot-margin)) * 1 / 13);
-        width: 100%;
-        margin-bottom: var(--top-slot-margin);
       }
     `;
 
@@ -131,9 +133,15 @@ class DragDropList extends HTMLElement {
     `;
 
     this.shadowRoot.append(style, template.content.cloneNode(true));
+
     //prevent mouseclick events on drop-list
     const dropList = this.shadowRoot.querySelector('.drop-list-wrapper');
     dropList.addEventListener('mousedown', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+    }, true); // Use capture phase
+    //prevent ontouch events on drop-list
+    dropList.addEventListener('click', (e) => {
       e.stopPropagation();
       e.preventDefault();
     }, true); // Use capture phase
