@@ -1,3 +1,5 @@
+import Sortable from '../3rdparty/sortable.js'; // Import Sortable.js
+
 class DragDropList extends HTMLElement {
   constructor() {
     super();
@@ -6,7 +8,6 @@ class DragDropList extends HTMLElement {
   }
 
   static get observedAttributes() {
-    // Fix: Return an array of attribute names instead of a single string
     return ['events', 'selected-event'];
   }
 
@@ -20,24 +21,27 @@ class DragDropList extends HTMLElement {
   }
 
   populateSlots(events) {
-    const slots = this.shadowRoot.querySelectorAll('.slot');
-    slots.forEach((slot, index) => {
-      slot.innerHTML = ''; // Clear existing content
-      if (events[index]) {
-        const pill = document.createElement('div');
-        pill.className = 'pill';
-        pill.textContent = events[index].title;
-        slot.appendChild(pill);
-      }
+    const dropList = this.shadowRoot.querySelector('.drop-list');
+    dropList.innerHTML = ''; // Clear existing content
+    events.forEach((event, index) => {
+      const slot = document.createElement('div');
+      slot.className = 'slot';
+      const pill = document.createElement('div');
+      pill.className = 'pill';
+      pill.textContent = event.title;
+      slot.appendChild(pill);
+      dropList.appendChild(slot);
     });
   }
 
   populateTopSlot(event) {
-    const topSlot = this.shadowRoot.querySelector('.top-slot');
-    // Add a check to ensure event and event.title are defined
+    const topSlot = this.shadowRoot.querySelector('.top-slot-container');
     if (event && event.title) {
-      topSlot.innerHTML = `<div class="drag-element">${event.title}</div>`;
-      this.initDragAndDrop();
+      topSlot.innerHTML = `<div class="top-slot"><div class="drag-element">${event.title}</div></div>`;
+      Sortable.create(topSlot, {  
+        group: 'dragDropList',
+
+      });
     } else {
       console.warn('Invalid event object or missing title:', event);
       topSlot.innerHTML = ''; // Clear the top slot if event is invalid
@@ -51,32 +55,32 @@ class DragDropList extends HTMLElement {
         --top-slot-margin: 5px;
         display: flex;
         flex-direction: column;
-        width: 100%; /* Ensure the host element takes full width */
-        height: 100%; /* Ensure the host element takes full height */
-        max-width: 480px; /* Typical big phone width */
+        width: 100%;
+        height: 100%;
+        max-width: 480px;
       }
       .container {
-        box-sizing: border-box; 
-        height: 100%; /* Ensure the wrapper div takes full height */
-        width: 100%; /* Ensure the wrapper div takes full width */
+        box-sizing: border-box;
+        height: 100%;
+        width: 100%;
         display: flex;
         flex-direction: column;
       }
       .drag-element {
-        box-sizing: border-box; 
+        box-sizing: border-box;
         border: 1px solid blue;
         border-radius: 12px;
-        height: 100%; /* Fixed height for the top slot */
-        width: 100%; /* Ensure the top slot takes full width */
-        background-color: lightblue; /* Background color for visibility */
+        height: 100%;
+        width: 100%;
+        background-color: lightblue;
         padding: 5px 10px;
-        text-align: center;   
+        text-align: center;
         display: flex;
         align-items: center;
         justify-content: center;
       }
       .pill {
-        box-sizing: border-box; 
+        box-sizing: border-box;
         border: 1px solid grey;
         border-radius: 12px;
         background-color: lightgrey;
@@ -88,90 +92,64 @@ class DragDropList extends HTMLElement {
         justify-content: center;
       }
       .slot {
-        box-sizing: border-box; 
-        border: 1px solid black;
-        height: calc((100% - var(--top-slot-margin)) / 12); /* Fixed height for each slot */
-        width: 100%; /* Ensure each slot takes full width */
         box-sizing: border-box;
+        border: 1px solid black;
+        height: calc(100% / 12);
+        width: 100%;
         padding: 5px;
-      }
-      .drop-list {
-        box-sizing: border-box; 
-        display: flex;
-        flex-direction: column;
-        height: calc((100% - var(--top-slot-margin)) * 12 / 13);
-        width: 100%; /* Ensure the drop list takes full width */
       }
       .top-slot {
         box-sizing: border-box;
         border: 1px solid black;
+        height: calc(100%);
+        width: 100%;
+        padding: 5px;
+      }
+      .drop-list-wrapper {
+        height: calc((100% - var(--top-slot-margin)) * 12 / 13);
+      }
+      .drop-list {
+        box-sizing: border-box;
         display: flex;
         flex-direction: column;
+        height: 100%; //calc((100% - var(--top-slot-margin)) * 12 / 13);
+        width: 100%;
+      }
+      .top-slot-container {
         height: calc((100% - var(--top-slot-margin)) * 1 / 13);
-        width: 100%; /* Ensure the top slot takes full width */
+        width: 100%;
         margin-bottom: var(--top-slot-margin);
-        padding: 5px;
-        box-sizing: border-box;
       }
     `;
 
     const template = document.createElement('template');
     template.innerHTML = `
       <div class="container">
-        <div class="top-slot">
-        </div>
-        <div class="drop-list">
-          ${'<div class="slot"></div>'.repeat(12)}
-        </div>
+        <div class="top-slot-container"></div>
+        <div class="drop-list-wrapper"><div class="drop-list"></div></div>
       </div>
     `;
 
     this.shadowRoot.append(style, template.content.cloneNode(true));
+    //prevent mouseclick events on drop-list
+    const dropList = this.shadowRoot.querySelector('.drop-list-wrapper');
+    dropList.addEventListener('mousedown', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+    }, true); // Use capture phase
+
+    this.initSortable();
   }
 
-  initDragAndDrop() {
-    const dragElement = this.shadowRoot.querySelector('.drag-element');
-    let offsetX = 0, offsetY = 0;
-
-    const onDragStart = (event) => {
-      if (event.type === 'touchstart') {
-        const touch = event.touches[0];
-        offsetX = touch.clientX - dragElement.getBoundingClientRect().left;
-        offsetY = touch.clientY - dragElement.getBoundingClientRect().top;
-      } else {
-        offsetX = event.clientX - dragElement.getBoundingClientRect().left;
-        offsetY = event.clientY - dragElement.getBoundingClientRect().top;
-      }
-      dragElement.style.position = 'relative';
-      dragElement.style.zIndex = '1000';
-    };
-
-    const onDragMove = (event) => {
-      let clientY;
-      if (event.type === 'touchmove') {
-        const touch = event.touches[0];
-        clientY = touch.clientY;
-      } else {
-        clientY = event.clientY;
-      }
-      dragElement.style.top = `${clientY - offsetY}px`;
-    };
-
-    const onDragEnd = () => {
-      dragElement.style.zIndex = '';
-      dragElement.style.position = '';
-      dragElement.style.left = '';
-      dragElement.style.top = '';
-    };
-
-    dragElement.addEventListener('mousedown', onDragStart);
-    dragElement.addEventListener('touchstart', onDragStart, { passive: false });
-
-    document.addEventListener('mousemove', onDragMove);
-    document.addEventListener('touchmove', onDragMove, { passive: false });
-
-    document.addEventListener('mouseup', onDragEnd);
-    document.addEventListener('touchend', onDragEnd);
+  initSortable() { 
+    if (typeof Sortable === 'undefined') {
+      console.error('Sortable.js is not loaded. Please include it in your project.');
+      return;
+    }
+    const dropList = this.shadowRoot.querySelector('.drop-list');
+    Sortable.create(dropList, {
+      group: 'dragDropList',
+    });
   }
 }
 
