@@ -132,25 +132,33 @@ class DragDropList extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['events'];
+    return ['event-service'];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    if (name === 'events' && newValue) {
-      this.initializeEvents(JSON.parse(newValue));
+    if (name === 'event-service' && newValue) {
+      this.eventService = JSON.parse(newValue);
+      this.initializeEvents();
     }
   }
 
-  initializeEvents(events) {
-    if (!Array.isArray(events) || events.length < 20) {
-      console.error('Invalid or insufficient events provided:', events);
+  set eventService(service) {
+    if (!service || typeof service.get !== 'function') {
+      console.error('Invalid or missing EventService:', service);
       return;
     }
+    this._eventService = service;
+    this.initializeEvents();
+  }
 
-    const shuffledEvents = events.sort(() => 0.5 - Math.random());
-
-    this.populateSlots([shuffledEvents[1], shuffledEvents[2]]);
-    this.populateTopSlot(shuffledEvents[0]);
+  initializeEvents() {
+    if (!this._eventService) {
+      console.error('EventService is not set.');
+      return;
+    }
+    const events = [this._eventService.get(), this._eventService.get(), this._eventService.get()];
+    this.populateSlots(events.slice(1).sort((a, b) => a.year - b.year));
+    this.populateTopSlot(events[0]);
   }
 
   populateSlots(events) {
@@ -203,6 +211,7 @@ class DragDropList extends HTMLElement {
       setTimeout(() => {
         draggedElement.classList.remove('incorrect-answer-animation');
         draggedElement.remove();
+        this.populateTopSlot(this._eventService.get());
       }, 500); // Adjust the duration as needed
     } else {
       this.dispatchMessage(AnswerResultEnum.CORRECT);
@@ -211,9 +220,12 @@ class DragDropList extends HTMLElement {
       draggedElement.classList.add('correct-answer-animation');
 
       setTimeout(() => {
+        draggedElement.classList.remove('correct-answer');
+        draggedElement.classList.remove('correct-answer-animation');
         // style drag element like a regular slot
         draggedElement.children[0].classList.remove('drag-element');
         draggedElement.children[0].classList.add('pill');
+        this.populateTopSlot(this._eventService.get());
       }, 500); // Adjust the duration as needed
     }
   }

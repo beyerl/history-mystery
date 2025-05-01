@@ -1,6 +1,7 @@
 import { gameStateService } from '../business-logic/game-state-service.js';
 import { AnswerResultEnum } from '../models/answer-result.js';
 import { GameStateEnum } from '../models/game-state.js';
+import { EventService } from '../business-logic/event-service.js';
 
 class GamePage extends HTMLElement {
   constructor() {
@@ -77,9 +78,13 @@ class GamePage extends HTMLElement {
 
   initialize() {
     import('../data/historic-events.js').then(({ historicEvents }) => {
+      const eventService = new EventService(historicEvents);
       const dragDropList = this.shadowRoot.getElementById('dragDropList');
       if (dragDropList) {
-        dragDropList.setAttribute('events', JSON.stringify(historicEvents));
+        // Ensure the property is set after the element is fully upgraded
+        requestAnimationFrame(() => {
+          dragDropList.eventService = eventService;
+        });
       }
 
       const eventAccordion = this.shadowRoot.getElementById('eventAccordion');
