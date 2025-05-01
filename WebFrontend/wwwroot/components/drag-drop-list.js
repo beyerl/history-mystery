@@ -14,6 +14,14 @@ class DragDropList extends HTMLElement {
       :host {
         --top-slot-margin: 5px;
         --container-height: 100vh;
+        --border-color-blue: blue;
+        --border-color-grey: grey;
+        --border-color-black: black;
+        --bg-color-lightblue: lightblue;
+        --bg-color-lightgrey: lightgrey;
+        --bg-color-whitesmoke: WhiteSmoke;
+        --bg-color-red: red;
+        --bg-color-green: green;
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -28,11 +36,11 @@ class DragDropList extends HTMLElement {
       }
       .drag-element {
         box-sizing: border-box;
-        border: 1px solid blue;
+        border: 1px solid var(--border-color-blue);
         border-radius: 12px;
         height: 100%;
         width: 100%;
-        background-color: lightblue;
+        background-color: var(--bg-color-lightblue);
         padding: 5px 10px;
         text-align: center;
         display: flex;
@@ -41,9 +49,9 @@ class DragDropList extends HTMLElement {
       }
       .pill {
         box-sizing: border-box;
-        border: 1px solid grey;
+        border: 1px solid var(--border-color-grey);
         border-radius: 12px;
-        background-color: lightgrey;
+        background-color: var(--bg-color-lightgrey);
         text-align: center;
         font-size: 14px;
         height: 100%;
@@ -53,7 +61,7 @@ class DragDropList extends HTMLElement {
       }
       .slot {
         box-sizing: border-box;
-        border: 1px solid black;
+        border: 1px solid var(--border-color-black);
         height: calc((var(--container-height) - var(--top-slot-margin)) / 13);
         width: 100%;
         padding: 5px;
@@ -62,18 +70,18 @@ class DragDropList extends HTMLElement {
         height: calc((var(--container-height) - var(--top-slot-margin)) / 13);
         width: 100%;
         margin-bottom: var(--top-slot-margin);
-        background-color: WhiteSmoke;
+        background-color: var(--bg-color-whitesmoke);
       }
       .top-slot {
         box-sizing: border-box;
-        border: 1px solid black;
+        border: 1px solid var(--border-color-black);
         height: calc((var(--container-height) - var(--top-slot-margin)) / 13);
         width: 100%;
         padding: 5px;
       }
       .drop-list-wrapper {
         height: calc((100% - var(--top-slot-margin)) * 12 / 13);
-        background-color: WhiteSmoke;
+        background-color: var(--bg-color-whitesmoke);
       }
       .drop-list {
         box-sizing: border-box;
@@ -83,7 +91,7 @@ class DragDropList extends HTMLElement {
         width: 100%;
       }
       .incorrect-answer .drag-element {
-        background-color: red;
+        background-color: var(--bg-color-red);
       }       
 
       .incorrect-answer-animation {
@@ -99,7 +107,7 @@ class DragDropList extends HTMLElement {
       }
 
       .correct-answer .drag-element {
-        background-color: green;
+        background-color: var(--bg-color-green);
       }
       .correct-answer-animation {
         animation: fadeIn 0.5s ease-in-out;
