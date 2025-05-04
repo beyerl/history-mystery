@@ -129,15 +129,26 @@ class DragDropList extends HTMLElement {
     const previousYear = previousElement ? previousElement.getAttribute('data-year') : -999999999;
     const nextElement = evt.to.children[evt.newIndex + 1];
     const nextYear = nextElement ? nextElement.getAttribute('data-year') : 999999999;
+
     if (draggedYear < previousYear || draggedYear > nextYear) {
       this.dispatchMessage(AnswerResultEnum.INCORRECT);
       draggedElement.classList.add('incorrect-answer');
       draggedElement.classList.add('incorrect-answer-animation');
+
+      // Show correct year in a popover
+      const popover = document.createElement('div');
+      popover.className = 'popover';
+      popover.textContent = `${draggedYear}`;
+
+      draggedElement.style.position = 'relative';
+      draggedElement.appendChild(popover);
+
       setTimeout(() => {
         draggedElement.classList.remove('incorrect-answer-animation');
+        popover.remove();
         draggedElement.remove();
         this.populateTopSlot(this._eventService.get());
-      }, 500); // Adjust the duration as needed
+      }, 500);
     } else {
       this.dispatchMessage(AnswerResultEnum.CORRECT);
       // style drag element like a regular slot

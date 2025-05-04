@@ -143,3 +143,32 @@
         opacity: 1;
     }
 }
+
+.popover {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    background: tomato;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 20px;
+    white-space: nowrap;
+    z-index: 10;
+    animation: fade-out 5s ease;
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
