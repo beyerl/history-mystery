@@ -37,6 +37,14 @@
     justify-content: center;
 }
 
+.drag-element .year {
+    display: none;
+}
+
+.drag-element .more {
+    display: none;
+}
+
 .pill {
     box-sizing: border-box;
     border: 1px solid var(--border-color-grey);
@@ -45,9 +53,11 @@
     text-align: center;
     font-size: 14px;
     height: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 5px 10px;
 }
 
 .slot {

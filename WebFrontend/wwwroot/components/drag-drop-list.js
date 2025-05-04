@@ -64,7 +64,7 @@ class DragDropList extends HTMLElement {
     const dropList = this.shadowRoot.querySelector('.drop-list');
     dropList.innerHTML = events.map(event => `
       <div class="slot ignore-elements" data-year="${event.year}">
-      <div class="pill">${event.title}</div>
+        <div class="pill">${this.createPillContent(event)}</div>
       </div>
     `).join('');
   }
@@ -72,7 +72,8 @@ class DragDropList extends HTMLElement {
   populateTopSlot(event) {
     const topSlot = this.shadowRoot.querySelector('.top-slot-container');
     if (event && event.title && event.year) {
-      topSlot.innerHTML = `<div class="top-slot" data-year="${event.year}"><div class="drag-element">${event.title}</div></div>`;
+      topSlot.innerHTML = `<div class="top-slot" data-year="${event.year}">
+      <div class="drag-element">${this.createPillContent(event)}</div></div>`;
       Sortable.create(topSlot, {
         group: 'dragDropList'
       });
@@ -82,6 +83,14 @@ class DragDropList extends HTMLElement {
       topSlot.innerHTML = ''; // Clear the top slot if event is invalid
     }
   }
+
+  createPillContent(event) {
+    return `   
+      <div class="year">${event.year}</div>
+      <div class="title">${event.title}</div>
+      <button class="more">more</button>`
+  }
+
 
   initSortable() {
     if (typeof Sortable === 'undefined') {
@@ -114,6 +123,10 @@ class DragDropList extends HTMLElement {
       }, 500); // Adjust the duration as needed
     } else {
       this.dispatchMessage(AnswerResultEnum.CORRECT);
+      // style drag element like a regular slot
+      draggedElement.children[0].classList.remove('drag-element');
+      draggedElement.children[0].classList.add('pill');
+
       draggedElement.classList.add('ignore-elements');
       draggedElement.classList.add('correct-answer');
       draggedElement.classList.add('correct-answer-animation');
@@ -121,9 +134,7 @@ class DragDropList extends HTMLElement {
       setTimeout(() => {
         draggedElement.classList.remove('correct-answer');
         draggedElement.classList.remove('correct-answer-animation');
-        // style drag element like a regular slot
-        draggedElement.children[0].classList.remove('drag-element');
-        draggedElement.children[0].classList.add('pill');
+
         this.populateTopSlot(this._eventService.get());
       }, 500); // Adjust the duration as needed
     }
