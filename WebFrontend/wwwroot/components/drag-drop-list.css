@@ -126,7 +126,7 @@
     }
 }
 
-.correct-answer .drag-element {
+.correct-answer .pill {
     background-color: var(--bg-color-green);
 }
 
