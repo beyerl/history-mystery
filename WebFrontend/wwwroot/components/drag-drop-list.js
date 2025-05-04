@@ -42,6 +42,9 @@ class DragDropList extends HTMLElement {
   }
 
   connectedCallback() {
+    if (!this.events) {
+      return;
+    }
     if (this.events.length === 0 && this.hasAttribute('events')) {
       const events = this.getAttribute('events')
       this.events = JSON.parse(events);
