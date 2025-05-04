@@ -76,6 +76,8 @@ class GamePage extends HTMLElement {
   }
 
   initialize() {
+    import('../components/drag-drop-list.js');
+
     import('../data/historic-events.js').then(({ historicEvents }) => {
       const dragDropList = this.shadowRoot.getElementById('dragDropList');
       if (dragDropList) {
@@ -83,7 +85,6 @@ class GamePage extends HTMLElement {
       }
     });
 
-    import('../components/drag-drop-list.js');
 
     this.updatePlayerScores();
     this.pollGameState();
