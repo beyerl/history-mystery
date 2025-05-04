@@ -56,7 +56,6 @@ class GamePage extends HTMLElement {
         }
       </style>
       <drag-drop-list id="dragDropList"></drag-drop-list>
-      <!--<accordion-component id="eventAccordion"></accordion-component>-->
       <button id="checkButton" class="button">Check</button>
       <div id="messageBox" class="message-box"></div>
       <footer id="footer">
@@ -82,23 +81,9 @@ class GamePage extends HTMLElement {
       if (dragDropList) {
         dragDropList.setAttribute('events', JSON.stringify(historicEvents));
       }
-
-      const eventAccordion = this.shadowRoot.getElementById('eventAccordion');
-      if (eventAccordion) {
-        eventAccordion.setAttribute('events', JSON.stringify(historicEvents));
-      }
     });
 
-    import('../components/accordion-section-component.js');
-    import('../components/accordion-component.js');
     import('../components/drag-drop-list.js');
-
-    this.shadowRoot.getElementById('checkButton').addEventListener('click', () => {
-      const eventAccordion = this.shadowRoot.getElementById('eventAccordion');
-      if (eventAccordion) {
-        eventAccordion.checkEventOrderAndCreateEvent();
-      }
-    });
 
     this.updatePlayerScores();
     this.pollGameState();

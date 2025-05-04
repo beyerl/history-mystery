@@ -1,16 +1,9 @@
-/* Styles for the container and accordion */
 .container {
   max-width: 600px;
   margin: 0px auto;
   text-align: center;
 }
 
-.accordion {
-  width: 100%;
-}
-
-
-/* Style for the next button */
 .button {
   padding: 10px;
   background-color: #4CAF50;
@@ -19,5 +12,3 @@
   border-radius: 5px;
   cursor: pointer;
 }
-
-

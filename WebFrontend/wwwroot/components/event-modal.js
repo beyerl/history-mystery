@@ -64,6 +64,7 @@ export class EventModal extends HTMLElement {
             content.innerHTML = `
         <h2>${this.eventData.year} - ${this.eventData.title}</h2>
         <p>${this.eventData.description || 'No description available.'}</p>
+        <p>${this.eventData.api_url || 'No url available.'}</p>
       `;
         }
     }
