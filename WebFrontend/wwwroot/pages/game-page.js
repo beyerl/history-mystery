@@ -1,7 +1,6 @@
 import { gameStateService } from '../business-logic/game-state-service.js';
 import { AnswerResultEnum } from '../models/answer-result.js';
 import { GameStateEnum } from '../models/game-state.js';
-import { EventService } from '../business-logic/event-service.js';
 
 class GamePage extends HTMLElement {
   previousPlayerScores = {};

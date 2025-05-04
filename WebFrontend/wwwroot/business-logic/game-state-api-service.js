@@ -1,33 +1,41 @@
 import { IGameStateService } from './i-game-state-service.js';
 
 export class GameStateApiService extends IGameStateService {
-    constructor(httpClient) {
+    constructor() {
         super();
-        this.httpClient = httpClient; // Assume httpClient is an instance of a library like Axios or Fetch wrapper
+        this.baseAddress = 'https://localhost:7227/';
     }
 
     async CreateGame(gameId) {
-        const response = await this.httpClient.post(`/api/GameState/${gameId}`);
-        return response.data;
+        const response = await fetch(`${this.baseAddress}api/GameState/${gameId}`, {
+            method: 'POST',
+        });
+        return response.json();
     }
 
     async GetGame(gameId) {
-        const response = await this.httpClient.get(`/api/GameState/${gameId}`);
-        return response.data;
+        const response = await fetch(`${this.baseAddress}api/GameState/${gameId}`);
+        return response.json();
     }
 
     async AddPlayer(gameId, playerId) {
-        const response = await this.httpClient.post(`/api/GameState/${gameId}/players/${playerId}`);
+        const response = await fetch(`${this.baseAddress}api/GameState/${gameId}/players/${playerId}`, {
+            method: 'POST',
+        });
         return response.status === 200;
     }
 
     async RemovePlayer(gameId, playerId) {
-        const response = await this.httpClient.delete(`/api/GameState/${gameId}/players/${playerId}`);
+        const response = await fetch(`${this.baseAddress}api/GameState/${gameId}/players/${playerId}`, {
+            method: 'DELETE',
+        });
         return response.status === 200;
     }
 
     async IncrementPlayerScore(gameId, playerId) {
-        const response = await this.httpClient.post(`/api/GameState/${gameId}/players/${playerId}/increment`);
+        const response = await fetch(`${this.baseAddress}api/GameState/${gameId}/players/${playerId}/increment`, {
+            method: 'POST',
+        });
         return response.status === 200;
     }
 
@@ -36,12 +44,16 @@ export class GameStateApiService extends IGameStateService {
     }
 
     async StartGame(gameId) {
-        const response = await this.httpClient.post(`/api/GameState/${gameId}/start`);
+        const response = await fetch(`${this.baseAddress}api/GameState/${gameId}/start`, {
+            method: 'POST',
+        });
         return response.status === 200;
     }
 
     async EndGame(gameId) {
-        const response = await this.httpClient.post(`/api/GameState/${gameId}/end`);
+        const response = await fetch(`${this.baseAddress}api/GameState/${gameId}/end`, {
+            method: 'POST',
+        });
         return response.status === 200;
     }
 }

@@ -38,7 +38,6 @@ class JoinGamePage extends HTMLElement {
             const playerRegistration = this.querySelector('#player-registration');
             playerRegistration.setAttribute('game-hash', gameHash);
             playerRegistration.style.display = 'block';
-            this.querySelector('#start-game-button').style.display = 'inline-block';
         });
     }
 }

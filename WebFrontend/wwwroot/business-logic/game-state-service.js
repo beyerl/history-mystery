@@ -4,87 +4,84 @@ import { IGameStateService } from './i-game-state-service.js';
 class GameStateService extends IGameStateService {
     constructor() {
         super();
-        if (GameStateService.instance) {
-            return GameStateService.instance;
+        this.baseAddress = 'https://localhost:7227/';
+    }
+
+    async CreateGame(gameId) {
+        const response = await fetch(`${this.baseAddress}api/GameState/${gameId}`, {
+            method: 'POST',
+            contenttype: 'application/json',
+        });
+        var responseJson = await response.json()
+        // if (responseJson?.playerScores === null) {
+        //     responseJson.playerScores = {}
+        // }
+        this.validateGameState(responseJson);
+        return new GameState(responseJson.gameId, responseJson.gameState, responseJson.players);
+    }
+
+    async GetGame(gameId) {
+        const response = await fetch(`${this.baseAddress}api/GameState/${gameId}`);
+        var responseJson = await response.json()
+        // if (responseJson?.playerScores === null) {
+        //     responseJson.playerScores = {}
+        // }
+        this.validateGameState(responseJson);
+        return new GameState(responseJson.gameId, responseJson.gameState, responseJson.players);
+    }
+
+    async AddPlayer(gameId, playerId) {
+        const response = await fetch(`${this.baseAddress}api/GameState/${gameId}/players/${playerId}`, {
+            method: 'POST',
+        });
+        return response.status === 200;
+    }
+
+    async RemovePlayer(gameId, playerId) {
+        const response = await fetch(`${this.baseAddress}api/GameState/${gameId}/players/${playerId}`, {
+            method: 'DELETE',
+        });
+        return response.status === 200;
+    }
+
+    async IncrementPlayerScore(gameId, playerId) {
+        const response = await fetch(`${this.baseAddress}api/GameState/${gameId}/players/${playerId}/increment`, {
+            method: 'POST',
+        });
+        return response.status === 200;
+    }
+
+    async ResetScores(gameId) {
+        const response = await fetch(`${this.baseAddress}api/GameState/${gameId}/restart`, {
+            method: 'POST',
+        });
+        return response.status === 200;
+    }
+
+    async StartGame(gameId) {
+        const response = await fetch(`${this.baseAddress}api/GameState/${gameId}/start`, {
+            method: 'POST',
+        });
+        return response.status === 200;
+    }
+
+    async EndGame(gameId) {
+        const response = await fetch(`${this.baseAddress}api/GameState/${gameId}/end`, {
+            method: 'POST',
+        });
+        return response.status === 200;
+    }
+
+    validateGameState(responseJson) {
+        if (typeof responseJson.gameId !== 'string') {
+            throw new Error('Invalid gameId in response from server');
         }
-        this.games = new Map();
-        GameStateService.instance = this;
-    }
-
-    // Create a new game
-    CreateGame(gameId) {
-        const newGame = new GameState(gameId, [], GameStateEnum.SETUP);
-        this.games.set(gameId, newGame);
-        return newGame;
-    }
-
-    // Retrieve a game by its ID
-    GetGame(gameId) {
-        return this.games.get(gameId);
-    }
-
-    // Add a player to a game
-    AddPlayer(gameId, playerId) {
-        const game = this.games.get(gameId);
-        if (!game || game.state !== GameStateEnum.SETUP) return false;
-
-        const playerExists = game.playerScores.some(player => player.playerId === playerId);
-        if (playerExists) return false; // Player already exists
-
-        game.playerScores.push({ playerId, score: 0 });
-        return true;
-    }
-
-    // Remove a player from a game
-    RemovePlayer(gameId, playerId) {
-        const game = this.games.get(gameId);
-        if (!game || game.state !== GameStateEnum.SETUP) return false;
-
-        const playerIndex = game.playerScores.findIndex(player => player.playerId === playerId);
-        if (playerIndex === -1) return false; // Player not found
-
-        game.playerScores.splice(playerIndex, 1);
-        return true;
-    }
-
-    // Increment the score of a player by their ID
-    IncrementPlayerScore(gameId, playerId) {
-        const game = this.games.get(gameId);
-        if (!game) return false;
-
-        const player = game.playerScores.find(p => p.playerId === playerId);
-        if (!player) return false;
-
-        player.score += 1;
-        return true;
-    }
-
-    // Reset the score of all players in a game
-    ResetScores(gameId) {
-        const game = this.games.get(gameId);
-        if (!game) return false;
-
-        game.playerScores.forEach(player => player.score = 0);
-        game.state = GameStateEnum.RUNNING;
-        return true;
-    }
-
-    // Start a game by its ID
-    StartGame(gameId) {
-        const game = this.games.get(gameId);
-        if (!game || game.state !== GameStateEnum.SETUP) return false;
-
-        game.state = GameStateEnum.RUNNING;
-        return true;
-    }
-
-    // End a game by its ID
-    EndGame(gameId) {
-        const game = this.games.get(gameId);
-        if (!game || game.state !== GameStateEnum.RUNNING) return false;
-
-        game.state = GameStateEnum.ENDED;
-        return true;
+        if (!Object.values(GameStateEnum).includes(responseJson.state)) {
+            throw new Error('Invalid game state in response from server');
+        }
+        if (typeof responseJson.playerScores !== 'object') {
+            throw new Error('Invalid playerScores in response from server');
+        }
     }
 }
 
