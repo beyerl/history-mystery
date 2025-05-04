@@ -1,7 +1,7 @@
 import Sortable from '../3rdparty/sortable.js'; // Import Sortable.js
 import { AnswerResultEnum } from '../models/answer-result.js';
 import { EventService } from '../business-logic/event-service.js';
-
+import { EventModal } from './event-modal.js';
 class DragDropList extends HTMLElement {
   constructor() {
     super();
@@ -47,6 +47,12 @@ class DragDropList extends HTMLElement {
       this.events = JSON.parse(events);
     }
     this.initializeEvents();
+    this.shadowRoot.addEventListener('click', (e) => {
+      if (e.target.classList.contains('more')) {
+        const eventData = JSON.parse(e.target.getAttribute('data-event'));
+        this.openEventModal(eventData);
+      }
+    });
   }
 
   static get observedAttributes() {
@@ -88,9 +94,20 @@ class DragDropList extends HTMLElement {
     return `   
       <div class="year">${event.year}</div>
       <div class="title">${event.title}</div>
-      <button class="more">more</button>`
+      <button class="more" data-event='${JSON.stringify(event)}'>more</button>`
   }
 
+  openEventModal(eventData) {
+    // Check if the modal is already open
+    const existingModal = document.querySelector('event-modal');
+    if (existingModal) {
+      existingModal.remove();
+    }
+    // Create a new modal instance and set the event data
+    const modal = new EventModal();
+    modal.setAttribute('data-event', JSON.stringify(eventData));
+    document.body.appendChild(modal);
+  }
 
   initSortable() {
     if (typeof Sortable === 'undefined') {
