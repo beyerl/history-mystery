@@ -78,13 +78,9 @@ class GamePage extends HTMLElement {
 
   initialize() {
     import('../data/historic-events.js').then(({ historicEvents }) => {
-      const eventService = new EventService(historicEvents);
       const dragDropList = this.shadowRoot.getElementById('dragDropList');
       if (dragDropList) {
-        // Ensure the property is set after the element is fully upgraded
-        requestAnimationFrame(() => {
-          dragDropList.eventService = eventService;
-        });
+        dragDropList.setAttribute('events', JSON.stringify(historicEvents));
       }
 
       const eventAccordion = this.shadowRoot.getElementById('eventAccordion');

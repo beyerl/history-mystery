@@ -1,5 +1,6 @@
 import Sortable from '../3rdparty/sortable.js'; // Import Sortable.js
 import { AnswerResultEnum } from '../models/answer-result.js';
+import { EventService } from '../business-logic/event-service.js';
 
 class DragDropList extends HTMLElement {
   constructor() {
@@ -30,30 +31,30 @@ class DragDropList extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['event-service'];
+    return ['events'];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    if (name === 'event-service' && newValue) {
-      this.eventService = JSON.parse(newValue);
+    if (name === 'events') {
+      this.events = JSON.parse(newValue);
       this.initializeEvents();
     }
   }
 
-  set eventService(service) {
-    if (!service || typeof service.get !== 'function') {
-      console.error('Invalid or missing EventService:', service);
-      return;
+  connectedCallback() {
+    if (this.events.length === 0 && this.hasAttribute('events')) {
+      const events = this.getAttribute('events')
+      this.events = JSON.parse(events);
     }
-    this._eventService = service;
     this.initializeEvents();
   }
 
+  static get observedAttributes() {
+    return ['events'];
+  }
+
   initializeEvents() {
-    if (!this._eventService) {
-      console.error('EventService is not set.');
-      return;
-    }
+    this._eventService = new EventService(this.events);
     const events = [this._eventService.get(), this._eventService.get(), this._eventService.get()];
     this.populateSlots(events.slice(1).sort((a, b) => a.year - b.year));
     this.populateTopSlot(events[0]);
