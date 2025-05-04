@@ -4,6 +4,9 @@ import { GameStateEnum } from '../models/game-state.js';
 import { EventService } from '../business-logic/event-service.js';
 
 class GamePage extends HTMLElement {
+  previousPlayerScores = {};
+  changedScores = [];
+
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -34,42 +37,36 @@ class GamePage extends HTMLElement {
           padding: 10px 0;
           border-top: 1px solid #ccc;
         }
-        table {
-          width: 100%;
-          border-collapse: collapse;
-        }
-        th, td {
-          border: 1px solid #ccc;
-          padding: 8px;
-          text-align: left;
-        }
-        th {
-          background-color: #f9f9f9;
-        }
         #dragDropList {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 100%;
-        padding: 10px;
-        box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          height: 100%;
+          padding: 10px;
+          box-sizing: border-box;
+        }
+        .toast {
+          position: fixed;
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          background-color: #333;
+          color: #fff;
+          padding: 10px 20px;
+          border-radius: 5px;
+          opacity: 0;
+          transition: opacity 0.5s ease-in-out;
+          z-index: 1000;
+        }
+        .toast.show {
+          opacity: 1;
         }
       </style>
       <drag-drop-list id="dragDropList"></drag-drop-list>
       <footer id="footer">
         <div>Game ID: ${this.gameId || 'N/A'}</div>
-        <table id="playerScoresTable">
-          <thead>
-            <tr>
-              <th>Player</th>
-              <th>Score</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td colspan="2">Loading scores...</td></tr>
-          </tbody>
-        </table>
       </footer>
+      <div id="toast" class="toast"></div>
     `;
   }
 
@@ -84,25 +81,26 @@ class GamePage extends HTMLElement {
       }
     });
 
-
-    this.updatePlayerScores();
     this.pollGameState();
+    this.toastGameStateChanges();
   }
 
   pollGameState() {
     setInterval(() => {
-      const game = this.gameStateService.GetGame(this.gameId);
-      const footer = this.shadowRoot.getElementById('footer');
-      if (game && footer) {
-        //update the tbody with the game state
-        const playerScoresTable = footer.querySelector('tbody');
-        playerScoresTable.innerHTML = game.playerScores
-          .map(player => `<tr><td>${player.playerId}</td><td>${player.score}</td></tr>`)
-          .join('');
+      const gameState = this.gameStateService.GetGame(this.gameId);
+      if (!gameState) {
+        return;
       }
 
-      if (game && game.state === GameStateEnum.RUNNING) {
-        const playersWithMaxScore = game.playerScores.filter(player => player.score >= 10);
+      var changedScores = gameState.playerScores.filter(
+        player => player.score !== 0 && this.previousPlayerScores[player.playerId] !== player.score
+      )
+
+      if (changedScores.length > 0)
+        this.changedScores = this.changedScores.concat(changedScores);
+
+      if (gameState && gameState.state === GameStateEnum.RUNNING) {
+        const playersWithMaxScore = gameState.playerScores.filter(player => player.score >= 10);
 
         if (playersWithMaxScore.length > 0) {
           this.gameStateService.EndGame(this.gameId);
@@ -118,10 +116,25 @@ class GamePage extends HTMLElement {
           setTimeout(() => {
             document.body.removeChild(winOverlay);
             window.location.hash = `/scores?gameId=${this.gameId}`;
-          }, 3000);
+          }, 2000);
         }
       }
+
+      this.previousPlayerScores = gameState.playerScores.reduce((acc, player) => {
+        acc[player.playerId] = player.score;
+        return acc;
+      }, {});
     }, 1000);
+  }
+
+  toastGameStateChanges() {
+    setInterval(() => {
+      if (this.changedScores.length > 0) {
+        var oldestChangedScore = this.changedScores.shift()
+        if (!oldestChangedScore || oldestChangedScore.score === 0) return;
+        this.showToast(`${oldestChangedScore.playerId}'s score is now ${oldestChangedScore.score}`);
+      }
+    }, 100);
   }
 
   addEventListeners() {
@@ -134,21 +147,19 @@ class GamePage extends HTMLElement {
           break;
         default:
           console.error('Unknown answer result:', event.detail.answerResult);
-          break
+          break;
       }
     });
   }
 
-  updatePlayerScores() {
-    const game = this.gameStateService.GetGame(this.gameId);
-    const playerScoresTable = this.shadowRoot.getElementById('playerScoresTable').querySelector('tbody');
-
-    if (game && game.playerScores.length > 0) {
-      playerScoresTable.innerHTML = game.playerScores
-        .map(player => `<tr><td>${player.playerId}</td><td>${player.score}</td></tr > `)
-        .join('');
-    } else {
-      playerScoresTable.innerHTML = `<tr><td colspan="2">No scores available</td></tr > `;
+  showToast(message) {
+    const toast = this.shadowRoot.getElementById('toast');
+    if (toast) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 1000);
     }
   }
 }
