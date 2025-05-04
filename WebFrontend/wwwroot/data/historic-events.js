@@ -1,4 +1,4 @@
-const historicEvents = [
+export const historicEvents = [
     {
         title: "Moon Landing",
         year: 1969,
