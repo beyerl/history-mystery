@@ -45,34 +45,19 @@ class GamePage extends HTMLElement {
           padding: 10px;
           box-sizing: border-box;
         }
-        .toast {
-          position: fixed;
-          bottom: 20px;
-          left: 50%;
-          transform: translateX(-50%);
-          background-color: #333;
-          color: #fff;
-          padding: 10px 20px;
-          border-radius: 5px;
-          opacity: 0;
-          transition: opacity 0.5s ease-in-out;
-          z-index: 1000;
-        }
-        .toast.show {
-          opacity: 1;
-        }
       </style>
       <drag-drop-list id="dragDropList"></drag-drop-list>
       <footer id="footer">
         <div>Game ID: ${this.gameId || 'N/A'}</div>
       </footer>
-      <div id="toast" class="toast"></div>
+      <toast-component id="toast"></toast-component>
     `;
   }
 
   initialize() {
     import('../components/drag-drop-list.js');
-    import('../components/win-overlay.js')
+    import('../components/win-overlay.js');
+    import('../components/toast-component.js'); // Import the new toast component
 
     import('../data/historic-events.js').then(({ historicEvents }) => {
       const dragDropList = this.shadowRoot.getElementById('dragDropList');
@@ -155,11 +140,7 @@ class GamePage extends HTMLElement {
   showToast(message) {
     const toast = this.shadowRoot.getElementById('toast');
     if (toast) {
-      toast.textContent = message;
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 1000);
+      toast.show(message);
     }
   }
 }
