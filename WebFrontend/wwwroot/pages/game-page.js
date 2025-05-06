@@ -86,11 +86,11 @@ class GamePage extends HTMLElement {
       if (gameState && gameState.state === GameStateEnum.RUNNING) {
         const playersWithMaxScore = gameState.playerScores.filter(player => player.score >= 10);
 
-        if (playersWithMaxScore.length > 0) {
-          this.gameStateService.EndGame(this.gameId);
-        }
+        let currentPlayerIsWinner = playersWithMaxScore.find(player => player.playerId === localStorage.getItem('playerName'))
 
-        if (playersWithMaxScore.find(player => player.playerId === localStorage.getItem('playerName'))) {
+        if (currentPlayerIsWinner) {
+          this.gameStateService.EndGame(this.gameId);
+
           // Create the win overlay
           const winOverlay = document.createElement('win-overlay');
           winOverlay.setAttribute('message', 'You win!');
@@ -101,7 +101,14 @@ class GamePage extends HTMLElement {
             document.body.removeChild(winOverlay);
             window.location.hash = `/scores?gameId=${this.gameId}`;
           }, 2000);
+        } else if (playersWithMaxScore.length > 0 && !currentPlayerIsWinner) {
+          this.gameStateService.EndGame(this.gameId);
+          window.location.hash = `/scores?gameId=${this.gameId}`;
         }
+      }
+
+      if (gameState && gameState.state === GameStateEnum.ENDED) {
+        window.location.hash = `/scores?gameId=${this.gameId}`;
       }
 
       this.previousPlayerScores = gameState.playerScores.reduce((acc, player) => {

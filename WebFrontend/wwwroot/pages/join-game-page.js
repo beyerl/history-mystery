@@ -13,7 +13,7 @@ class JoinGamePage extends HTMLElement {
                     <br>
                     <div id="game-id-message" style="height: 20px;"></div>
                 </div>
-                <player-registration id="player-registration" style="display: none;"></player-registration>
+                <div id="player-registration-container"></div
             </div>
         `;
 
@@ -35,9 +35,9 @@ class JoinGamePage extends HTMLElement {
             }
 
             this.querySelector('#game-id-message').textContent = '';
-            const playerRegistration = this.querySelector('#player-registration');
-            playerRegistration.setAttribute('game-hash', gameHash);
-            playerRegistration.style.display = 'block';
+
+            const playerRegistrationContainer = this.querySelector('#player-registration-container');
+            playerRegistrationContainer.innerHTML = `<player-registration id="player-registration" game-hash=${gameHash}></player-registration>`;
         });
     }
 }

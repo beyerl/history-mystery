@@ -66,7 +66,7 @@ class PlayerRegistration extends HTMLElement {
         setInterval(async () => {
             var game = await gameStateService.GetGameAsync(gameHash);
             this.updatePlayerTable(game);
-            if (game && game.state === 'RUNNING') {
+            if (game && game.state === GameStateEnum.RUNNING) {
                 window.location.hash = `/game?gameId=${gameHash}`;
             }
         }, 1000);
@@ -74,7 +74,6 @@ class PlayerRegistration extends HTMLElement {
 
     updatePlayerTable(game) {
         if (game) {
-            console.log("🚀 ~ PlayerRegistration ~ updatePlayerTable ~ game:", game)
             const playerTableBody = this.querySelector('#player-table tbody');
             playerTableBody.innerHTML = game.playerScores
                 .map(playerScore => `<tr><td style="border: 1px solid black;">${playerScore.playerId}</td></tr>`)

@@ -1,10 +1,13 @@
 import { gameStateService } from '../business-logic/game-state-service.js';
+import { GameStateEnum } from '../models/game-state.js';
 
 class GameScoresPage extends HTMLElement {
+    gameId;
+
     async connectedCallback() {
         const urlParams = new URLSearchParams(window.location.hash.split('?')[1]);
-        const gameId = urlParams.get('gameId');
-        const game = await gameStateService.GetGameAsync(gameId);
+        this.gameId = urlParams.get('gameId');
+        const game = await gameStateService.GetGameAsync(this.gameId);
 
         if (!game) {
             this.innerHTML = `<h1>Game not found</h1>`;
@@ -47,10 +50,24 @@ class GameScoresPage extends HTMLElement {
         this.querySelector('#rematch-button').addEventListener('click', () => {
             // Start a new game with the same players
             const playerNames = game.playerScores.map(player => player.playerId);
-            gameStateService.ResetScores(gameId);
-            window.location.hash = '#/game?gameId=' + gameId;
+            gameStateService.ResetScores(this.gameId);
+            window.location.hash = '#/game?gameId=' + this.gameId;
         });
+        this.pollGameState();
+    }
 
+    pollGameState() {
+        setInterval(async () => {
+            const gameState = await gameStateService.GetGameAsync(this.gameId);
+            if (!gameState) {
+                return;
+            }
+
+            if (gameState && gameState.state === GameStateEnum.RUNNING) {
+                window.location.hash = `/game?gameId=${this.gameId}`;
+            }
+
+        }, 1000);
     }
 }
 
