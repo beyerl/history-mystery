@@ -21,7 +21,6 @@ class GameStateService extends IGameStateService {
     async GetGameAsync(gameId) {
         const response = await fetch(`${this.baseAddress}api/GameState/${gameId}`);
         var responseJson = await response.json()
-        console.log("🚀 ~ GameStateService ~ GetGameAsync ~ responseJson:", responseJson)
         this.validateGameState(responseJson);
         return new GameState(responseJson.gameId, responseJson.playerScores, responseJson.state);
     }
