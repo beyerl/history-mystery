@@ -21,14 +21,14 @@ class JoinGamePage extends HTMLElement {
     }
 
     addEventListeners() {
-        this.querySelector('#join-game-button').addEventListener('click', () => {
+        this.querySelector('#join-game-button').addEventListener('click', async () => {
             const gameHash = this.querySelector('#game-id-input').value.trim();
             if (!gameHash) {
                 this.querySelector('#game-id-message').textContent = 'Please enter a valid Game ID.';
                 return;
             }
 
-            const game = gameStateService.GetGame(gameHash);
+            const game = await gameStateService.GetGameAsync(gameHash);
             if (!game) {
                 this.querySelector('#game-id-message').textContent = 'Game not found. Please check the Game ID.';
                 return;

@@ -7,27 +7,23 @@ class GameStateService extends IGameStateService {
         this.baseAddress = 'https://localhost:7227/';
     }
 
-    async CreateGame(gameId) {
+    async CreateGameAsync(gameId) {
         const response = await fetch(`${this.baseAddress}api/GameState/${gameId}`, {
             method: 'POST',
             contenttype: 'application/json',
         });
         var responseJson = await response.json()
-        // if (responseJson?.playerScores === null) {
-        //     responseJson.playerScores = {}
-        // }
+
         this.validateGameState(responseJson);
-        return new GameState(responseJson.gameId, responseJson.gameState, responseJson.players);
+        return new GameState(responseJson.gameId, responseJson.playerScores, responseJson.state);
     }
 
-    async GetGame(gameId) {
+    async GetGameAsync(gameId) {
         const response = await fetch(`${this.baseAddress}api/GameState/${gameId}`);
         var responseJson = await response.json()
-        // if (responseJson?.playerScores === null) {
-        //     responseJson.playerScores = {}
-        // }
+        console.log("🚀 ~ GameStateService ~ GetGameAsync ~ responseJson:", responseJson)
         this.validateGameState(responseJson);
-        return new GameState(responseJson.gameId, responseJson.gameState, responseJson.players);
+        return new GameState(responseJson.gameId, responseJson.playerScores, responseJson.state);
     }
 
     async AddPlayer(gameId, playerId) {
@@ -79,7 +75,7 @@ class GameStateService extends IGameStateService {
         if (!Object.values(GameStateEnum).includes(responseJson.state)) {
             throw new Error('Invalid game state in response from server');
         }
-        if (typeof responseJson.playerScores !== 'object') {
+        if (!Array.isArray(responseJson.playerScores)) {
             throw new Error('Invalid playerScores in response from server');
         }
     }

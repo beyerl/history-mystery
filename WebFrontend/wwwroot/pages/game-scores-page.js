@@ -1,10 +1,10 @@
 import { gameStateService } from '../business-logic/game-state-service.js';
 
 class GameScoresPage extends HTMLElement {
-    connectedCallback() {
+    async connectedCallback() {
         const urlParams = new URLSearchParams(window.location.hash.split('?')[1]);
         const gameId = urlParams.get('gameId');
-        const game = gameStateService.GetGame(gameId);
+        const game = await gameStateService.GetGameAsync(gameId);
 
         if (!game) {
             this.innerHTML = `<h1>Game not found</h1>`;

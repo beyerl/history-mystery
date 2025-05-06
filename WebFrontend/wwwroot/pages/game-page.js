@@ -70,8 +70,8 @@ class GamePage extends HTMLElement {
   }
 
   pollGameState() {
-    setInterval(() => {
-      const gameState = this.gameStateService.GetGame(this.gameId);
+    setInterval(async () => {
+      const gameState = await this.gameStateService.GetGameAsync(this.gameId);
       if (!gameState) {
         return;
       }

@@ -7,7 +7,7 @@ namespace GameStateApi.Services
     {
         private readonly Dictionary<string, GameState> _gameStates = new();
 
-        public GameState CreateGame(string gameId)
+        public GameStateDto CreateGame(string gameId)
         {
             var newGame = new GameState
             {
@@ -16,12 +16,12 @@ namespace GameStateApi.Services
                 State = GameStateEnum.Setup
             };
             _gameStates[gameId] = newGame;
-            return newGame;
+            return newGame.ToDto();
         }
 
-        public GameState GetGame(string gameId)
+        public GameStateDto GetGame(string gameId)
         {
-            return _gameStates.TryGetValue(gameId, out var gameState) ? gameState : null;
+            return _gameStates.TryGetValue(gameId, out var gameState) ? gameState.ToDto() : null;
         }
 
         public bool AddPlayer(string gameId, string playerId)
@@ -94,12 +94,40 @@ namespace GameStateApi.Services
         public string GameId { get; set; }
         public Dictionary<string, int> PlayerScores { get; set; }
         public GameStateEnum State { get; set; }
+
+        public GameStateDto ToDto()
+        {
+            return new GameStateDto
+            {
+                GameId = GameId,
+                PlayerScores = PlayerScores.Select(ps => new PlayerScoreDto { PlayerId = ps.Key, Score = ps.Value }).ToList(),
+                State = State
+            };
+        }
     }
+
 
     public enum GameStateEnum
     {
         Setup,
         Running,
         Ended
+    }
+
+    public class GameStateDto
+    {
+        public string GameId { get; set; }
+
+        public List<PlayerScoreDto> PlayerScores { get; set; }
+
+        public GameStateEnum State { get; set; }
+
+
+    }
+
+    public class PlayerScoreDto
+    {
+        public string PlayerId { get; set; }
+        public int Score { get; set; }
     }
 }

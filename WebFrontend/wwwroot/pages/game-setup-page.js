@@ -3,9 +3,9 @@ import { gameStateService } from '../business-logic/game-state-service.js';
 import './player-registration.js'; // Import the new PlayerRegistration component
 
 class GameSetupPage extends HTMLElement {
-    connectedCallback() {
+    async connectedCallback() {
         const gameHash = HashHelper.generateGameHash();
-        gameStateService.CreateGame(gameHash); // Create a new game
+        await gameStateService.CreateGameAsync(gameHash); // Create a new game
 
         this.innerHTML = `
             <div>
@@ -51,9 +51,9 @@ class GameSetupPage extends HTMLElement {
             });
         });
 
-        this.querySelector('#start-game-button').addEventListener('click', () => {
+        this.querySelector('#start-game-button').addEventListener('click', async () => {
             const gameId = document.getElementById('game-id').textContent;
-            const game = gameStateService.GetGame(gameId);
+            const game = await gameStateService.GetGameAsync(gameId);
             if (!game || game.playerScores.length == 0) {
                 this.querySelector('player-registration').setError('No players have joined the game. Please add players before starting the game.');
                 return;
