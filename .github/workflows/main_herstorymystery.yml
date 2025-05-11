@@ -62,5 +62,5 @@ jobs:
         with:
           app-name: 'HerstoryMystery'
           slot-name: 'Production'
-          package: .
+          package: ./app
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_80F8D75116244437978BCFB7EE7FD565 }}
