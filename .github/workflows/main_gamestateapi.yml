@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read # Required for actions/checkout
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -21,20 +21,25 @@ jobs:
         with:
           dotnet-version: '8.0'
 
-      - name: Restore dependencies
+      - name: Restore backend dependencies
         run: dotnet restore GameStateApi/GameStateApi.csproj
 
-      - name: Build with dotnet
+      - name: Copy frontend files into backend wwwroot
+        run: |
+          mkdir -p GameStateApi/wwwroot
+          cp -r WebFrontend/wwwroot/* GameStateApi/wwwroot/
+
+      - name: Build backend
         run: dotnet build GameStateApi/GameStateApi.csproj --configuration Release
 
-      - name: dotnet publish
-        run: dotnet publish GameStateApi/GameStateApi.csproj -c Release -o ./published
+      - name: Publish combined app
+        run: dotnet publish GameStateApi/GameStateApi.csproj --configuration Release --output ./publish
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: .net-app
-          path: ./published
+          name: combined-app
+          path: ./publish
 
   deploy:
     runs-on: ubuntu-latest
@@ -52,7 +57,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: .net-app
+          name: combined-app
 
       - name: Login to Azure
         uses: azure/login@v2
