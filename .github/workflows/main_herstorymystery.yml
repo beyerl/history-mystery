@@ -23,17 +23,25 @@ jobs:
         with:
           dotnet-version: '8.0'
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
+      - name: Restore backend dependencies
+        run: dotnet restore GameStateApi/GameStateApi.csproj
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+      - name: Copy frontend files into backend wwwroot
+        run: |
+          mkdir -p GameStateApi/wwwroot
+          cp -r WebFrontend/wwwroot/* GameStateApi/wwwroot/
+
+      - name: Build backend
+        run: dotnet build GameStateApi/GameStateApi.csproj --configuration Release
+
+      - name: Publish combined app
+        run: dotnet publish GameStateApi/GameStateApi.csproj --configuration Release --output ./publish
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          name: combined-app
+          path: ./publish
 
   deploy:
     runs-on: ubuntu-latest
