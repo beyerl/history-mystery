@@ -2,19 +2,18 @@ using GameStateApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services
 builder.Services.AddSingleton<GameStateService>();
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configure CORS
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("https://localhost:7151") // Ensure this matches your frontend URL
+        policy.WithOrigins("https://localhost:7151")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -22,7 +21,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Apply CORS middleware before other middleware
 app.UseCors();
 
 if (app.Environment.IsDevelopment())
@@ -33,12 +31,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
-app.MapControllers();
 
+// 🔀 Move these up
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
+app.MapControllers();
+
 app.Run();
-
-
-
