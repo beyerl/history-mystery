@@ -55,12 +55,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: combined-app
-          path: combined-app
-
-      - name: Move artifact contents to working directory
-        run: |
-          shopt -s dotglob
-          if [ -n "$(ls -A ./combined-app)" ]; then mv ./combined-app/* .; fi
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -73,5 +67,5 @@ jobs:
 
       - name: Write base URL to config file
         run: |
-          jq ".BaseUrl = \"${{ steps.deploy-to-webapp.outputs.webapp-url }}\"" GameStateApi/appsettings.Production.json > GameStateApi/appsettings.Production.tmp.json
-          mv GameStateApi/appsettings.Production.tmp.json GameStateApi/appsettings.Production.json
+          jq ".BaseUrl = \"${{ steps.deploy-to-webapp.outputs.webapp-url }}\"" ./appsettings.Production.json > ./appsettings.Production.tmp.json
+          mv ./appsettings.Production.tmp.json ./appsettings.Production.json
