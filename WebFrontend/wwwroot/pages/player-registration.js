@@ -1,4 +1,5 @@
 import { gameStateService } from '../business-logic/game-state-service.js';
+import { GameStateEnum } from '../models/game-state.js';
 
 class PlayerRegistration extends HTMLElement {
     connectedCallback() {
