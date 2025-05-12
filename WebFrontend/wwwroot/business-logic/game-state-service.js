@@ -1,10 +1,11 @@
 import { GameState, GameStateEnum } from '../models/game-state.js';
 import { IGameStateService } from './i-game-state-service.js';
+import { API_BASE_ADDRESS } from '../config.js'; // <--- hinzugefügt
 
 class GameStateService extends IGameStateService {
     constructor() {
         super();
-        this.baseAddress = 'https://localhost:7227/';
+        this.baseAddress = API_BASE_ADDRESS; // <--- geändert
     }
 
     async CreateGameAsync(gameId) {
