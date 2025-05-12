@@ -55,11 +55,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: combined-app
+          path: combined-app
 
       - name: Move artifact contents to working directory
         run: |
           shopt -s dotglob
-          mv ./combined-app/* .
+          if [ -n "$(ls -A ./combined-app)" ]; then mv ./combined-app/* .; fi
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
