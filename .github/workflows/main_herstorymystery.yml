@@ -56,13 +56,6 @@ jobs:
         with:
           name: combined-app
 
-      - name: Write base URL to config file
-        run: |
-          echo "{\"baseUrl\": \"${{ environment.url }}\"}" > ./wwwroot/config.json
-          cp ./wwwroot/config.json GameStateApi/wwwroot/config.json
-          jq ".BaseUrl = \"${{ environment.url }}\"" GameStateApi/appsettings.Production.json > GameStateApi/appsettings.Production.tmp.json
-          mv GameStateApi/appsettings.Production.tmp.json GameStateApi/appsettings.Production.json
-
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -71,3 +64,10 @@ jobs:
           slot-name: 'Production'
           package: ./
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_80F8D75116244437978BCFB7EE7FD565 }}
+
+      - name: Write base URL to config file
+        run: |
+          echo "{\"baseUrl\": \"${{ steps.deploy-to-webapp.outputs.webapp-url }}\"}" > ./wwwroot/config.json
+          cp ./wwwroot/config.json GameStateApi/wwwroot/config.json
+          jq ".BaseUrl = \"${{ steps.deploy-to-webapp.outputs.webapp-url }}\"" GameStateApi/appsettings.Production.json > GameStateApi/appsettings.Production.tmp.json
+          mv GameStateApi/appsettings.Production.tmp.json GameStateApi/appsettings.Production.json
