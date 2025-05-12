@@ -67,7 +67,5 @@ jobs:
 
       - name: Write base URL to config file
         run: |
-          echo "{\"baseUrl\": \"${{ steps.deploy-to-webapp.outputs.webapp-url }}\"}" > ./wwwroot/config.json
-          cp ./wwwroot/config.json GameStateApi/wwwroot/config.json
           jq ".BaseUrl = \"${{ steps.deploy-to-webapp.outputs.webapp-url }}\"" GameStateApi/appsettings.Production.json > GameStateApi/appsettings.Production.tmp.json
           mv GameStateApi/appsettings.Production.tmp.json GameStateApi/appsettings.Production.json
