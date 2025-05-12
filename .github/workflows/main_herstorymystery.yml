@@ -56,6 +56,11 @@ jobs:
         with:
           name: combined-app
 
+      - name: Write base URL to config file
+        run: |
+          jq ".BaseUrl = \"${{ steps.deploy-to-webapp.outputs.webapp-url }}\"" ./appsettings.Production.json > ./appsettings.Production.tmp.json
+          mv ./appsettings.Production.tmp.json ./appsettings.Production.json
+          
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -65,7 +70,4 @@ jobs:
           package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_80F8D75116244437978BCFB7EE7FD565 }}
 
-      - name: Write base URL to config file
-        run: |
-          jq ".BaseUrl = \"${{ steps.deploy-to-webapp.outputs.webapp-url }}\"" ./appsettings.Production.json > ./appsettings.Production.tmp.json
-          mv ./appsettings.Production.tmp.json ./appsettings.Production.json
+
