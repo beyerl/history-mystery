@@ -47,7 +47,7 @@ jobs:
     needs: build
     environment:
       name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+      url: ${{ secrets.AZURE_WEBAPP_URL }}
     
     steps:
       - name: Download artifact from build job
@@ -57,11 +57,11 @@ jobs:
 
       - name: Set API_BASE_ADDRESS in config.js
         run: |
-          echo "export const API_BASE_ADDRESS = 'https://${{ steps.deploy-to-webapp.outputs.webapp-url }}/';" > ./wwwroot/config.js
+          echo "export const API_BASE_ADDRESS = '${{ secrets.AZURE_WEBAPP_URL }}/';" > ./wwwroot/config.js
 
       - name: Write base URL to config file
         run: |
-          jq ".BaseUrl = \"${{ steps.deploy-to-webapp.outputs.webapp-url }}\"" ./appsettings.Production.json > ./appsettings.Production.tmp.json
+          jq ".BaseUrl = \"${{ secrets.AZURE_WEBAPP_URL }}\"" ./appsettings.Production.json > ./appsettings.Production.tmp.json
           mv ./appsettings.Production.tmp.json ./appsettings.Production.json
 
       - name: cat ./appsettings.Production.json and config.js
@@ -71,7 +71,6 @@ jobs:
           echo "Contents of appsettings.Production.json:"
           cat ./appsettings.Production.json
 
-          
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
