@@ -63,6 +63,14 @@ jobs:
         run: |
           jq ".BaseUrl = \"${{ steps.deploy-to-webapp.outputs.webapp-url }}\"" ./appsettings.Production.json > ./appsettings.Production.tmp.json
           mv ./appsettings.Production.tmp.json ./appsettings.Production.json
+
+      - name: cat ./appsettings.Production.json and config.js
+        run: |
+          echo "Contents of config.js:"
+          cat ./wwwroot/config.js
+          echo "Contents of appsettings.Production.json:"
+          cat ./appsettings.Production.json
+
           
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
