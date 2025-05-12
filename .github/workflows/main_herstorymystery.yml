@@ -55,6 +55,10 @@ jobs:
         with:
           name: combined-app
 
+      - name: Set API_BASE_ADDRESS in config.js
+        run: |
+          echo "export const API_BASE_ADDRESS = 'https://${{ steps.deploy-to-webapp.outputs.webapp-url }}/';" > WebFrontend/wwwroot/config.js
+
       - name: Write base URL to config file
         run: |
           jq ".BaseUrl = \"${{ steps.deploy-to-webapp.outputs.webapp-url }}\"" ./appsettings.Production.json > ./appsettings.Production.tmp.json
