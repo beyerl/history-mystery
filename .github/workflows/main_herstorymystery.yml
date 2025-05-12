@@ -62,10 +62,11 @@ jobs:
         with:
           app-name: 'HerstoryMystery'
           slot-name: 'Production'
-          package: ./
+          package: ./combined-app
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_80F8D75116244437978BCFB7EE7FD565 }}
 
       - name: Write base URL to config file
+        working-directory: ./combined-app
         run: |
           jq ".BaseUrl = \"${{ steps.deploy-to-webapp.outputs.webapp-url }}\"" GameStateApi/appsettings.Production.json > GameStateApi/appsettings.Production.tmp.json
           mv GameStateApi/appsettings.Production.tmp.json GameStateApi/appsettings.Production.json
