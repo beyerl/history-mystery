@@ -160,7 +160,7 @@ class DragDropList extends HTMLElement {
         popover.remove();
         draggedElement.remove();
         this.populateTopSlot(this._eventService.get());
-      }, 500);
+      }, 800);
     } else {
       this.dispatchMessage(AnswerResultEnum.CORRECT);
       // style drag element like a regular slot
@@ -176,7 +176,7 @@ class DragDropList extends HTMLElement {
         draggedElement.classList.remove('correct-answer-animation');
 
         this.populateTopSlot(this._eventService.get());
-      }, 500); // Adjust the duration as needed
+      }, 800); 
     }
   }
 
