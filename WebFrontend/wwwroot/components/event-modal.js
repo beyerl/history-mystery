@@ -31,7 +31,7 @@ export class EventModal extends HTMLElement {
           padding: 20px;
           box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
           z-index: 1000;
-          max-height: calc(100vh - 20px);
+          max-height: calc(100vh - 40px);
           overflow-y: auto;
         }
         .overlay {
@@ -50,6 +50,7 @@ export class EventModal extends HTMLElement {
           color: white;
           border: none;
           cursor: pointer;
+          float: right;
         }
         .wiki-summary {
             padding: 10px;
@@ -62,8 +63,8 @@ export class EventModal extends HTMLElement {
       </style>
       <div class="overlay"></div>
       <div class="modal">
-        <div class="content"></div>
         <button class="close-btn">Close</button>
+        <div class="content"></div>
       </div>
     `;
 
