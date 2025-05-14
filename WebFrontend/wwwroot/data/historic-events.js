@@ -3,7 +3,7 @@ export const historicEvents = [
         "title": "Ada Blackjack survives Arctic expedition",
         "year": 1923,
         "wiki_title": "Ada_Blackjack",
-        "description": "Ada Blackjack, an Iñupiaq woman, survived alone for months on Wrangel Island after a failed Arctic expedition."
+        "description": "Ada Blackjack, an IÃ±upiaq woman, survived alone for months on Wrangel Island after a failed Arctic expedition."
     },
     {
         "title": "Ada Lovelace writes the first computer algorithm",
@@ -108,7 +108,7 @@ export const historicEvents = [
         "description": "Cleopatra VII, known for her political acumen, was the last active ruler of the Ptolemaic Kingdom of Egypt."
     },
     {
-        "title": "Coco Chanel releases her perfume Chanel Nº 5",
+        "title": "Coco Chanel releases her perfume Chanel NÂº 5",
         "year": 1922,
         "wiki_title": "Coco_Chanel",
         "description": "Coco Chanel introduced modern, comfortable styles, transforming women's fashion in the 20th century."
@@ -126,10 +126,10 @@ export const historicEvents = [
         "description": "Eleanor Roosevelt, as chair of the United Nations Human Rights Commission, was instrumental in drafting the Universal Declaration of Human Rights."
     },
     {
-        "title": "Émilie du Châtelet translates Newton's Principia",
+        "title": "Ã‰milie du ChÃ¢telet translates Newton's Principia",
         "year": 1749,
-        "wiki_title": "Émilie_du_Châtelet",
-        "description": "Émilie du Châtelet translated Newton's Principia into French, making his work more accessible and adding her own commentary."
+        "wiki_title": "Ã‰milie_du_ChÃ¢telet",
+        "description": "Ã‰milie du ChÃ¢telet translated Newton's Principia into French, making his work more accessible and adding her own commentary."
     },
     {
         "title": "Empress Elisabeth of Austria influences the Austro-Hungarian Compromise",
@@ -234,10 +234,10 @@ export const historicEvents = [
         "description": "Janet Mock, a transgender rights activist and writer, released her memoir 'Redefining Realness,' chronicling her journey and advocating for trans visibility."
     },
     {
-        "title": "Joan of Arc leads French forces at Orléans",
+        "title": "Joan of Arc leads French forces at OrlÃ©ans",
         "year": 1429,
         "wiki_title": "Joan_of_Arc",
-        "description": "Joan of Arc, claiming divine guidance, led French troops to a pivotal victory at the Siege of Orléans during the Hundred Years' War."
+        "description": "Joan of Arc, claiming divine guidance, led French troops to a pivotal victory at the Siege of OrlÃ©ans during the Hundred Years' War."
     },
     {
         "title": "First Black woman in a major motion picture",
@@ -390,10 +390,10 @@ export const historicEvents = [
         "description": "Sojourner Truth delivered her powerful 'Ain't I a Woman?' speech at the Women's Convention in Akron, Ohio, in 1851, advocating for women's rights and racial equality."
     },
     {
-        "title": "Sor Juana Inés de la Cruz defends women's education",
+        "title": "Sor Juana InÃ©s de la Cruz defends women's education",
         "year": 1700,
         "wiki_title": "Sor_Juana_In%C3%A9s_de_la_Cruz",
-        "description": "Sor Juana Inés de la Cruz, a 17th-century Mexican nun and writer, defended women's right to education and intellectual freedom in her writings."
+        "description": "Sor Juana InÃ©s de la Cruz, a 17th-century Mexican nun and writer, defended women's right to education and intellectual freedom in her writings."
     },
     {
         "title": "Women's Suffrage in the United States",
@@ -459,7 +459,7 @@ export const historicEvents = [
         "title": "First Woman Appointed to the U.S. Supreme Court",
         "year": 1981,
         "wiki_title": "Sandra_Day_O'Connor",
-        "description": "Sandra Day O’Connor became the first woman to serve as a Justice on the U.S. Supreme Court."
+        "description": "Sandra Day Oâ€™Connor became the first woman to serve as a Justice on the U.S. Supreme Court."
     },
     {
         "title": "Katharine Graham Becomes CEO of The Washington Post",
@@ -476,8 +476,8 @@ export const historicEvents = [
     {
         "title": "First Woman Elected Head of State in Modern Europe",
         "year": 1980,
-        "wiki_title": "Vigdís_Finnbogadóttir",
-        "description": "Vigdís Finnbogadóttir of Iceland became the world's first democratically elected female president."
+        "wiki_title": "VigdÃ­s_FinnbogadÃ³ttir",
+        "description": "VigdÃ­s FinnbogadÃ³ttir of Iceland became the world's first democratically elected female president."
     },
     {
         "title": "First Female Vice President of the United States",
@@ -489,7 +489,7 @@ export const historicEvents = [
         "title": "International Women's Day Officially Recognized by the UN",
         "year": 1977,
         "wiki_title": "International_Women's_Day",
-        "description": "The UN officially recognized International Women’s Day, celebrated annually to promote gender equality and women's achievements."
+        "description": "The UN officially recognized International Womenâ€™s Day, celebrated annually to promote gender equality and women's achievements."
     },
     {
         "title": "Publication of 'A Vindication of the Rights of Woman'",
@@ -501,7 +501,7 @@ export const historicEvents = [
         "title": "Founding of the Female Moral Reform Society",
         "year": 1834,
         "wiki_title": "Female_Moral_Reform_Society",
-        "description": "Established in New York to fight prostitution and promote women’s moral and social reform."
+        "description": "Established in New York to fight prostitution and promote womenâ€™s moral and social reform."
     },
     {
         "title": "First Woman Earns a Medical Degree in the U.S.",
@@ -531,7 +531,7 @@ export const historicEvents = [
         "title": "Catherine the Great Becomes Empress of Russia",
         "year": 1762,
         "wiki_title": "Catherine_the_Great",
-        "description": "Catherine the Great took the Russian throne and ruled as one of Europe’s most powerful and reformist monarchs."
+        "description": "Catherine the Great took the Russian throne and ruled as one of Europeâ€™s most powerful and reformist monarchs."
     },
     {
         "title": "Laura Bassi Appointed Professor of Physics",
@@ -555,7 +555,7 @@ export const historicEvents = [
         "title": "Hannah Wooley Publishes First English Cookbook by a Woman",
         "year": 1670,
         "wiki_title": "Hannah_Wooley",
-        "description": "Hannah Wooley's 'The Gentlewoman’s Companion' became the first English cookbook authored by a woman, focusing on domesticity and cooking."
+        "description": "Hannah Wooley's 'The Gentlewomanâ€™s Companion' became the first English cookbook authored by a woman, focusing on domesticity and cooking."
     },
     {
         "title": "Lady Mary Wortley Montagu Introduces Smallpox Inoculation to Britain",
@@ -588,7 +588,7 @@ export const historicEvents = [
         "description": "Christine de Pizan, one of the first professional female writers, published 'The Book of the City of Ladies,' defending women and their contributions to society."
     },
     {
-        "title": "The First Female Artist to Be Recognized: Filippino Lippi’s Female Student",
+        "title": "The First Female Artist to Be Recognized: Filippino Lippiâ€™s Female Student",
         "year": 1460,
         "wiki_title": "Filippino_Lippi",
         "description": "Filippino Lippi, an Italian painter, is believed to have had a female student who is one of the earliest known women to be recognized for her artistic achievements."

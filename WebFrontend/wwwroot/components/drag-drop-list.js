@@ -129,9 +129,9 @@ class DragDropList extends HTMLElement {
     const draggedElement = evt.item;
     const draggedYear = Number(draggedElement.getAttribute('data-year'));
     const previousElement = evt.to.children[evt.newIndex - 1];
-      const previousYear = previousElement ? Number(previousElement.getAttribute('data-year')) : -999999999;
+    const previousYear = previousElement ? Number(previousElement.getAttribute('data-year')) : -999999999;
     const nextElement = evt.to.children[evt.newIndex + 1];
-      const nextYear = nextElement ? Number(nextElement.getAttribute('data-year')) : 999999999;
+    const nextYear = nextElement ? Number(nextElement.getAttribute('data-year')) : 999999999;
 
     if (draggedYear < previousYear || draggedYear > nextYear) {
       this.dispatchMessage(AnswerResultEnum.INCORRECT);
