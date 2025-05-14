@@ -5,6 +5,7 @@ import { GameStateEnum } from '../models/game-state.js';
 class GamePage extends HTMLElement {
   previousPlayerScores = {};
   changedScores = [];
+  toastGameStateId = null;
 
   constructor() {
     super();
@@ -71,7 +72,7 @@ class GamePage extends HTMLElement {
   }
 
   pollGameState() {
-    setInterval(async () => {
+    var pollGameStateId = setInterval(async () => {
       const gameState = await this.gameStateService.GetGameAsync(this.gameId);
       if (!gameState) {
         return;
@@ -100,15 +101,21 @@ class GamePage extends HTMLElement {
           // Remove the overlay after 3 seconds
           setTimeout(() => {
             document.body.removeChild(winOverlay);
+            clearInterval(this.toastGameStateId);
+            clearInterval(pollGameStateId);
             window.location.hash = `/scores?gameId=${this.gameId}`;
           }, 2000);
         } else if (playersWithMaxScore.length > 0 && !currentPlayerIsWinner) {
           this.gameStateService.EndGame(this.gameId);
+          clearInterval(this.toastGameStateId);
+          clearInterval(pollGameStateId);
           window.location.hash = `/scores?gameId=${this.gameId}`;
         }
       }
 
       if (gameState && gameState.state === GameStateEnum.ENDED) {
+        clearInterval(this.toastGameStateId);
+        clearInterval(pollGameStateId);
         window.location.hash = `/scores?gameId=${this.gameId}`;
       }
 
@@ -120,11 +127,11 @@ class GamePage extends HTMLElement {
   }
 
   toastGameStateChanges() {
-    setInterval(() => {
+    this.toastGameStateId = setInterval(() => {
       if (this.changedScores.length > 0) {
         var oldestChangedScore = this.changedScores.shift()
         if (!oldestChangedScore || oldestChangedScore.score === 0) return;
-        this.showToast(`${oldestChangedScore.playerId}'s score is now ${oldestChangedScore.score}`);
+        this.showToast(`${oldestChangedScore.playerId}: ${oldestChangedScore.score} pts`);
       }
     }, 100);
   }

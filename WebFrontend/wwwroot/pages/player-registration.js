@@ -2,6 +2,8 @@ import { gameStateService } from '../business-logic/game-state-service.js';
 import { GameStateEnum } from '../models/game-state.js';
 
 class PlayerRegistration extends HTMLElement {
+    gameStateIntervalId = null;
+
     connectedCallback() {
         const gameHash = this.getAttribute('game-hash');
 
@@ -64,10 +66,11 @@ class PlayerRegistration extends HTMLElement {
     }
 
     pollGameState(gameStateService, gameHash) {
-        setInterval(async () => {
+        this.gameStateIntervalId = setInterval(async () => {
             var game = await gameStateService.GetGameAsync(gameHash);
             this.updatePlayerTable(game);
             if (game && game.state === GameStateEnum.RUNNING) {
+                clearInterval(this.gameStateIntervalId);
                 window.location.hash = `/game?gameId=${gameHash}`;
             }
         }, 1000);

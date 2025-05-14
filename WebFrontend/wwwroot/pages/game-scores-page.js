@@ -3,6 +3,7 @@ import { GameStateEnum } from '../models/game-state.js';
 
 class GameScoresPage extends HTMLElement {
     gameId;
+    gameStateIntervalId = null;
 
     async connectedCallback() {
         const urlParams = new URLSearchParams(window.location.hash.split('?')[1]);
@@ -44,12 +45,13 @@ class GameScoresPage extends HTMLElement {
 
         this.querySelector('#back-button').addEventListener('click', () => {
             // Go back to start page
+            clearInterval(this.gameStateIntervalId);
             window.location.hash = '#/';
         });
 
         this.querySelector('#rematch-button').addEventListener('click', () => {
             // Start a new game with the same players
-            const playerNames = game.playerScores.map(player => player.playerId);
+            clearInterval(this.gameStateIntervalId);
             gameStateService.ResetScores(this.gameId);
             window.location.hash = '#/game?gameId=' + this.gameId;
         });
@@ -57,7 +59,7 @@ class GameScoresPage extends HTMLElement {
     }
 
     pollGameState() {
-        setInterval(async () => {
+        this.gameStateIntervalId = setInterval(async () => {
             const gameState = await gameStateService.GetGameAsync(this.gameId);
             if (!gameState) {
                 return;
