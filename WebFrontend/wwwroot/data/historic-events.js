@@ -588,7 +588,7 @@ export const historicEvents = [
         "description": "Christine de Pizan, one of the first professional female writers, published 'The Book of the City of Ladies,' defending women and their contributions to society."
     },
     {
-        "title": "The First Female Artist to Be Recognized: Filippino Lippi's Female Student",
+        "title": "The First Female Artist to Be Recognized",
         "year": 1460,
         "wiki_title": "Filippino_Lippi",
         "description": "Filippino Lippi, an Italian painter, is believed to have had a female student who is one of the earliest known women to be recognized for her artistic achievements."
