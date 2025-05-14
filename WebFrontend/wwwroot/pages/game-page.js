@@ -45,11 +45,12 @@ class GamePage extends HTMLElement {
           box-sizing: border-box;
         }
       </style>
-      <drag-drop-list id="dragDropList"></drag-drop-list>
+      <toast-component id="toast"></toast-component>
       <footer id="footer">
         <div>Game ID: ${this.gameId || 'N/A'}</div>
       </footer>
-      <toast-component id="toast"></toast-component>
+      <drag-drop-list id="dragDropList"></drag-drop-list>
+
     `;
   }
 
