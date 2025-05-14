@@ -10,7 +10,7 @@ class ToastComponent extends HTMLElement {
       <style>
         .toast {
           position: fixed;
-          top: 20px;
+          top: 10px;
           left: 50%;
           transform: translateX(-50%);
           background-color: #333;
