@@ -97,7 +97,7 @@ class DragDropList extends HTMLElement {
     return `   
       <div class="year">${event.year}</div>
       <div class="title">${this.escapeHtml(event.title)}</div>
-      <button class="more" data-event='${escapeHtml(JSON.stringify(event))}'>more</button>`
+      <button class="more" data-event='${this.escapeHtml(JSON.stringify(event))}'>more</button>`
   }
 
   escapeHtml(text) {
