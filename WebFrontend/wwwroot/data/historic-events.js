@@ -36,7 +36,7 @@ export const historicEvents = [
         "description": "Anne Boleyn, the second wife of King Henry VIII, was executed, influencing the English Reformation."
     },
     {
-        "title": "Anne Frank writes a diary in hiding during the Holocaust",
+        "title": "Anne Frank writes a diary during the Holocaust",
         "year": 1942,
         "wiki_title": "Anne_Frank",
         "description": "Anne Frank documented her life in hiding during the Holocaust in a diary that became world-renowned."
@@ -54,7 +54,7 @@ export const historicEvents = [
         "description": "Bertha Benz undertook the first long-distance automobile trip, promoting the automobile industry."
     },
     {
-        "title": "Billie Holiday sings about racial injustice in her song 'Strange Fruit'",
+        "title": "Billie Holiday sings about racial injustice in 'Strange Fruit'",
         "year": 1939,
         "wiki_title": "Billie_Holiday",
         "description": "Billie Holiday, a renowned jazz singer, brought attention to racial injustices through her song 'Strange Fruit.'"
@@ -96,7 +96,7 @@ export const historicEvents = [
         "description": "Clara Schumann, a renowned pianist and composer, made significant contributions to Romantic-era music."
     },
     {
-        "title": "Christine de Pizan writes a treatise on the propper education of girls",
+        "title": "Christine de Pizan writes a treatise on girls' education",
         "year": 1405,
         "wiki_title": "Christine_de_Pizan",
         "description": "Christine de Pizan, one of Europe's first professional female writers, advocated for women's rights in her works."
@@ -120,7 +120,7 @@ export const historicEvents = [
         "description": "Eleanor of Aquitaine, queen consort of France and England, played a significant role in 12th-century European politics."
     },
     {
-        "title": "Eleanor Roosevelt helps draft the Universal Declaration of Human Rights",
+        "title": "Eleanor Roosevelt co-writes the Universal Declaration of Human Rights",
         "year": 1948,
         "wiki_title": "Eleanor_Roosevelt",
         "description": "Eleanor Roosevelt, as chair of the United Nations Human Rights Commission, was instrumental in drafting the Universal Declaration of Human Rights."
@@ -366,7 +366,7 @@ export const historicEvents = [
         "description": "Rosa Parks ignited the Montgomery Bus Boycott by refusing to surrender her seat to a white passenger on December 1, 1955, leading to a 13-month protest against racial segregation on public buses."
     },
     {
-        "title": "Ruth Bader Ginsburg files a federal case to challenge involuntary sterilization",
+        "title": "Ruth Bader Ginsburg challenges involuntary sterilization",
         "year": 1973,
         "wiki_title": "Ruth_Bader_Ginsburg",
         "description": "Ruth Bader Ginsburg successfully argued six landmark cases before the U.S. Supreme Court in the 1970s, challenging gender discrimination and advancing civil liberties."
@@ -414,7 +414,7 @@ export const historicEvents = [
         "description": "Valentina Tereshkova became the first woman to travel into space aboard Vostok 6."
     },
     {
-        "title": "UN Adopts the Convention on the Elimination of All Forms of Discrimination Against Women (CEDAW)",
+        "title": "Convention on the Elimination of All Forms of Discrimination Against Women",
         "year": 1979,
         "wiki_title": "Convention_on_the_Elimination_of_All_Forms_of_Discrimination_Against_Women",
         "description": "CEDAW was adopted by the UN to promote women's rights and gender equality worldwide."
@@ -582,13 +582,13 @@ export const historicEvents = [
         "description": "Angela Merici founded the Ursuline Order, one of the first religious institutes for women dedicated to teaching young girls, spreading education and Catholic values."
     },
     {
-        "title": "Christine de Pizan becomes one of the first professional female writers by publishing her magnum opus",
+        "title": "Christine de Pizan becomes one of the first professional female writers",
         "year": 1405,
         "wiki_title": "Christine_de_Pizan",
         "description": "Christine de Pizan, one of the first professional female writers, published 'The Book of the City of Ladies,' defending women and their contributions to society."
     },
     {
-        "title": "The First Female Artist to Be Recognized: Filippino Lippi’s Female Student",
+        "title": "The First Female Artist to Be Recognized: Filippino Lippi's Female Student",
         "year": 1460,
         "wiki_title": "Filippino_Lippi",
         "description": "Filippino Lippi, an Italian painter, is believed to have had a female student who is one of the earliest known women to be recognized for her artistic achievements."
