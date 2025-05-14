@@ -96,8 +96,17 @@ class DragDropList extends HTMLElement {
   createPillContent(event) {
     return `   
       <div class="year">${event.year}</div>
-      <div class="title">${event.title}</div>
-      <button class="more" data-event='${JSON.stringify(event)}'>more</button>`
+      <div class="title">${this.escapeHtml(event.title)}</div>
+      <button class="more" data-event='${escapeHtml(JSON.stringify(event))}'>more</button>`
+  }
+
+  escapeHtml(text) {
+    return text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   }
 
   openEventModal(eventData) {
