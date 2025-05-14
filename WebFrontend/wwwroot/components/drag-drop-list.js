@@ -50,12 +50,6 @@ class DragDropList extends HTMLElement {
       this.events = JSON.parse(events);
     }
     this.initializeEvents();
-    this.shadowRoot.addEventListener('click', (e) => {
-      if (e.target.classList.contains('more')) {
-        const eventData = JSON.parse(e.target.getAttribute('data-event'));
-        this.openEventModal(eventData);
-      }
-    });
   }
 
   static get observedAttributes() {
@@ -67,6 +61,12 @@ class DragDropList extends HTMLElement {
     const events = [this._eventService.get(), this._eventService.get(), this._eventService.get()];
     this.populateSlots(events.slice(1).sort((a, b) => a.year - b.year));
     this.populateTopSlot(events[0]);
+    this.shadowRoot.addEventListener('click', (e) => {
+      if (e.target.classList.contains('more')) {
+        const eventData = JSON.parse(e.target.getAttribute('data-event'));
+        this.openEventModal(eventData);
+      }
+    });
   }
 
   populateSlots(events) {
