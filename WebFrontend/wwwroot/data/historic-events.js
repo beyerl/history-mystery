@@ -604,5 +604,31 @@ export const historicEvents = [
         "year": 1020,
         "wiki_title": "Slavic_paganism",
         "description": "Women played active roles in the resistance to Christianization in Slavic regions, sometimes as leaders in uprisings against Christian missionary efforts."
+    },
+    {
+        "title": "Legend of Hua Mulan",
+        "year": 420,
+        "wiki_title": "Hua_Mulan",
+        "description": "Hua Mulan, a legendary Chinese warrior woman, is said to have taken her father's place in the army, disguising herself as a man and serving with distinction."
+    },
+    {
+        "title": "Pocahontas Meets the English",
+        "year": 1607,
+        "wiki_title": "Pocahontas",
+        "description": "Pocahontas, a Native American woman of the Powhatan people, became known for her association with the English colonial settlement at Jamestown, Virginia, and her role in mediating relations between the two cultures."
+    },
+    {
+        "title": "Legend of Hua Mulan",
+        "year": 420,
+        "wiki_title": "Hua_Mulan",
+        "description": "Hua Mulan, a legendary Chinese warrior woman, is said to have taken her father's place in the army, disguising herself as a man and serving with distinction."
+    },
+    {
+        "title": "Pocahontas Meets the English",
+        "year": 1607,
+        "wiki_title": "Pocahontas",
+        "description": "Pocahontas, a Native American woman of the Powhatan people, became known for her association with the English colonial settlement at Jamestown, Virginia, and her role in mediating relations between the two cultures."
     }
+
+
 ];
