@@ -8,17 +8,16 @@ class GameSetupPage extends HTMLElement {
         await gameStateService.CreateGameAsync(gameHash); // Create a new game
 
         this.innerHTML = `
-            <div>
-                <h1>Game Setup</h1>
+            <div style="padding:20px;background-color: rgba(122, 73, 24, 0.9); border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);margin: 20px;">
+                <h1 style="margin-top: 0px">Game Setup</h1>
                 <div>
-                    <label>Game Id:</label>
-                    <span id="game-id">${gameHash}</span>
-                    <button id="share-button">Share</button>
+                        <label style="font-weight:bold">Game Id: <span id="game-id">${gameHash}</span></label>                        
+                        <button id="share-button" style="background-color:var(--color-yellow);border:0; border-radius:5px; margin-left:10px;">Share</button>
                     <br>
-                    <div id="game-id-message" style="height: 20px;"></div>
+                    <div id="game-id-message" style="height: 20px;padding-top:10px;padding-bottom:10px"></div>
                 </div>
                 <player-registration game-hash="${gameHash}"></player-registration>
-                <button id="start-game-button">Begin</button>
+                <button id="start-game-button" class="primary-button w-100">Begin</button>
             </div>
         `;
 

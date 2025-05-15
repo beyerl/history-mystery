@@ -11,11 +11,11 @@ class PlayerRegistration extends HTMLElement {
             <div>
                 <label>Player Name:</label>
                 <input type="text" id="player-name" placeholder="Enter your name" />
-                <button id="update-player-button">Accept</button>
+                <button id="update-player-button" style="background-color:var(--color-yellow);border:0; border-radius:5px;">Accept</button>
                 <br>
                 <div id="player-name-error" style="color: red;height: 20px;"></div>
             </div>
-            <table id="player-table" style="margin: 0 auto; border-collapse: collapse; border: 1px solid black; width: 100%;">
+            <table id="player-table" style="margin: 0 auto; border-collapse: collapse; border: 1px solid black; width: 100%;background-color: whitesmoke;">
                 <thead>
                     <tr>
                         <th style="border: 1px solid black;">Player Names</th>                         

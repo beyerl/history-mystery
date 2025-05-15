@@ -8,6 +8,18 @@
   --color-yellow: #F1C064;
   --color-brown: #7A4918;
   --color-beige: #D6D8B1;
+
+  /* bootstrap gray scale*/
+  --color-gray-100: #f8f9fa;
+  --color-gray-200: #e9ecef;
+  --color-gray-300: #dee2e6;
+  --color-gray-400: #ced4da;
+  --color-gray-500: #adb5bd;
+  --color-gray-600: #6c757d;
+  --color-gray-700: #495057;
+  --color-gray-800: #343a40;
+  --color-gray-900: #212529;
+  --color-gray-1000: #000000;
 }
 
 /* fonts */
@@ -18,9 +30,10 @@
   font-style: normal;
 }
 
+
 @font-face {
-  font-family: 'Comfortaa';
-  src: url('/assets/fonts/Comfortaa-Bold.ttf') format('truetype');
+  font-family: 'CrimsonPro';
+  src: url('/assets/fonts/CrimsonPro-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
 }
@@ -43,4 +56,17 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.primary-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: var(--color-yellow);
+  color: var(--color-brown);
+  border: none;
+  border-radius: 5px;
+}
+
+.w-100 {
+  width: 100%;
 }

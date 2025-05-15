@@ -1,12 +1,19 @@
 class StartPage extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
-            <div style="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                <h1 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); margin-bottom: 65vh;">Herstory Mystery</h1>
-                <div style="text-align: center; margin-top: 20px; display: flex; flex-direction: column; align-items: stretch;">
-                    <button id="start-game-button" style="padding: 10px 20px; font-size: 16px; background-color: var(--color-mint); color: var(--color-brown); border: none; border-radius: 5px;">Start Game</button>
-                    <button id="join-game-button" style="padding: 10px 20px; font-size: 16px; background-color: var(--color-yellow); color: var(--color-brown); border: none; border-radius: 5px; margin-top: 10px;">Join Game</button>
+            <style>
+            .primary-button + .primary-button {
+                margin-top: 10px;
+            }
+            </style>
+            <div style="height: 100vh; display: flex; flex-direction: column; justify-content: end; align-items: center;">
+            <div style="background-color: rgba(122, 73, 24, 0.7); padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); width: 80%;margin-bottom: 20px;">
+                <h1 style="font-family: 'CrimsonPro', Times;color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);margin-top:0px">Herstory Mystery</h1>
+                <div style="text-align: center; margin-top: 20px; display: flex; flex-direction: column; align-items: stretch;width:100%">
+                <button id="start-game-button" class="primary-button w-100">Start Game</button>
+                <button id="join-game-button" class="primary-button w-100">Join Game</button>
                 </div>
+            </div>
             </div>
         `;
 
