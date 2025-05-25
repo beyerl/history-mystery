@@ -12,12 +12,13 @@ class GameSetupPage extends HTMLElement {
                 <h1 style="margin-top: 0px">Game Setup</h1>
                 <div>
                         <label style="font-weight:bold">Game Id: <span id="game-id">${gameHash}</span></label>                        
-                        <button id="share-button" style="background-color:var(--color-yellow);border:0; border-radius:5px; margin-left:10px;">Share</button>
+                        <button id="share-button" class="btn btn-primary" style="margin-left:10px;">Share</button>
                     <br>
                     <div id="game-id-message" style="height: 20px;padding-top:10px;padding-bottom:10px"></div>
                 </div>
                 <player-registration game-hash="${gameHash}"></player-registration>
-                <button id="start-game-button" class="primary-button w-100">Begin</button>
+                <button id="start-game-button" class="btn btn-primary btn-block">Begin</button>
+                <button id="back-to-menu-button" class="btn btn-primary btn-block">Back to Main Menu</button>
             </div>
         `;
 
@@ -62,6 +63,11 @@ class GameSetupPage extends HTMLElement {
             } else {
                 alert('Failed to start the game. Please try again.');
             }
+        });
+
+        this.querySelector('#back-to-menu-button').addEventListener('click', () => {
+            // Go back to the main menu
+            window.location.hash = '#/';
         });
     }
 }

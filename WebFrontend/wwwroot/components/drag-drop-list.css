@@ -1,3 +1,6 @@
+/* importing global styles */
+@import '../styles.css';
+
 :host {
     --top-slot-margin: 5px;
     --container-height: 90vh;

@@ -37,8 +37,8 @@ class GameScoresPage extends HTMLElement {
                     </tbody>
                 </table>
                 <div style="margin-top: 20px;display: flex; flex-direction: column; align-items: center;">
-                    <button id="back-button" style="margin-top: 20px;">Back to Main Menu</button>
-                    <button id="rematch-button" style="margin-top: 20px;">Rematch</button>
+                    <button id="back-button" class="btn btn-primary btn-block">Back to Main Menu</button>
+                    <button id="rematch-button" class="btn btn-primary btn-block">Rematch</button>
                 </div>
             </div>
         `;

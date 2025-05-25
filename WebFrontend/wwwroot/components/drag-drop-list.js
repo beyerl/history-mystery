@@ -97,7 +97,7 @@ class DragDropList extends HTMLElement {
     return `   
       <div class="year">${event.year}</div>
       <div class="title">${this.escapeHtml(event.title)}</div>
-      <button class="more" data-event='${this.escapeHtml(JSON.stringify(event))}'>more</button>`
+      <button class="btn btn-primary more" data-event='${this.escapeHtml(JSON.stringify(event))}'>more</button>`
   }
 
   escapeHtml(text) {
@@ -176,7 +176,7 @@ class DragDropList extends HTMLElement {
         draggedElement.classList.remove('correct-answer-animation');
 
         this.populateTopSlot(this._eventService.get());
-      }, 800); 
+      }, 800);
     }
   }
 

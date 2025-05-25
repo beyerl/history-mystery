@@ -9,7 +9,7 @@ class JoinGamePage extends HTMLElement {
                 <div>
                     <label>Game Id:</label>
                     <input type="text" id="game-id-input" placeholder="Enter Game ID" />
-                    <button id="join-game-button">Join</button>
+                    <button class="btn btn-primary" id="join-game-button">Join</button>
                     <br>
                     <div id="game-id-message" style="height: 20px;"></div>
                 </div>

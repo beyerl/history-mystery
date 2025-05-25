@@ -46,10 +46,13 @@ class GamePage extends HTMLElement {
           padding: 10px;
           box-sizing: border-box;
         }
+        .btn {
+          /* Ensures .btn styles are available in shadow DOM */
+        }
       </style>
       <toast-component id="toast"></toast-component>
       <footer id="footer">
-        <div>Game ID: ${this.gameId || 'N/A'}</div>
+        <button id="back-to-menu" class="btn btn-primary" style="margin-left: 10px;">Back to Menu</button>
       </footer>
       <drag-drop-list id="dragDropList"></drag-drop-list>
 
@@ -150,6 +153,13 @@ class GamePage extends HTMLElement {
           break;
       }
     });
+    // Add back to menu button event
+    const backBtn = this.shadowRoot.getElementById('back-to-menu');
+    if (backBtn) {
+      backBtn.addEventListener('click', () => {
+        window.location.hash = '/';
+      });
+    }
   }
 
   showToast(message) {

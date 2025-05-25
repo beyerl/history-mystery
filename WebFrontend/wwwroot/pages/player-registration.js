@@ -11,7 +11,7 @@ class PlayerRegistration extends HTMLElement {
             <div>
                 <label>Player Name:</label>
                 <input type="text" id="player-name" placeholder="Enter your name" />
-                <button id="update-player-button" style="background-color:var(--color-yellow);border:0; border-radius:5px;">Accept</button>
+                <button id="update-player-button" class="btn btn-primary" >Accept</button>
                 <br>
                 <div id="player-name-error" style="color: red;height: 20px;"></div>
             </div>
