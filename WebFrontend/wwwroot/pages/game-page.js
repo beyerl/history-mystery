@@ -7,7 +7,7 @@ class GamePage extends HTMLElement {
   changedScores = [];
   toastGameStateId = null;
   pollGameStateId = null;
-  maxScore = 1;
+  maxScore = 10;
 
   constructor() {
     super();
