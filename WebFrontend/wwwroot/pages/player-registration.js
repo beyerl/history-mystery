@@ -4,7 +4,7 @@ import { GameStateEnum } from '../models/game-state.js';
 class PlayerRegistration extends HTMLElement {
     gameStateIntervalId = null;
 
-    connectedCallback() {
+    async connectedCallback() {
         const gameHash = this.getAttribute('game-hash');
 
         this.innerHTML = `
@@ -27,7 +27,7 @@ class PlayerRegistration extends HTMLElement {
             <div id="player-table-error" style="color: red;height: 20px;"></div>
         `;
 
-        this.initializePlayerNameFromLocalStorage();
+        this.initializePlayerNameFromLocalStorage(gameHash);
         this.addEventListeners(gameStateService, gameHash);
         this.pollGameState(gameStateService, gameHash);
     }
@@ -58,10 +58,11 @@ class PlayerRegistration extends HTMLElement {
         });
     }
 
-    initializePlayerNameFromLocalStorage() {
+    initializePlayerNameFromLocalStorage(gameHash) {
         const playerNameFromStorage = localStorage.getItem('playerName');
         if (playerNameFromStorage) {
             this.querySelector('#player-name').value = playerNameFromStorage;
+            gameStateService.AddPlayer(gameHash, playerNameFromStorage);
         }
     }
 
