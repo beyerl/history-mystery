@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Frontend & Api",
+    "Projects": [
+      {
+        "Path": "WebFrontend\\WebFrontend.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "GameStateApi\\GameStateApi.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

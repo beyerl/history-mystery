@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,7 +14,8 @@ namespace GameStateApi.Services
             {
                 GameId = gameId,
                 PlayerScores = new Dictionary<string, int>(),
-                State = GameStateEnum.Setup
+                State = GameStateEnum.Setup,
+                LastUpdated = DateTime.UtcNow
             };
             _gameStates[gameId] = newGame;
             return newGame.ToDto();
@@ -33,6 +35,7 @@ namespace GameStateApi.Services
                 return false;
 
             game.PlayerScores[playerId] = 0;
+            game.LastUpdated = DateTime.UtcNow;
             return true;
         }
 
@@ -41,7 +44,12 @@ namespace GameStateApi.Services
             if (!_gameStates.TryGetValue(gameId, out var game) || game.State != GameStateEnum.Setup)
                 return false;
 
-            return game.PlayerScores.Remove(playerId);
+            var result = game.PlayerScores.Remove(playerId);
+            if (result)
+            {
+                game.LastUpdated = DateTime.UtcNow;
+            }
+            return result;
         }
 
         public bool IncrementPlayerScore(string gameId, string playerId)
@@ -53,6 +61,7 @@ namespace GameStateApi.Services
                 return false;
 
             game.PlayerScores[playerId]++;
+            game.LastUpdated = DateTime.UtcNow;
             return true;
         }
 
@@ -62,6 +71,7 @@ namespace GameStateApi.Services
                 return false;
 
             game.State = GameStateEnum.Running;
+            game.LastUpdated = DateTime.UtcNow;
             return true;
         }
 
@@ -71,6 +81,7 @@ namespace GameStateApi.Services
                 return false;
 
             game.State = GameStateEnum.Ended;
+            game.LastUpdated = DateTime.UtcNow;
             return true;
         }
 
@@ -85,7 +96,19 @@ namespace GameStateApi.Services
             }
 
             game.State = GameStateEnum.Running;
+            game.LastUpdated = DateTime.UtcNow;
             return true;
+        }
+
+        public void CleanupOldGameStates()
+        {
+            var oneHourAgo = DateTime.UtcNow.AddHours(-1);
+            var keysToRemove = _gameStates.Where(kvp => kvp.Value.LastUpdated < oneHourAgo).Select(kvp => kvp.Key).ToList();
+
+            foreach (var key in keysToRemove)
+            {
+                _gameStates.Remove(key);
+            }
         }
     }
 
@@ -94,6 +117,7 @@ namespace GameStateApi.Services
         public string GameId { get; set; }
         public Dictionary<string, int> PlayerScores { get; set; }
         public GameStateEnum State { get; set; }
+        public DateTime LastUpdated { get; set; } // New property to track last update time
 
         public GameStateDto ToDto()
         {
@@ -105,7 +129,6 @@ namespace GameStateApi.Services
             };
         }
     }
-
 
     public enum GameStateEnum
     {
@@ -121,8 +144,6 @@ namespace GameStateApi.Services
         public List<PlayerScoreDto> PlayerScores { get; set; }
 
         public GameStateEnum State { get; set; }
-
-
     }
 
     public class PlayerScoreDto
