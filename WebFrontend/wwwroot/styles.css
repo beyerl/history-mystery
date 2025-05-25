@@ -28,8 +28,8 @@
   --color-modal-overlay: rgba(0, 0, 0, 0.5);
   --color-modal-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   --color-modal-close: #e53935;
-  --color-toast-bg: #333;
-  --color-toast-text: #fff;
+  --color-toast-bg: var(--color-gray-900);
+  --color-toast-text: var(--color-white);
   --color-popover-bg: #e86a3c;
   --color-popover-text: #fff;
   --color-table-border: var(--color-black);
@@ -70,14 +70,12 @@ body {
   cursor: pointer;
 }
 
-.primary-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: var(--color-yellow);
-  color: var(--color-brown);
-  border: none;
-  border-radius: 5px;
+h1 {
+  color: var(--color-white);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7)
 }
+
+
 
 .w-100 {
   width: 100%;
