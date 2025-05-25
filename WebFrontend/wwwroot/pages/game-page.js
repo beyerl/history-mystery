@@ -6,6 +6,7 @@ class GamePage extends HTMLElement {
   previousPlayerScores = {};
   changedScores = [];
   toastGameStateId = null;
+  pollGameStateId = null;
   maxScore = 1;
 
   constructor() {
@@ -62,7 +63,7 @@ class GamePage extends HTMLElement {
   initialize() {
     import('../components/drag-drop-list.js');
     import('../components/win-overlay.js');
-    import('../components/toast-component.js'); // Import the new toast component
+    import('../components/toast-component.js');
 
     import('../data/historic-events.js').then(({ historicEvents }) => {
       const dragDropList = this.shadowRoot.getElementById('dragDropList');
@@ -76,7 +77,7 @@ class GamePage extends HTMLElement {
   }
 
   pollGameState() {
-    var pollGameStateId = setInterval(async () => {
+    this.pollGameStateId = setInterval(async () => {
       const gameState = await this.gameStateService.GetGameAsync(this.gameId);
       if (!gameState) {
         return;
@@ -106,20 +107,20 @@ class GamePage extends HTMLElement {
           setTimeout(() => {
             document.body.removeChild(winOverlay);
             clearInterval(this.toastGameStateId);
-            clearInterval(pollGameStateId);
+            clearInterval(this.pollGameStateId);
             window.location.hash = `/scores?gameId=${this.gameId}`;
           }, 2000);
         } else if (playersWithMaxScore.length > 0 && !currentPlayerIsWinner) {
           this.gameStateService.EndGame(this.gameId);
           clearInterval(this.toastGameStateId);
-          clearInterval(pollGameStateId);
+          clearInterval(this.pollGameStateId);
           window.location.hash = `/scores?gameId=${this.gameId}`;
         }
       }
 
       if (gameState && gameState.state === GameStateEnum.ENDED) {
         clearInterval(this.toastGameStateId);
-        clearInterval(pollGameStateId);
+        clearInterval(this.pollGameStateId);
         window.location.hash = `/scores?gameId=${this.gameId}`;
       }
 
@@ -158,6 +159,8 @@ class GamePage extends HTMLElement {
     if (backBtn) {
       backBtn.addEventListener('click', () => {
         window.location.hash = '/';
+        clearInterval(this.toastGameStateId);
+        clearInterval(this.pollGameStateId);
       });
     }
   }

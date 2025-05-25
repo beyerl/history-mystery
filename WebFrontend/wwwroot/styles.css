@@ -59,7 +59,6 @@ body {
 .container {
   max-width: 600px;
   margin: 0px auto;
-  text-align: center;
 }
 
 .button {
@@ -184,6 +183,29 @@ body {
 
 .input[disabled],
 .form-control[disabled] {
-  background-color: var(--color-gray-200);
+  background-color: var(--color-gray-500);
   opacity: 1;
+}
+
+/* Bootstrap-like input-group */
+.input-group {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+/* Bootstrap-like label styles */
+.form-label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--color-brown);
+  font-size: 1rem;
+}
+
+.form-label-required::after {
+  content: '*';
+  color: #e53935;
+  margin-left: 0.25em;
+  font-size: 1em;
 }

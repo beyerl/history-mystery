@@ -3,59 +3,56 @@ import { gameStateService } from '../business-logic/game-state-service.js';
 import './player-registration.js'; // Import the new PlayerRegistration component
 
 class GameSetupPage extends HTMLElement {
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+    }
     async connectedCallback() {
+        import('../components/toast-component.js');
+
         const gameHash = HashHelper.generateGameHash();
         await gameStateService.CreateGameAsync(gameHash); // Create a new game
 
-        this.innerHTML = `
+        this.shadowRoot.innerHTML = `
+            <style>
+                @import '../styles.css';
+            </style>
+            <toast-component id="toast"></toast-component>
             <div style="padding:20px;background-color: rgba(122, 73, 24, 0.9); border-radius: 10px; box-shadow: 0 4px 8px var(--color-modal-shadow);margin: 20px;">
                 <h1 style="margin-top: 0px">Game Setup</h1>
                 <div>
-                        <label style="font-weight:bold">Game Id: <span id="game-id">${gameHash}</span></label>                        
-                        <button id="share-button" class="btn btn-primary" style="margin-left:10px;">Share</button>
+                    <label>Game Id:</label>
+                    <div class="input-group" style="justify-content: space-between; align-items: center;">
+                        <input class="input" type="text" id="game-id" value="${gameHash}" disabled/>                     
+                        <button id="share-button" class="btn btn-primary">Share</button>
+                    </div>
                     <br>
-                    <div id="game-id-message" style="height: 20px;padding-top:10px;padding-bottom:10px"></div>
                 </div>
                 <player-registration game-hash="${gameHash}"></player-registration>
                 <button id="start-game-button" class="btn btn-primary btn-block">Begin</button>
                 <button id="back-to-menu-button" class="btn btn-primary btn-block">Back to Main Menu</button>
             </div>
         `;
-
-        // add 10 empty rows to the player table
-        const playerTableBody = this.querySelector('player-registration tbody');
-        for (let i = 0; i < 10; i++) {
-            playerTableBody.innerHTML += '<tr><td style="border: 1px solid var(--color-table-border);height: 20px;"> </td></tr>';
-        }
-
         this.addEventListeners(gameStateService, gameHash);
     }
 
     addEventListeners(gameStateService, gameHash) {
-        this.querySelector('#share-button').addEventListener('click', () => {
+        this.shadowRoot.querySelector('#share-button').addEventListener('click', () => {
             // Copy the game ID to the clipboard
-            const gameId = document.getElementById('game-id').textContent;
+            const gameId = this.shadowRoot.getElementById('game-id').value;
             navigator.clipboard.writeText(gameId).then(() => {
-                const messageDiv = this.querySelector('#game-id-message');
-                messageDiv.textContent = 'Game ID copied to clipboard!'; // Show a success message
-                setTimeout(() => {
-                    messageDiv.textContent = ''; // Clear the message after 2 seconds
-                }, 2000);
+                this.showToast(`Game ID ${gameId} copied to clipboard!`); // Show a toast notification
             }).catch(err => {
                 console.error('Failed to copy game ID: ', err); // Log any errors
-                const messageDiv = this.querySelector('#game-id-message');
-                messageDiv.textContent = 'Failed to copy game ID.'; // Show an error message
-                setTimeout(() => {
-                    messageDiv.textContent = ''; // Clear the message after 2 seconds
-                }, 2000);
+                this.showToast('Failed to copy game ID.'); // Show a toast notification
             });
         });
 
-        this.querySelector('#start-game-button').addEventListener('click', async () => {
-            const gameId = document.getElementById('game-id').textContent;
+        this.shadowRoot.querySelector('#start-game-button').addEventListener('click', async () => {
+            const gameId = this.shadowRoot.getElementById('game-id').value;
             const game = await gameStateService.GetGameAsync(gameId);
             if (!game || game.playerScores.length == 0) {
-                this.querySelector('player-registration').setError('No players have joined the game. Please add players before starting the game.');
+                this.shadowRoot.querySelector('player-registration').setError('No players have joined the game. Please add players before starting the game.');
                 return;
             }
             if (gameStateService.StartGame(gameId)) { // Start the game
@@ -65,10 +62,21 @@ class GameSetupPage extends HTMLElement {
             }
         });
 
-        this.querySelector('#back-to-menu-button').addEventListener('click', () => {
-            // Go back to the main menu
+        this.shadowRoot.querySelector('#back-to-menu-button').addEventListener('click', () => {
+            // Call disconnect on player-registration to clear interval
+            const playerRegistration = this.shadowRoot.querySelector('player-registration');
+            if (playerRegistration && typeof playerRegistration.disconnect === 'function') {
+                playerRegistration.disconnect();
+            }
             window.location.hash = '#/';
         });
+    }
+
+    showToast(message) {
+        const toast = this.shadowRoot.getElementById('toast');
+        if (toast) {
+            toast.show(message);
+        }
     }
 }
 

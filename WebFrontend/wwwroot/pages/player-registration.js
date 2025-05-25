@@ -8,10 +8,12 @@ class PlayerRegistration extends HTMLElement {
         const gameHash = this.getAttribute('game-hash');
 
         this.innerHTML = `
-            <div style="display: flex; align-items: center;">
-                <label>Player Name:</label>
-                <input class="input" type="text" id="player-name" placeholder="Enter your name" />
-                <button id="update-player-button" class="btn btn-primary" >Accept</button>
+            <div>
+                <label for="player-name">Player Name:</label>
+                <div class="input-group">
+                    <input class="input" type="text" id="player-name" placeholder="Player Name" />
+                    <button id="update-player-button" class="btn btn-primary" >Accept</button>
+                </div>
             </div>
             <div id="player-name-error" style="color: red;height: 20px;"></div>
             <table id="player-table" class="table" style="margin: 0 auto; width: 100%;">
@@ -25,6 +27,11 @@ class PlayerRegistration extends HTMLElement {
             </table>
             <div id="player-table-error" style="color: red;height: 20px;"></div>
         `;
+        // add 10 empty rows to the player table
+        const playerTableBody = this.querySelector('player-registration tbody');
+        for (let i = 0; i < 10; i++) {
+            playerTableBody.innerHTML += '<tr><td style="border: 1px solid var(--color-table-border);height: 20px;"> </td></tr>';
+        }
 
         this.initializePlayerNameFromLocalStorage(gameHash);
         this.addEventListeners(gameStateService, gameHash);
@@ -101,6 +108,13 @@ class PlayerRegistration extends HTMLElement {
 
     setError(message) {
         this.querySelector('#player-table-error').textContent = message;
+    }
+
+    disconnect() {
+        if (this.gameStateIntervalId) {
+            clearInterval(this.gameStateIntervalId);
+            this.gameStateIntervalId = null;
+        }
     }
 }
 
