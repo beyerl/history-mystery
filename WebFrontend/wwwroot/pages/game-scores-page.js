@@ -18,7 +18,7 @@ class GameScoresPage extends HTMLElement {
         const sortedScores = [...game.playerScores].sort((a, b) => b.score - a.score);
 
         this.innerHTML = `
-            <div>
+            <div class="card w-100">
                 <h1>Game Scores</h1>
                 <table id="scores-table" class="table" style="width: 100%;">
                     <thead>

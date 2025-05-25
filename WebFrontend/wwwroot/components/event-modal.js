@@ -1,27 +1,28 @@
 import { WikipediaApiService } from '../business-logic/wikipedia-api-service.js';
 
 export class EventModal extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        this.wikipediaApiService = new WikipediaApiService();
-        this.render();
-    }
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.wikipediaApiService = new WikipediaApiService();
+    this.render();
+  }
 
-    static get observedAttributes() {
-        return ['data-event'];
-    }
+  static get observedAttributes() {
+    return ['data-event'];
+  }
 
-    attributeChangedCallback(name, oldValue, newValue) {
-        if (name === 'data-event') {
-            this.eventData = JSON.parse(newValue);
-            this.updateContent();
-        }
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === 'data-event') {
+      this.eventData = JSON.parse(newValue);
+      this.updateContent();
     }
+  }
 
-    render() {
-        this.shadowRoot.innerHTML = `
+  render() {
+    this.shadowRoot.innerHTML = `
       <style>
+        @import '../styles.css';
         .modal {
           position: fixed;
           top: 50%;
@@ -33,6 +34,7 @@ export class EventModal extends HTMLElement {
           z-index: 1000;
           max-height: calc(100vh - 40px);
           overflow-y: auto;
+          border-radius: 0.75rem;
         }
         .overlay {
           position: fixed;
@@ -45,11 +47,6 @@ export class EventModal extends HTMLElement {
         }
         .close-btn {
           margin-top: 10px;
-          padding: 5px 10px;
-          background: var(--color-modal-close);
-          color: var(--color-white);
-          border: none;
-          cursor: pointer;
           float: right;
         }
         .wiki-summary {
@@ -63,47 +60,47 @@ export class EventModal extends HTMLElement {
       </style>
       <div class="overlay"></div>
       <div class="modal">
-        <button class="close-btn">Close</button>
+        <button class="close-btn btn btn-primary">X</button>
         <div class="content"></div>
       </div>
     `;
 
-        this.shadowRoot.querySelector('.overlay').addEventListener('click', () => this.close());
-        this.shadowRoot.querySelector('.close-btn').addEventListener('click', () => this.close());
-    }
+    this.shadowRoot.querySelector('.overlay').addEventListener('click', () => this.close());
+    this.shadowRoot.querySelector('.close-btn').addEventListener('click', () => this.close());
+  }
 
-    async updateContent() {
-        const content = this.shadowRoot.querySelector('.content');
-        if (this.eventData) {
-            content.innerHTML = `
+  async updateContent() {
+    const content = this.shadowRoot.querySelector('.content');
+    if (this.eventData) {
+      content.innerHTML = `
         <h2>${this.eventData.year} - ${this.eventData.title}</h2>
         <p>${this.eventData.description || 'No description available.'}</p>
       `;
 
-            if (this.eventData.wiki_title) {
-                try {
-                    const summary = await this.wikipediaApiService.getSummary(this.eventData.wiki_title);
-                    const summaryCard = `
+      if (this.eventData.wiki_title) {
+        try {
+          const summary = await this.wikipediaApiService.getSummary(this.eventData.wiki_title);
+          const summaryCard = `
           <div class="wiki-summary">
             <i>Wikipedia Summary</i>
             <h3>${summary.title}</h3>
             ${summary.thumbnail ? `<img src="${summary.thumbnail.source}" max-height="${summary.thumbnail.height}" max-width="${summary.thumbnail.width}" alt="${summary.title}" >` : ''}
             <div>${summary.extract_html}</div>
-            <a href="${summary.page}" target="_blank">Read more on Wikipedia</a>
+            <a class="link" href="${summary.page}" target="_blank">Read more on Wikipedia</a>
           </div>
         `;
-                    content.innerHTML += summaryCard;
-                } catch (error) {
-                    console.error('Error fetching Wikipedia summary:', error);
-                    content.innerHTML += `<p>Failed to load Wikipedia summary.</p>`;
-                }
-            }
+          content.innerHTML += summaryCard;
+        } catch (error) {
+          console.error('Error fetching Wikipedia summary:', error);
+          content.innerHTML += `<p>Failed to load Wikipedia summary.</p>`;
         }
+      }
     }
+  }
 
-    close() {
-        this.remove();
-    }
+  close() {
+    this.remove();
+  }
 }
 
 customElements.define('event-modal', EventModal);

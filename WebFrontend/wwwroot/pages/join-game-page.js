@@ -4,12 +4,14 @@ import './player-registration.js'; // Import the PlayerRegistration component
 class JoinGamePage extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
-            <div>
+            <div id="join-game-container" class="card">
                 <h1>Join Game</h1>
-                <div style="display: flex; align-items: center;">
+                <div>
                     <label>Game Id:</label>
-                    <input class="input" type="text" id="game-id-input" placeholder="Enter Game ID" />
-                    <button class="btn btn-primary" id="join-game-button">Join</button>
+                    <div class="input-group">
+                        <input class="input" type="text" id="game-id-input" placeholder="Enter Game ID" />
+                        <button class="btn btn-primary" id="join-game-button">Join</button>
+                    </div>
                 </div>
                 <div id="game-id-message" style="height: 20px;"></div>
                 <div id="player-registration-container"></div>

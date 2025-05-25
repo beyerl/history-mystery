@@ -18,7 +18,7 @@ class GameSetupPage extends HTMLElement {
                 @import '../styles.css';
             </style>
             <toast-component id="toast"></toast-component>
-            <div style="padding:20px;background-color: rgba(122, 73, 24, 0.9); border-radius: 10px; box-shadow: 0 4px 8px var(--color-modal-shadow);margin: 20px;">
+            <div class="card">
                 <h1 style="margin-top: 0px">Game Setup</h1>
                 <div>
                     <label>Game Id:</label>
