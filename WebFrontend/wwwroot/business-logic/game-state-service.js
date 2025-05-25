@@ -20,10 +20,15 @@ class GameStateService extends IGameStateService {
     }
 
     async GetGameAsync(gameId) {
-        const response = await fetch(`${this.baseAddress}api/GameState/${gameId}`);
-        var responseJson = await response.json()
-        this.validateGameState(responseJson);
-        return new GameState(responseJson.gameId, responseJson.playerScores, responseJson.state);
+        try {
+            const response = await fetch(`${this.baseAddress}api/GameState/${gameId}`);
+            var responseJson = await response.json()
+            this.validateGameState(responseJson);
+            return new GameState(responseJson.gameId, responseJson.playerScores, responseJson.state);
+        } catch (error) {
+            console.error('Error fetching game state:', error);
+            return null; // Return null if the game is not found or an error occurs
+        }
     }
 
     async AddPlayer(gameId, playerId) {

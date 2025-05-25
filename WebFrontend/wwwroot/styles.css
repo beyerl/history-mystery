@@ -84,6 +84,7 @@ body {
   width: 100%;
 }
 
+
 /* Bootstrap-like table styles */
 .table {
   width: 100%;
@@ -155,4 +156,34 @@ body {
 .btn-block {
   display: block;
   width: 100%;
+}
+
+/* Bootstrap-like input box styles */
+.input,
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--color-black);
+  background-color: var(--color-white);
+  background-clip: padding-box;
+  border: 1px solid var(--color-brown);
+  border-radius: 0.375rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-sizing: border-box;
+}
+
+.input:focus,
+.form-control:focus {
+  border-color: var(--color-gold);
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(153, 114, 41, 0.25);
+}
+
+.input[disabled],
+.form-control[disabled] {
+  background-color: var(--color-gray-200);
+  opacity: 1;
 }

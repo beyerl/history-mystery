@@ -8,13 +8,12 @@ class PlayerRegistration extends HTMLElement {
         const gameHash = this.getAttribute('game-hash');
 
         this.innerHTML = `
-            <div>
+            <div style="display: flex; align-items: center;">
                 <label>Player Name:</label>
-                <input type="text" id="player-name" placeholder="Enter your name" />
+                <input class="input" type="text" id="player-name" placeholder="Enter your name" />
                 <button id="update-player-button" class="btn btn-primary" >Accept</button>
-                <br>
-                <div id="player-name-error" style="color: red;height: 20px;"></div>
             </div>
+            <div id="player-name-error" style="color: red;height: 20px;"></div>
             <table id="player-table" class="table" style="margin: 0 auto; width: 100%;">
                 <thead>
                     <tr>

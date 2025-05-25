@@ -6,14 +6,14 @@ class JoinGamePage extends HTMLElement {
         this.innerHTML = `
             <div>
                 <h1>Join Game</h1>
-                <div>
+                <div style="display: flex; align-items: center;">
                     <label>Game Id:</label>
-                    <input type="text" id="game-id-input" placeholder="Enter Game ID" />
+                    <input class="input" type="text" id="game-id-input" placeholder="Enter Game ID" />
                     <button class="btn btn-primary" id="join-game-button">Join</button>
-                    <br>
-                    <div id="game-id-message" style="height: 20px;"></div>
                 </div>
-                <div id="player-registration-container"></div
+                <div id="game-id-message" style="height: 20px;"></div>
+                <div id="player-registration-container"></div>
+                <button class="btn btn-primary btn-block" id="back-to-menu-button">Back to Main Menu</button>
             </div>
         `;
 
@@ -21,6 +21,11 @@ class JoinGamePage extends HTMLElement {
     }
 
     addEventListeners() {
+        this.querySelector('#back-to-menu-button').addEventListener('click', () => {
+            // Navigate back to the main menu
+            window.location.hash = '#/';
+        });
+
         this.querySelector('#join-game-button').addEventListener('click', async () => {
             const gameHash = this.querySelector('#game-id-input').value.trim();
             if (!gameHash) {
@@ -39,6 +44,8 @@ class JoinGamePage extends HTMLElement {
             const playerRegistrationContainer = this.querySelector('#player-registration-container');
             playerRegistrationContainer.innerHTML = `<player-registration id="player-registration" game-hash=${gameHash}></player-registration>`;
         });
+
+
     }
 }
 
