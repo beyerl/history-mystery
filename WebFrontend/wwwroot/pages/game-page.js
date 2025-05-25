@@ -34,7 +34,7 @@ class GamePage extends HTMLElement {
         }
         footer {
           width: 100%;
-          background-color: #f1f1f1;
+          background-color:rgba(122, 73, 24, 0.7);
           text-align: center;
           padding: 10px 0;
           border-top: 1px solid #ccc;
@@ -50,7 +50,7 @@ class GamePage extends HTMLElement {
         .btn {
           /* Ensures .btn styles are available in shadow DOM */
         }
-      </style>
+      </style>      
       <toast-component id="toast"></toast-component>
       <footer id="footer">
         <button id="back-to-menu" class="btn btn-primary" style="margin-left: 10px;">Back to Menu</button>

@@ -18,19 +18,21 @@ class GameSetupPage extends HTMLElement {
                 @import '../styles.css';
             </style>
             <toast-component id="toast"></toast-component>
-            <div class="card">
-                <h1 style="margin-top: 0px">Game Setup</h1>
-                <div>
-                    <label>Game Id:</label>
-                    <div class="input-group" style="justify-content: space-between; align-items: center;">
-                        <input class="input" type="text" id="game-id" value="${gameHash}" disabled/>                     
-                        <button id="share-button" class="btn btn-primary">Share</button>
+            <div class="padding-x-5">
+                <div class="card">
+                    <h1 style="margin-top: 0px">Game Setup</h1>
+                    <div>
+                        <label>Game Id:</label>
+                        <div class="input-group" style="justify-content: space-between; align-items: center;">
+                            <input class="input" type="text" id="game-id" value="${gameHash}" disabled/>                     
+                            <button id="share-button" class="btn btn-primary">Share</button>
+                        </div>
+                        <br>
                     </div>
-                    <br>
+                    <player-registration game-hash="${gameHash}"></player-registration>
+                    <button id="start-game-button" class="btn btn-primary btn-block">Begin</button>
+                    <button id="back-to-menu-button" class="btn btn-primary btn-block">Back to Main Menu</button>
                 </div>
-                <player-registration game-hash="${gameHash}"></player-registration>
-                <button id="start-game-button" class="btn btn-primary btn-block">Begin</button>
-                <button id="back-to-menu-button" class="btn btn-primary btn-block">Back to Main Menu</button>
             </div>
         `;
         this.addEventListeners(gameStateService, gameHash);

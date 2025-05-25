@@ -4,6 +4,7 @@ import './player-registration.js'; // Import the PlayerRegistration component
 class JoinGamePage extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
+        <div class="padding-x-5">
             <div id="join-game-container" class="card">
                 <h1>Join Game</h1>
                 <div>
@@ -17,6 +18,7 @@ class JoinGamePage extends HTMLElement {
                 <div id="player-registration-container"></div>
                 <button class="btn btn-primary btn-block" id="back-to-menu-button">Back to Main Menu</button>
             </div>
+        </div>
         `;
 
         this.addEventListeners();

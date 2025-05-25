@@ -18,6 +18,7 @@ class GameScoresPage extends HTMLElement {
         const sortedScores = [...game.playerScores].sort((a, b) => b.score - a.score);
 
         this.innerHTML = `
+        <div class="padding-x-5">
             <div class="card w-100">
                 <h1>Game Scores</h1>
                 <table id="scores-table" class="table" style="width: 100%;">
@@ -41,6 +42,7 @@ class GameScoresPage extends HTMLElement {
                     <button id="rematch-button" class="btn btn-primary btn-block">Rematch</button>
                 </div>
             </div>
+        </div>
         `;
 
         this.querySelector('#back-button').addEventListener('click', () => {

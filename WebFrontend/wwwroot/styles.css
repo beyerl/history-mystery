@@ -83,6 +83,11 @@ body {
   width: 100%;
 }
 
+.padding-x-5 {
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+
 
 /* Bootstrap-like table styles */
 .table {
@@ -217,7 +222,8 @@ body {
   border-radius: 0.75rem;
   box-shadow: 0 2px 8px rgba(153, 114, 41, 0.08);
   padding: 2rem 2.5rem;
-  margin: 2rem auto;
+  box-sizing: border-box;
+  margin: .5rem auto;
   max-width: 500px;
 }
 
