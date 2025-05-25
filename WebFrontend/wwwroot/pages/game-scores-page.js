@@ -20,18 +20,18 @@ class GameScoresPage extends HTMLElement {
         this.innerHTML = `
             <div>
                 <h1>Game Scores</h1>
-                <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+                <table id="scores-table" class="table" style="width: 100%;">
                     <thead>
                         <tr>
-                            <th style="border: 1px solid black;">Player</th>
-                            <th style="border: 1px solid black;">Score</th>
+                            <th>Player</th>
+                            <th>Score</th>
                         </tr>
                     </thead>
                     <tbody>
                         ${sortedScores.map(player => `
                             <tr>
-                                <td style="border: 1px solid black;">${player.playerId}</td>
-                                <td style="border: 1px solid black;">${player.score}</td>
+                                <td>${player.playerId}</td>
+                                <td>${player.score}</td>
                             </tr>
                         `).join('')}
                     </tbody>

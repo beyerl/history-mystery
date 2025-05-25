@@ -27,9 +27,9 @@ export class EventModal extends HTMLElement {
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          background: white;
+          background: var(--color-modal-bg);
           padding: 20px;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          box-shadow: var(--color-modal-shadow);
           z-index: 1000;
           max-height: calc(100vh - 40px);
           overflow-y: auto;
@@ -40,22 +40,22 @@ export class EventModal extends HTMLElement {
           left: 0;
           width: 100%;
           height: 100%;
-          background: rgba(0, 0, 0, 0.5);
+          background: var(--color-modal-overlay);
           z-index: 999;
         }
         .close-btn {
           margin-top: 10px;
           padding: 5px 10px;
-          background: red;
-          color: white;
+          background: var(--color-modal-close);
+          color: var(--color-white);
           border: none;
           cursor: pointer;
           float: right;
         }
         .wiki-summary {
             padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
+            border: 1px solid var(--color-gray-400);
+            background-color: var(--color-gray-100);
         }
         h3 {
           margin-top: 0;

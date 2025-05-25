@@ -1,14 +1,16 @@
 :host {
     --top-slot-margin: 5px;
     --container-height: 90vh;
-    --border-color-blue: blue;
-    --border-color-grey: grey;
-    --border-color-black: black;
-    --bg-color-lightblue: lightblue;
-    --bg-color-lightgrey: lightgrey;
-    --bg-color-whitesmoke: WhiteSmoke;
-    --bg-color-red: red;
-    --bg-color-green: green;
+    --border-color-blue: var(--color-mint);
+    --border-color-grey: var(--color-gray-400);
+    --border-color-black: var(--color-black);
+    --bg-color-lightblue: var(--color-mint);
+    --bg-color-lightgrey: var(--color-beige);
+    --bg-color-whitesmoke: var(--color-gray-100);
+    --bg-color-red: var(--color-modal-close);
+    --bg-color-green: var(--color-green);
+    --popover-bg: var(--color-popover-bg);
+    --popover-text: var(--color-popover-text);
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -149,8 +151,8 @@
     top: 50%;
     left: 10%;
     transform: translate(-50%, -50%);
-    background: tomato;
-    color: #fff;
+    background: var(--popover-bg);
+    color: var(--popover-text);
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 20px;

@@ -13,8 +13,8 @@ class ToastComponent extends HTMLElement {
           top: 5px;
           left: 50%;
           transform: translateX(-50%);
-          background-color: #333;
-          color: #fff;
+          background-color: var(--color-toast-bg);
+          color: var(--color-toast-text);
           padding: 10px 20px;
           border-radius: 5px;
           opacity: 0;

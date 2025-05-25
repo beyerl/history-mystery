@@ -15,10 +15,10 @@ class PlayerRegistration extends HTMLElement {
                 <br>
                 <div id="player-name-error" style="color: red;height: 20px;"></div>
             </div>
-            <table id="player-table" style="margin: 0 auto; border-collapse: collapse; border: 1px solid black; width: 100%;background-color: whitesmoke;">
+            <table id="player-table" class="table" style="margin: 0 auto; width: 100%;">
                 <thead>
                     <tr>
-                        <th style="border: 1px solid black;">Player Names</th>                         
+                        <th>Player Names</th>                         
                     </tr>                 
                 </thead>
                 <tbody>

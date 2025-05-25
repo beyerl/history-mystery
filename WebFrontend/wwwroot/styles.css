@@ -20,6 +20,19 @@
   --color-gray-800: #343a40;
   --color-gray-900: #212529;
   --color-gray-1000: #000000;
+
+  --color-green: #4CAF50;
+  --color-white: #fff;
+  --color-black: #000;
+  --color-modal-bg: #fff;
+  --color-modal-overlay: rgba(0, 0, 0, 0.5);
+  --color-modal-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --color-modal-close: #e53935;
+  --color-toast-bg: #333;
+  --color-toast-text: #fff;
+  --color-popover-bg: #e86a3c;
+  --color-popover-text: #fff;
+  --color-table-border: var(--color-black);
 }
 
 /* fonts */
@@ -51,8 +64,8 @@ body {
 
 .button {
   padding: 10px;
-  background-color: #4CAF50;
-  color: white;
+  background-color: var(--color-green);
+  color: var(--color-white);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -69,4 +82,36 @@ body {
 
 .w-100 {
   width: 100%;
+}
+
+/* Bootstrap-like table styles */
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: var(--color-black);
+  background-color: var(--color-white);
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid var(--color-table-border);
+  border: 1px solid var(--color-table-border);
+}
+
+.table thead th {
+  vertical-align: bottom;
+  background-color: var(--color-yellow);
+  color: var(--color-black);
+  border-bottom: 2px solid var(--color-table-border);
+}
+
+.table tbody tr:nth-of-type(odd) {
+  background-color: var(--color-gray-100);
+}
+
+.table tbody tr:hover {
+  background-color: var(--color-mint);
 }

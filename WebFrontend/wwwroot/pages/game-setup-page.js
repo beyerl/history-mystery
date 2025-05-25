@@ -8,7 +8,7 @@ class GameSetupPage extends HTMLElement {
         await gameStateService.CreateGameAsync(gameHash); // Create a new game
 
         this.innerHTML = `
-            <div style="padding:20px;background-color: rgba(122, 73, 24, 0.9); border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);margin: 20px;">
+            <div style="padding:20px;background-color: rgba(122, 73, 24, 0.9); border-radius: 10px; box-shadow: 0 4px 8px var(--color-modal-shadow);margin: 20px;">
                 <h1 style="margin-top: 0px">Game Setup</h1>
                 <div>
                         <label style="font-weight:bold">Game Id: <span id="game-id">${gameHash}</span></label>                        
@@ -24,7 +24,7 @@ class GameSetupPage extends HTMLElement {
         // add 10 empty rows to the player table
         const playerTableBody = this.querySelector('player-registration tbody');
         for (let i = 0; i < 10; i++) {
-            playerTableBody.innerHTML += '<tr><td style="border: 1px solid black;height: 20px;"> </td></tr>';
+            playerTableBody.innerHTML += '<tr><td style="border: 1px solid var(--color-table-border);height: 20px;"> </td></tr>';
         }
 
         this.addEventListeners(gameStateService, gameHash);

@@ -6,6 +6,7 @@ class GamePage extends HTMLElement {
   previousPlayerScores = {};
   changedScores = [];
   toastGameStateId = null;
+  maxScore = 1;
 
   constructor() {
     super();
@@ -86,7 +87,7 @@ class GamePage extends HTMLElement {
         this.changedScores = this.changedScores.concat(changedScores);
 
       if (gameState && gameState.state === GameStateEnum.RUNNING) {
-        const playersWithMaxScore = gameState.playerScores.filter(player => player.score >= 10);
+        const playersWithMaxScore = gameState.playerScores.filter(player => player.score >= this.maxScore);
 
         let currentPlayerIsWinner = playersWithMaxScore.find(player => player.playerId === localStorage.getItem('playerName'))
 
