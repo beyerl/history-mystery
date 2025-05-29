@@ -54,7 +54,7 @@ export const historicEvents = [
         "description": "Bertha Benz undertook the first long-distance automobile trip, promoting the automobile industry."
     },
     {
-        "title": "Billie Holiday sings about racial injustice in 'Strange Fruit'",
+        "title": "Billie Holiday's 'Strange Fruit' protests racism",
         "year": 1939,
         "wiki_title": "Billie_Holiday",
         "description": "Billie Holiday, a renowned jazz singer, brought attention to racial injustices through her song 'Strange Fruit.'"
@@ -96,7 +96,7 @@ export const historicEvents = [
         "description": "Clara Schumann, a renowned pianist and composer, made significant contributions to Romantic-era music."
     },
     {
-        "title": "Christine de Pizan writes a treatise on girls' education",
+        "title": "Christine de Pizan writes treatise on girls' education",
         "year": 1405,
         "wiki_title": "Christine_de_Pizan",
         "description": "Christine de Pizan, one of Europe's first professional female writers, advocated for women's rights in her works."
@@ -114,13 +114,13 @@ export const historicEvents = [
         "description": "Coco Chanel introduced modern, comfortable styles, transforming women's fashion in the 20th century."
     },
     {
-        "title": "Eleanor of Aquitaine become Queen in medieval England",
+        "title": "Eleanor of Aquitaine becomes Queen in medieval England",
         "year": 1154,
         "wiki_title": "Eleanor_of_Aquitaine",
         "description": "Eleanor of Aquitaine, queen consort of France and England, played a significant role in 12th-century European politics."
     },
     {
-        "title": "Eleanor Roosevelt co-writes the Universal Declaration of Human Rights",
+        "title": "Eleanor Roosevelt co-writes Universal Rights Declaration",
         "year": 1948,
         "wiki_title": "Eleanor_Roosevelt",
         "description": "Eleanor Roosevelt, as chair of the United Nations Human Rights Commission, was instrumental in drafting the Universal Declaration of Human Rights."
@@ -132,7 +132,7 @@ export const historicEvents = [
         "description": "Émilie du Châtelet translated Newton's Principia into French, making his work more accessible and adding her own commentary."
     },
     {
-        "title": "Empress Elisabeth of Austria influences the Austro-Hungarian Compromise",
+        "title": "Empress Elisabeth aids Austro-Hungarian Compromise",
         "year": 1867,
         "wiki_title": "Empress_Elisabeth_of_Austria",
         "description": "Empress Elisabeth, known as Sisi, played a key role in the Austro-Hungarian Compromise of 1867, advocating for Hungarian interests."
@@ -144,7 +144,7 @@ export const historicEvents = [
         "description": "Elizabeth I ascended to the English throne, initiating a period marked by flourishing arts and exploration known as the Elizabethan Era."
     },
     {
-        "title": "Florence Nightingale revolutionizes nursing during the Crimean War",
+        "title": "Florence Nightingale transforms nursing in Crimean War",
         "year": 1854,
         "wiki_title": "Florence_Nightingale",
         "description": "Florence Nightingale led a team of nurses during the Crimean War, significantly reducing mortality rates and pioneering modern nursing practices."
@@ -192,7 +192,7 @@ export const historicEvents = [
         "description": "Hedy Lamarr, an Austrian-American actress, co-invented a frequency-hopping system that laid the groundwork for modern wireless communication technologies."
     },
     {
-        "title": "Hildegard of Bingen publishes 'Liber simplicis medicinae'",
+        "title": "Hildegard of Bingen issues 'Liber simplicis medicinae'",
         "year": 1151,
         "wiki_title": "Hildegard_of_Bingen",
         "description": "Hildegard of Bingen, a German Benedictine abbess, created influential writings on theology, medicine, and music, and is recognized as a Doctor of the Church."
@@ -228,7 +228,7 @@ export const historicEvents = [
         "description": "Jane Austen, an English novelist, published 'Pride and Prejudice,' offering a critique of the British landed gentry at the end of the 18th century."
     },
     {
-        "title": "Transgender activist Janet Mock publishes 'Redefining Realness'",
+        "title": "Trans activist Janet Mock releases 'Redefining Realness'",
         "year": 2014,
         "wiki_title": "Janet_Mock",
         "description": "Janet Mock, a transgender rights activist and writer, released her memoir 'Redefining Realness,' chronicling her journey and advocating for trans visibility."
@@ -252,13 +252,13 @@ export const historicEvents = [
         "description": "Rani Lakshmibai of Jhansi led Indian forces against British colonial rule during the 1857 rebellion, becoming a symbol of resistance."
     },
     {
-        "title": "Lise Meitner contributes to the discovery of nuclear fission",
+        "title": "Lise Meitner co-discovers nuclear fission",
         "year": 1938,
         "wiki_title": "Lise_Meitner",
         "description": "Physicist Lise Meitner played a crucial role in explaining nuclear fission, laying the groundwork for nuclear energy and weapons."
     },
     {
-        "title": "Lyudmila Pavlichenko becomes a top sniper in World War II",
+        "title": "Lyudmila Pavlichenko becomes top WWII sniper",
         "year": 1942,
         "wiki_title": "Lyudmila_Pavlichenko",
         "description": "Lyudmila Pavlichenko, a Soviet sniper, achieved 309 confirmed kills during World War II, earning the nickname 'Lady Death'."
@@ -276,7 +276,7 @@ export const historicEvents = [
         "description": "Marilyn Monroe rose to fame as an actress and model, becoming an enduring symbol of glamour and femininity in the 1950s."
     },
     {
-        "title": "Margaret Thatcher becomes UK's first female Prime Minister",
+        "title": "UK's first female Prime Minister",
         "year": 1979,
         "wiki_title": "Margaret_Thatcher",
         "description": "Margaret Thatcher became the first female Prime Minister of the United Kingdom, serving from 1979 to 1990 and implementing significant economic reforms."
@@ -306,7 +306,7 @@ export const historicEvents = [
         "description": "Mata Hari, a Dutch exotic dancer and courtesan, was executed by France for espionage during World War I; her guilt remains a topic of debate."
     },
     {
-        "title": "Maya Angelou publishes 'I Know Why the Caged Bird Sings'",
+        "title": "Maya Angelou releases 'I Know Why the Caged Bird Sings'",
         "year": 1969,
         "wiki_title": "Maya_Angelou",
         "description": "Maya Angelou, an American poet and civil rights activist, gained acclaim for her memoir 'I Know Why the Caged Bird Sings,' detailing her early life and resilience."
@@ -354,7 +354,7 @@ export const historicEvents = [
         "description": "Rosalind Franklin's X-ray diffraction image, known as Photo 51, was critical in discovering DNA's double helix structure, though her contributions were long overlooked."
     },
     {
-        "title": "Rosa Luxemburg co-founds the Spartacus League in Germany",
+        "title": "Rosa Luxemburg co-founds Spartacus League in Germany",
         "year": 1916,
         "wiki_title": "Rosa_Luxemburg",
         "description": "Rosa Luxemburg, a Marxist theorist and revolutionary, co-founded the Spartacus League in Germany, advocating for socialist reforms and opposing World War I."
@@ -366,7 +366,7 @@ export const historicEvents = [
         "description": "Rosa Parks ignited the Montgomery Bus Boycott by refusing to surrender her seat to a white passenger on December 1, 1955, leading to a 13-month protest against racial segregation on public buses."
     },
     {
-        "title": "Ruth Bader Ginsburg challenges involuntary sterilization",
+        "title": "Ruth Bader Ginsburg fights forced sterilization ",
         "year": 1973,
         "wiki_title": "Ruth_Bader_Ginsburg",
         "description": "Ruth Bader Ginsburg successfully argued six landmark cases before the U.S. Supreme Court in the 1970s, challenging gender discrimination and advancing civil liberties."
@@ -412,12 +412,6 @@ export const historicEvents = [
         "year": 1963,
         "wiki_title": "Valentina_Tereshkova",
         "description": "Valentina Tereshkova became the first woman to travel into space aboard Vostok 6."
-    },
-    {
-        "title": "Convention on the Elimination of All Forms of Discrimination Against Women",
-        "year": 1979,
-        "wiki_title": "Convention_on_the_Elimination_of_All_Forms_of_Discrimination_Against_Women",
-        "description": "CEDAW was adopted by the UN to promote women's rights and gender equality worldwide."
     },
     {
         "title": "Simone de Beauvoir Publishes 'The Second Sex'",
@@ -486,7 +480,7 @@ export const historicEvents = [
         "description": "Kamala Harris made history as the first female, first Black, and first South Asian Vice President of the U.S."
     },
     {
-        "title": "International Women's Day Officially Recognized by the UN",
+        "title": "International Women's Day Recognized by the UN",
         "year": 1977,
         "wiki_title": "International_Women's_Day",
         "description": "The UN officially recognized International Women’s Day, celebrated annually to promote gender equality and women's achievements."
@@ -552,25 +546,25 @@ export const historicEvents = [
         "description": "Olympe de Gouges was executed by guillotine during the French Revolution for her outspoken support of women's rights."
     },
     {
-        "title": "Hannah Wooley Publishes First English Cookbook by a Woman",
+        "title": "First English Cookbook by a Woman",
         "year": 1670,
         "wiki_title": "Hannah_Wooley",
         "description": "Hannah Wooley's 'The Gentlewoman’s Companion' became the first English cookbook authored by a woman, focusing on domesticity and cooking."
     },
     {
-        "title": "Lady Mary Wortley Montagu Introduces Smallpox Inoculation to Britain",
+        "title": "Mary Wortley Montagu Introduces Smallpox Inoculation",
         "year": 1718,
         "wiki_title": "Lady_Mary_Wortley_Montagu",
         "description": "Lady Mary Wortley Montagu introduced the practice of smallpox inoculation to Britain after witnessing it in the Ottoman Empire."
     },
     {
-        "title": "Sarah Good, Sarah Osborne, and Tituba Accused in the Salem Witch Trials",
+        "title": "Salem Witch Trials",
         "year": 1692,
         "wiki_title": "Salem_witch_trials",
         "description": "Sarah Good, Sarah Osborne, and Tituba were among the first women accused during the Salem Witch Trials, marking a dark period in American colonial history."
     },
     {
-        "title": "The First Female Printer in Europe: Aldus Manutius' Wife",
+        "title": "The First Female Printer in Europe",
         "year": 1500,
         "wiki_title": "Aldus_Manutius",
         "description": "Aldus Manutius' wife, a skilled typographer, became one of the first known female printers in Europe, though her name is not widely recorded."
@@ -582,7 +576,7 @@ export const historicEvents = [
         "description": "Angela Merici founded the Ursuline Order, one of the first religious institutes for women dedicated to teaching young girls, spreading education and Catholic values."
     },
     {
-        "title": "Christine de Pizan becomes one of the first professional female writers",
+        "title": "The First Female Writer to Be Recognized",
         "year": 1405,
         "wiki_title": "Christine_de_Pizan",
         "description": "Christine de Pizan, one of the first professional female writers, published 'The Book of the City of Ladies,' defending women and their contributions to society."
@@ -600,7 +594,7 @@ export const historicEvents = [
         "description": "Viking women, including those from Scandinavian noble families, were known to have participated in Viking raids and the early exploration of new territories."
     },
     {
-        "title": "Women play important roles in the Slavic Pagan Resistance",
+        "title": "Women aid Slavic Pagan Resistance efforts",
         "year": 1020,
         "wiki_title": "Slavic_paganism",
         "description": "Women played active roles in the resistance to Christianization in Slavic regions, sometimes as leaders in uprisings against Christian missionary efforts."
@@ -617,18 +611,4 @@ export const historicEvents = [
         "wiki_title": "Pocahontas",
         "description": "Pocahontas, a Native American woman of the Powhatan people, became known for her association with the English colonial settlement at Jamestown, Virginia, and her role in mediating relations between the two cultures."
     },
-    {
-        "title": "Legend of Hua Mulan",
-        "year": 420,
-        "wiki_title": "Hua_Mulan",
-        "description": "Hua Mulan, a legendary Chinese warrior woman, is said to have taken her father's place in the army, disguising herself as a man and serving with distinction."
-    },
-    {
-        "title": "Pocahontas Meets the English",
-        "year": 1607,
-        "wiki_title": "Pocahontas",
-        "description": "Pocahontas, a Native American woman of the Powhatan people, became known for her association with the English colonial settlement at Jamestown, Virginia, and her role in mediating relations between the two cultures."
-    }
-
-
 ];
