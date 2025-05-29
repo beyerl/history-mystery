@@ -392,7 +392,7 @@ export const historicEvents = [
     {
         "title": "Sor Juana Inés de la Cruz defends women's education",
         "year": 1700,
-        "wiki_title": "Sor_Juana_In%C3%A9s_de_la_Cruz",
+        "wiki_title": "Juana_Inés_de_la_Cruz",
         "description": "Sor Juana Inés de la Cruz, a 17th-century Mexican nun and writer, defended women's right to education and intellectual freedom in her writings."
     },
     {
