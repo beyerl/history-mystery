@@ -37,13 +37,17 @@ class GamePage extends HTMLElement {
           background-color:rgba(122, 73, 24, 0.7);
           text-align: center;
           padding: 10px 0;
+          box-sizing: border-box;
           border-top: 1px solid #ccc;
+          height: 8vh;
+          display: flex; 
+          justify-content: center; 
+          align-items: center;
         }
         #dragDropList {
           display: flex;
           flex-direction: column;
           width: 100%;
-          height: 100%;
           padding: 10px;
           box-sizing: border-box;
         }
