@@ -1,12 +1,12 @@
 class ToastComponent extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        this.render();
-    }
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.render();
+  }
 
-    render() {
-        this.shadowRoot.innerHTML = `
+  render() {
+    this.shadowRoot.innerHTML = `
       <style>
         .toast {
           position: fixed;
@@ -20,6 +20,8 @@ class ToastComponent extends HTMLElement {
           opacity: 0;
           transition: opacity 0.5s ease-in-out;
           z-index: 1000;
+          width: 80%;
+          text-align: center;
         }
         .toast.show {
           opacity: 1;
@@ -27,18 +29,18 @@ class ToastComponent extends HTMLElement {
       </style>
       <div id="toast" class="toast"></div>
     `;
-    }
+  }
 
-    show(message) {
-        const toast = this.shadowRoot.getElementById('toast');
-        if (toast) {
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 1000);
-        }
+  show(message) {
+    const toast = this.shadowRoot.getElementById('toast');
+    if (toast) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 1000);
     }
+  }
 }
 
 customElements.define('toast-component', ToastComponent);

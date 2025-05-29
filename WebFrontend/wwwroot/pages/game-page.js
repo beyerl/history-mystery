@@ -136,7 +136,7 @@ class GamePage extends HTMLElement {
       if (this.changedScores.length > 0) {
         var oldestChangedScore = this.changedScores.shift()
         if (!oldestChangedScore || oldestChangedScore.score === 0) return;
-        this.showToast(`${oldestChangedScore.playerId}: ${oldestChangedScore.score} pts`);
+        this.showToast(`${oldestChangedScore.playerId} has ${oldestChangedScore.score} points`);
       }
     }, 100);
   }
