@@ -12,6 +12,7 @@ class StartPage extends HTMLElement {
                     <div style="text-align: center; margin-top: 20px; display: flex; flex-direction: column; align-items: stretch;width:100%">
                     <button id="start-game-button" class="btn btn-primary btn-block">Start Game</button>
                     <button id="join-game-button" class="btn btn-primary btn-block">Join Game</button>
+                    <button id="credits" class="btn btn-primary btn-block">Credits</button>
                     </div>
                 </div>
             </div>
@@ -23,6 +24,10 @@ class StartPage extends HTMLElement {
 
         this.querySelector('#join-game-button').addEventListener('click', () => {
             window.location.hash = '/join';
+        });
+
+        this.querySelector('#credits').addEventListener('click', () => {
+            window.location.hash = '/credits';
         });
     }
 }

@@ -4,6 +4,7 @@ const routes = {
     '/setup': '<game-setup-page></game-setup-page>',
     '/join': '<join-game-page></join-game-page>',
     '/scores': '<game-scores-page></game-scores-page>',
+    '/credits': '<credits-page></credits-page>',
 };
 
 function updateView() {
