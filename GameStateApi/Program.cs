@@ -26,16 +26,15 @@ var app = builder.Build();
 
 app.UseCors();
 
-// if (app.Environment.IsDevelopment())
-// {
-app.UseSwagger();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
 app.UseSwaggerUI();
-// }
+}
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
 
-// ?? Move these up
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
