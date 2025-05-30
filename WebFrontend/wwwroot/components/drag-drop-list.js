@@ -144,6 +144,7 @@ class DragDropList extends HTMLElement {
 
     if (draggedYear < previousYear || draggedYear > nextYear) {
       this.dispatchMessage(AnswerResultEnum.INCORRECT);
+      draggedElement.classList.add('ignore-elements');
       draggedElement.classList.add('incorrect-answer');
       draggedElement.classList.add('incorrect-answer-animation');
 
