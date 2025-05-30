@@ -1,5 +1,10 @@
+import { audioService } from '../business-logic/audio-service.js';
+import { SoundEnum } from '../models/sound-enum.js';
+
 class StartPage extends HTMLElement {
     connectedCallback() {
+        audioService.play(SoundEnum.MENU, true);
+
         this.innerHTML = `
             <div class="padding-x-5" style="height: 100vh; display: flex; flex-direction: column; justify-content: end; align-items: center;">
                 <div class="card w-100" style="text-align:center;">

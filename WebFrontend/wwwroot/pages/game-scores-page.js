@@ -1,11 +1,15 @@
 import { gameStateService } from '../business-logic/game-state-service.js';
 import { GameStateEnum } from '../models/game-state.js';
+import { audioService } from '../business-logic/audio-service.js';
+import { SoundEnum } from '../models/sound-enum.js';
 
 class GameScoresPage extends HTMLElement {
     gameId;
     gameStateIntervalId = null;
 
     async connectedCallback() {
+        audioService.play(SoundEnum.MENU, true);
+
         const urlParams = new URLSearchParams(window.location.hash.split('?')[1]);
         this.gameId = urlParams.get('gameId');
         const game = await gameStateService.GetGameAsync(this.gameId);

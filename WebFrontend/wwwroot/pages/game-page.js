@@ -1,3 +1,5 @@
+import { audioService } from '../business-logic/audio-service.js';
+import { SoundEnum } from '../models/sound-enum.js';
 import { gameStateService } from '../business-logic/game-state-service.js';
 import { AnswerResultEnum } from '../models/answer-result.js';
 import { GameStateEnum } from '../models/game-state.js';
@@ -16,6 +18,7 @@ class GamePage extends HTMLElement {
   }
 
   connectedCallback() {
+    audioService.stop(SoundEnum.MENU);
     const urlParams = new URLSearchParams(window.location.hash.split('?')[1]);
     this.gameId = urlParams.get('gameId');
     this.render();
@@ -100,20 +103,22 @@ class GamePage extends HTMLElement {
         let currentPlayerIsWinner = playersWithMaxScore.find(player => player.playerId === localStorage.getItem('playerName'))
 
         if (currentPlayerIsWinner) {
+          clearInterval(this.toastGameStateId);
+          clearInterval(this.pollGameStateId);
           this.gameStateService.EndGame(this.gameId);
 
           // Create the win overlay
+          audioService.play(SoundEnum.WIN);
           const winOverlay = document.createElement('win-overlay');
           winOverlay.setAttribute('message', 'You win!');
           document.body.appendChild(winOverlay);
 
-          // Remove the overlay after 3 seconds
+          // Remove the overlay after sound has finished playing
+          const winSoundDuration = await audioService.getSoundLength(SoundEnum.WIN);
           setTimeout(() => {
             document.body.removeChild(winOverlay);
-            clearInterval(this.toastGameStateId);
-            clearInterval(this.pollGameStateId);
             window.location.hash = `/scores?gameId=${this.gameId}`;
-          }, 2000);
+          }, winSoundDuration);
         } else if (playersWithMaxScore.length > 0 && !currentPlayerIsWinner) {
           this.gameStateService.EndGame(this.gameId);
           clearInterval(this.toastGameStateId);
@@ -146,12 +151,14 @@ class GamePage extends HTMLElement {
   }
 
   addEventListeners() {
-    this.shadowRoot.addEventListener('answer-result', (event) => {
+    this.shadowRoot.addEventListener('answer-result', async (event) => {
       switch (event.detail.answerResult) {
         case AnswerResultEnum.CORRECT:
-          this.gameStateService.IncrementPlayerScore(this.gameId, localStorage.getItem('playerName'));
+          audioService.play(SoundEnum.SUCCESS);
+          await this.gameStateService.IncrementPlayerScore(this.gameId, localStorage.getItem('playerName'));
           break;
         case AnswerResultEnum.INCORRECT:
+          audioService.play(SoundEnum.FAILURE);
           break;
         default:
           console.error('Unknown answer result:', event.detail.answerResult);
