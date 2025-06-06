@@ -11,7 +11,7 @@ export class EventService {
             console.error('Invalid or insufficient events provided:', this.historicEvents);
             return;
         }
-        this.shuffledEvents = shuffleArray([...this.historicEvents]);
+        this.shuffledEvents = this.shuffleArray([...this.historicEvents]);
         this.currentIndex = 0;
     }
 
