@@ -11,7 +11,7 @@ export class EventService {
             console.error('Invalid or insufficient events provided:', this.historicEvents);
             return;
         }
-        this.shuffledEvents = [...this.historicEvents].sort(() => Math.random() - 0.5);
+        this.shuffledEvents = shuffleArray([...this.historicEvents]);
         this.currentIndex = 0;
     }
 
@@ -24,5 +24,13 @@ export class EventService {
         const event = this.shuffledEvents[this.currentIndex];
         this.currentIndex = (this.currentIndex + 1) % this.shuffledEvents.length;
         return event;
+    }
+
+    // Fisher–Yates shuffle to create unbiased permutation https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+    shuffleArray(array) {
+        for (let i = array.length - 1; i >= 1; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
     }
 }
