@@ -21,7 +21,7 @@ namespace GameStateApi.Services
             return newGame.ToDto();
         }
 
-        public GameStateDto GetGame(string gameId)
+        public GameStateDto? GetGame(string gameId)
         {
             return _gameStates.TryGetValue(gameId, out var gameState) ? gameState.ToDto() : null;
         }
@@ -114,8 +114,8 @@ namespace GameStateApi.Services
 
     public class GameState
     {
-        public string GameId { get; set; }
-        public Dictionary<string, int> PlayerScores { get; set; }
+        public string GameId { get; set; } = null!;
+        public Dictionary<string, int> PlayerScores { get; set; } = null!;
         public GameStateEnum State { get; set; }
         public DateTime LastUpdated { get; set; } // New property to track last update time
 
@@ -139,16 +139,16 @@ namespace GameStateApi.Services
 
     public class GameStateDto
     {
-        public string GameId { get; set; }
+        public string GameId { get; set; } = null!;
 
-        public List<PlayerScoreDto> PlayerScores { get; set; }
+        public List<PlayerScoreDto> PlayerScores { get; set; } = null!;
 
         public GameStateEnum State { get; set; }
     }
 
     public class PlayerScoreDto
     {
-        public string PlayerId { get; set; }
+        public string PlayerId { get; set; } = null!;
         public int Score { get; set; }
     }
 }
