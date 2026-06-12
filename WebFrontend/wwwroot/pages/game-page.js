@@ -1,6 +1,7 @@
 import { audioService } from '../business-logic/audio-service.js';
 import { SoundEnum } from '../models/sound-enum.js';
 import { gameStateService } from '../business-logic/game-state-service.js';
+import { mistakeService } from '../business-logic/mistake-service.js';
 import { AnswerResultEnum } from '../models/answer-result.js';
 import { GameStateEnum } from '../models/game-state.js';
 
@@ -21,6 +22,7 @@ class GamePage extends HTMLElement {
     audioService.stop(SoundEnum.MENU);
     const urlParams = new URLSearchParams(window.location.hash.split('?')[1]);
     this.gameId = urlParams.get('gameId');
+    mistakeService.clear(this.gameId);
     this.render();
     this.initialize();
     this.addEventListeners();
@@ -159,6 +161,7 @@ class GamePage extends HTMLElement {
           break;
         case AnswerResultEnum.INCORRECT:
           audioService.play(SoundEnum.FAILURE);
+          mistakeService.add(this.gameId, event.detail.eventData);
           break;
         default:
           console.error('Unknown answer result:', event.detail.answerResult);

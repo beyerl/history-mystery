@@ -80,6 +80,7 @@ class DragDropList extends HTMLElement {
 
   populateTopSlot(event) {
     const topSlot = this.shadowRoot.querySelector('.top-slot-container');
+    this.currentTopEvent = event;
     if (event && event.title && event.year) {
       topSlot.innerHTML = `<div class="top-slot" data-year="${event.year}">
       <div class="drag-element">${this.createPillContent(event)}</div></div>`;
@@ -143,7 +144,7 @@ class DragDropList extends HTMLElement {
     const nextYear = nextElement ? Number(nextElement.getAttribute('data-year')) : 999999999;
 
     if (draggedYear < previousYear || draggedYear > nextYear) {
-      this.dispatchMessage(AnswerResultEnum.INCORRECT);
+      this.dispatchMessage(AnswerResultEnum.INCORRECT, this.currentTopEvent);
       draggedElement.classList.add('ignore-elements');
       draggedElement.classList.add('incorrect-answer');
       draggedElement.classList.add('incorrect-answer-animation');
@@ -181,9 +182,9 @@ class DragDropList extends HTMLElement {
     }
   }
 
-  dispatchMessage(answerResult) {
+  dispatchMessage(answerResult, eventData = null) {
     this.dispatchEvent(new CustomEvent('answer-result', {
-      detail: { answerResult },
+      detail: { answerResult, eventData },
       bubbles: true,
       composed: true
     }));
