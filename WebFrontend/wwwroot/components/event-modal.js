@@ -32,6 +32,8 @@ export class EventModal extends HTMLElement {
           padding: 20px;
           box-shadow: var(--color-modal-shadow);
           z-index: 1000;
+          width: 90vw;
+          box-sizing: border-box;
           max-height: calc(100vh - 40px);
           overflow-y: auto;
           border-radius: 0.75rem;
