@@ -18,6 +18,7 @@ export class AudioService {
             return instance;
         }
         this.activeLoopAudios = {};
+        this.muted = localStorage.getItem('audioMuted') === 'true';
         instance = this;
     }
 
@@ -28,10 +29,22 @@ export class AudioService {
         const audio = new Audio(src);
         audio.loop = loop;
         audio.volume = 1;
+        audio.muted = this.muted;
         audio.play();
         if (loop) {
             this.activeLoopAudios[sound] = audio;
         }
+    }
+
+    setMuted(muted) {
+        this.muted = muted;
+        localStorage.setItem('audioMuted', muted);
+        Object.values(this.activeLoopAudios).forEach(audio => { audio.muted = muted; });
+    }
+
+    toggleMute() {
+        this.setMuted(!this.muted);
+        return this.muted;
     }
 
     stop(sound) {
