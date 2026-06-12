@@ -57,7 +57,7 @@ class DragDropList extends HTMLElement {
   }
 
   initializeEvents() {
-    this._eventService = new EventService(this.events);
+    this._eventService = new EventService(this.events, !this.hasAttribute('no-shuffle'));
     const events = [this._eventService.get(), this._eventService.get(), this._eventService.get()];
     this.populateSlots(events.slice(1).sort((a, b) => a.year - b.year));
     this.populateTopSlot(events[0]);
@@ -120,6 +120,10 @@ class DragDropList extends HTMLElement {
     const modal = new EventModal();
     modal.setAttribute('data-event', JSON.stringify(eventData));
     document.body.appendChild(modal);
+    this.dispatchEvent(new CustomEvent('event-modal-opened', {
+      bubbles: true,
+      composed: true
+    }));
   }
 
   initSortable() {
