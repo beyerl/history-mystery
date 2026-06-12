@@ -45,9 +45,14 @@ export class EventModal extends HTMLElement {
           background: var(--color-modal-overlay);
           z-index: 999;
         }
+        .close-btn-row {
+          position: sticky;
+          top: 0;
+          display: flex;
+          justify-content: flex-end;
+          z-index: 1;
+        }
         .close-btn {
-          margin-top: 10px;
-          float: right;
           background: none;
           border: none;
           cursor: pointer;
@@ -63,12 +68,14 @@ export class EventModal extends HTMLElement {
       </style>
       <div class="overlay"></div>
       <div class="modal">
-        <button class="close-btn btn btn-primary" title="Close" aria-label="Close">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;">
-            <line x1="4" y1="4" x2="16" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <line x1="16" y1="4" x2="4" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </button>
+        <div class="close-btn-row">
+          <button class="close-btn btn btn-primary" title="Close" aria-label="Close">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;">
+              <line x1="4" y1="4" x2="16" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <line x1="16" y1="4" x2="4" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
         <div class="content"></div>
       </div>
     `;
