@@ -2,6 +2,7 @@ import Sortable from '../3rdparty/sortable.js'; // Import Sortable.js
 import { AnswerResultEnum } from '../models/answer-result.js';
 import { EventService } from '../business-logic/event-service.js';
 import { EventModal } from './event-modal.js';
+import { translationService } from '../business-logic/translation-service.js';
 class DragDropList extends HTMLElement {
   constructor() {
     super();
@@ -98,7 +99,7 @@ class DragDropList extends HTMLElement {
     return `   
       <div class="year">${event.year}</div>
       <div class="title">${this.escapeHtml(event.title)}</div>
-      <button class="btn btn-primary btn-sm more" data-event='${this.escapeHtml(JSON.stringify(event))}'>more</button>`
+      <button class="btn btn-primary btn-sm more" data-event='${this.escapeHtml(JSON.stringify(event))}'>${translationService.t('common.more')}</button>`
   }
 
   escapeHtml(text) {

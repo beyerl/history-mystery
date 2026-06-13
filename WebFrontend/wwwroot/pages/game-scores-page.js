@@ -3,6 +3,7 @@ import { GameStateEnum } from '../models/game-state.js';
 import { audioService } from '../business-logic/audio-service.js';
 import { SoundEnum } from '../models/sound-enum.js';
 import { mistakeService } from '../business-logic/mistake-service.js';
+import { translationService } from '../business-logic/translation-service.js';
 import { EventModal } from '../components/event-modal.js';
 
 class GameScoresPage extends HTMLElement {
@@ -17,12 +18,13 @@ class GameScoresPage extends HTMLElement {
         const game = await gameStateService.GetGameAsync(this.gameId);
 
         if (!game) {
-            this.innerHTML = `<h1>Game not found</h1>`;
+            this.innerHTML = `<h1>${translationService.t('scores.gameNotFound')}</h1>`;
             return;
         }
 
         const sortedScores = [...game.playerScores].sort((a, b) => b.score - a.score);
         const mistakes = mistakeService.getAll(this.gameId);
+        const t = (key) => translationService.t(key);
 
         this.innerHTML = `
         <style>
@@ -44,12 +46,12 @@ class GameScoresPage extends HTMLElement {
         </style>
         <div class="padding-x-5">
             <div class="card w-100">
-                <h1>Game Scores</h1>
+                <h1>${t('scores.title')}</h1>
                 <table id="scores-table" class="table" style="width: 100%;">
                     <thead>
                         <tr>
-                            <th>Player</th>
-                            <th>Score</th>
+                            <th>${t('scores.player')}</th>
+                            <th>${t('scores.score')}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,17 +64,17 @@ class GameScoresPage extends HTMLElement {
                     </tbody>
                 </table>
                 <div style="margin-top: 20px;display: flex; flex-direction: column; align-items: center;">
-                    <button id="back-button" class="btn btn-primary btn-block">Back to Main Menu</button>
-                    <button id="rematch-button" class="btn btn-primary btn-block">Rematch</button>
+                    <button id="back-button" class="btn btn-primary btn-block">${t('common.backToMainMenu')}</button>
+                    <button id="rematch-button" class="btn btn-primary btn-block">${t('scores.rematch')}</button>
                 </div>
                 ${mistakes.length > 0 ? `
                 <div id="mistakes" style="margin-top: 20px;">
-                    <h1>Mistakes</h1>
+                    <h1>${t('scores.mistakes')}</h1>
                     ${mistakes.map(event => `
                         <div class="mistake-element">
                             <div class="year">${event.year}</div>
                             <div class="title">${this.escapeHtml(event.title)}</div>
-                            <button class="btn btn-primary btn-sm more" data-event='${this.escapeHtml(JSON.stringify(event))}'>more</button>
+                            <button class="btn btn-primary btn-sm more" data-event='${this.escapeHtml(JSON.stringify(event))}'>${t('common.more')}</button>
                         </div>
                     `).join('')}
                 </div>` : ''}

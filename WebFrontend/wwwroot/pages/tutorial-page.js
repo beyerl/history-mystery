@@ -2,6 +2,7 @@ import { audioService } from '../business-logic/audio-service.js';
 import { SoundEnum } from '../models/sound-enum.js';
 import { AnswerResultEnum } from '../models/answer-result.js';
 import { historicEvents } from '../data/historic-events.js';
+import { translationService } from '../business-logic/translation-service.js';
 import '../components/drag-drop-list.js';
 
 // A fake single-player game (unshuffled events, no API calls) that walks the
@@ -10,35 +11,13 @@ class TutorialPage extends HTMLElement {
   currentStep = 0;
 
   steps = [
-    {
-      text: 'Welcome to Herstory Mystery! Your goal is to place historic events at the right spot on a timeline.',
-      button: 'Next'
-    },
-    {
-      text: 'The card at the top is the event you have to place. The timeline below already contains events sorted by year.',
-      button: 'Next'
-    },
-    {
-      text: 'Drag the top card onto the timeline where it belongs. Hint: Ada Blackjack survived her Arctic expedition in 1923.',
-      advanceOn: 'correct',
-      retryText: 'Not quite — a new event appeared at the top. Compare the years on the timeline and try again.'
-    },
-    {
-      text: 'Mistakes are part of the game, though. This time, drop the card somewhere it does NOT belong.',
-      advanceOn: 'answer'
-    },
-    {
-      text: 'An incorrectly placed card shakes, turns red and reveals its correct year — and scores no point. Correct placements turn green and score a point. The first player to reach 10 points wins!',
-      button: 'Next'
-    },
-    {
-      text: "Want to learn more about an event? Tap the 'more' button on any card in the timeline to read its Wikipedia summary.",
-      advanceOn: 'modal'
-    },
-    {
-      text: "That's it — you are ready to play. Have fun!",
-      button: 'Finish'
-    },
+    { textKey: 'tutorial.welcome', buttonKey: 'tutorial.next' },
+    { textKey: 'tutorial.topCard', buttonKey: 'tutorial.next' },
+    { textKey: 'tutorial.dragCorrect', advanceOn: 'correct', retryTextKey: 'tutorial.dragRetry' },
+    { textKey: 'tutorial.dragWrong', advanceOn: 'answer' },
+    { textKey: 'tutorial.feedback', buttonKey: 'tutorial.next' },
+    { textKey: 'tutorial.wikipedia', advanceOn: 'modal' },
+    { textKey: 'tutorial.finished', buttonKey: 'tutorial.finish' },
   ];
 
   constructor() {
@@ -46,7 +25,7 @@ class TutorialPage extends HTMLElement {
     this.attachShadow({ mode: 'open' });
   }
 
-  connectedCallback() {
+  async connectedCallback() {
     audioService.stop(SoundEnum.MENU);
     // Opening the tutorial counts as completing it, so quitting half-way
     // does not lock the player out of multiplayer games.
@@ -56,6 +35,8 @@ class TutorialPage extends HTMLElement {
     this.render();
     this.addEventListeners();
     this.showStep();
+    const localizedEvents = await translationService.localizeEvents(historicEvents);
+    this.shadowRoot.getElementById('dragDropList').setAttribute('events', JSON.stringify(localizedEvents));
   }
 
   render() {
@@ -95,12 +76,11 @@ class TutorialPage extends HTMLElement {
       <div class="instruction-panel">
         <p class="instruction-text" id="instruction-text"></p>
         <div class="instruction-buttons">
-          <button id="exit-button" class="btn btn-primary btn-sm">Exit Tutorial</button>
-          <button id="next-button" class="btn btn-primary">Next</button>
+          <button id="exit-button" class="btn btn-primary btn-sm">${translationService.t('tutorial.exit')}</button>
+          <button id="next-button" class="btn btn-primary">${translationService.t('tutorial.next')}</button>
         </div>
       </div>
     `;
-    this.shadowRoot.getElementById('dragDropList').setAttribute('events', JSON.stringify(historicEvents));
   }
 
   addEventListeners() {
@@ -116,7 +96,7 @@ class TutorialPage extends HTMLElement {
         if (result === AnswerResultEnum.CORRECT) {
           this.advance();
         } else {
-          this.showStep(step.retryText);
+          this.showStep(step.retryTextKey);
         }
       } else if (step.advanceOn === 'answer') {
         this.advance();
@@ -130,12 +110,12 @@ class TutorialPage extends HTMLElement {
     });
   }
 
-  showStep(textOverride = null) {
+  showStep(textKeyOverride = null) {
     const step = this.steps[this.currentStep];
-    this.shadowRoot.getElementById('instruction-text').textContent = textOverride || step.text;
+    this.shadowRoot.getElementById('instruction-text').textContent = translationService.t(textKeyOverride || step.textKey);
     const nextButton = this.shadowRoot.getElementById('next-button');
-    nextButton.style.display = step.button ? 'inline-block' : 'none';
-    nextButton.textContent = step.button || 'Next';
+    nextButton.style.display = step.buttonKey ? 'inline-block' : 'none';
+    nextButton.textContent = translationService.t(step.buttonKey || 'tutorial.next');
   }
 
   advance() {

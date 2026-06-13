@@ -1,5 +1,6 @@
 import { HashHelper } from '../helpers/hash-helper.js';
 import { gameStateService } from '../business-logic/game-state-service.js';
+import { translationService } from '../business-logic/translation-service.js';
 import './player-registration.js'; // Import the new PlayerRegistration component
 
 class GameSetupPage extends HTMLElement {
@@ -13,6 +14,7 @@ class GameSetupPage extends HTMLElement {
         const gameHash = HashHelper.generateGameHash();
         await gameStateService.CreateGameAsync(gameHash); // Create a new game
 
+        const t = (key) => translationService.t(key);
         this.shadowRoot.innerHTML = `
             <style>
                 @import '../styles.css';
@@ -20,18 +22,18 @@ class GameSetupPage extends HTMLElement {
             <toast-component id="toast"></toast-component>
             <div class="padding-x-5">
                 <div class="card">
-                    <h1 style="margin-top: 0px">Game Setup</h1>
+                    <h1 style="margin-top: 0px">${t('setup.title')}</h1>
                     <div>
-                        <label>Game Id:</label>
+                        <label>${t('common.gameId')}</label>
                         <div class="input-group" style="justify-content: space-between; align-items: center;">
-                            <input class="input" type="text" id="game-id" value="${gameHash}" disabled/>                     
-                            <button id="share-button" class="btn btn-primary">Share</button>
+                            <input class="input" type="text" id="game-id" value="${gameHash}" disabled/>
+                            <button id="share-button" class="btn btn-primary">${t('setup.share')}</button>
                         </div>
                         <br>
                     </div>
                     <player-registration game-hash="${gameHash}"></player-registration>
-                    <button id="start-game-button" class="btn btn-primary btn-block">Begin</button>
-                    <button id="back-to-menu-button" class="btn btn-primary btn-block">Back to Main Menu</button>
+                    <button id="start-game-button" class="btn btn-primary btn-block">${t('setup.begin')}</button>
+                    <button id="back-to-menu-button" class="btn btn-primary btn-block">${t('common.backToMainMenu')}</button>
                 </div>
             </div>
         `;
@@ -43,10 +45,10 @@ class GameSetupPage extends HTMLElement {
             // Copy the game ID to the clipboard
             const gameId = this.shadowRoot.getElementById('game-id').value;
             navigator.clipboard.writeText(gameId).then(() => {
-                this.showToast(`Game ID ${gameId} copied to clipboard!`); // Show a toast notification
+                this.showToast(translationService.t('setup.gameIdCopied', { gameId }));
             }).catch(err => {
                 console.error('Failed to copy game ID: ', err); // Log any errors
-                this.showToast('Failed to copy game ID.'); // Show a toast notification
+                this.showToast(translationService.t('setup.copyFailed'));
             });
         });
 
@@ -54,13 +56,13 @@ class GameSetupPage extends HTMLElement {
             const gameId = this.shadowRoot.getElementById('game-id').value;
             const game = await gameStateService.GetGameAsync(gameId);
             if (!game || game.playerScores.length == 0) {
-                this.shadowRoot.querySelector('player-registration').setError('No players have joined the game. Please add players before starting the game.');
+                this.shadowRoot.querySelector('player-registration').setError(translationService.t('setup.noPlayers'));
                 return;
             }
             if (gameStateService.StartGame(gameId)) { // Start the game
                 window.location.hash = `/game?gameId=${gameId}`;
             } else {
-                alert('Failed to start the game. Please try again.');
+                alert(translationService.t('setup.startFailed'));
             }
         });
 

@@ -1,18 +1,21 @@
+import { translationService } from '../business-logic/translation-service.js';
+
 class CreditsPage extends HTMLElement {
     connectedCallback() {
+        const t = (key) => translationService.t(key);
         this.innerHTML = `
       <div class="padding-x-5">
         <div class="card w-100">
-            <h1>Credits</h2>
+            <h1>${t('credits.title')}</h2>
             <table class="credits-table">
-                <tr><td colspan="2" class="dedication">Dedicated to Sonja</td></tr>
-                <tr><td>Concept, Programming, Music Production</td><td>Lorenz</td></tr>
-                <tr><td>Menu Music</td><td>John Dowland - The Frog Galliard</td></tr>
-                <tr><td>Menu Art, Content, Programming</td><td>ChatGPT 4o & 4.1, Copilot</td></tr>
+                <tr><td colspan="2" class="dedication">${t('credits.dedication')}</td></tr>
+                <tr><td>${t('credits.concept')}</td><td>Lorenz</td></tr>
+                <tr><td>${t('credits.menuMusic')}</td><td>John Dowland - The Frog Galliard</td></tr>
+                <tr><td>${t('credits.menuArt')}</td><td>ChatGPT 4o & 4.1, Copilot</td></tr>
             </table>
-            <button id="back-button" class="btn btn-primary btn-block">Back to Main Menu</button>
+            <button id="back-button" class="btn btn-primary btn-block">${t('common.backToMainMenu')}</button>
         </div>
-    </div>  
+    </div>
       <style>
         .credits-table {
           width: 100%;

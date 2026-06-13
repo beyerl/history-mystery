@@ -1,5 +1,6 @@
 import { gameStateService } from '../business-logic/game-state-service.js';
 import { GameStateEnum } from '../models/game-state.js';
+import { translationService } from '../business-logic/translation-service.js';
 
 class PlayerRegistration extends HTMLElement {
     gameStateIntervalId = null;
@@ -7,20 +8,21 @@ class PlayerRegistration extends HTMLElement {
     async connectedCallback() {
         const gameHash = this.getAttribute('game-hash');
 
+        const t = (key) => translationService.t(key);
         this.innerHTML = `
             <div>
-                <label for="player-name">Player Name:</label>
+                <label for="player-name">${t('player.nameLabel')}</label>
                 <div class="input-group">
-                    <input class="input" type="text" id="player-name" placeholder="Player Name" />
-                    <button id="update-player-button" class="btn btn-primary" >Accept</button>
+                    <input class="input" type="text" id="player-name" placeholder="${t('player.namePlaceholder')}" />
+                    <button id="update-player-button" class="btn btn-primary" >${t('player.accept')}</button>
                 </div>
             </div>
             <div id="player-name-error" style="color: red;height: 20px;"></div>
             <table id="player-table" class="table" style="margin: 0 auto; width: 100%;">
                 <thead>
                     <tr>
-                        <th>Player Names</th>                         
-                    </tr>                 
+                        <th>${t('player.tableHeader')}</th>
+                    </tr>
                 </thead>
                 <tbody>
                 </tbody>
@@ -43,13 +45,13 @@ class PlayerRegistration extends HTMLElement {
             const playerName = event.target.value;
             if (!playerName) { return; }
             const isValid = /^[a-zA-Z0-9]+$/.test(playerName); // Check if the player name is valid (alphanumeric only)
-            this.querySelector('#player-name-error').textContent = isValid ? '' : 'Player name can only contain letters and numbers.';
+            this.querySelector('#player-name-error').textContent = isValid ? '' : translationService.t('player.invalidName');
         });
 
         this.querySelector('#update-player-button').addEventListener('click', () => {
             const playerName = this.querySelector('#player-name').value;
             if (!playerName) {
-                this.querySelector('#player-name-error').textContent = 'Please enter a player name.';
+                this.querySelector('#player-name-error').textContent = translationService.t('player.enterName');
                 return;
             }
 
@@ -97,9 +99,9 @@ class PlayerRegistration extends HTMLElement {
 
             const errorDiv = this.querySelector('#player-table-error');
             if (emptyRows === 0) {
-                errorDiv.textContent = 'Maximum number of players reached.';
+                errorDiv.textContent = translationService.t('player.maxReached');
             } else if (emptyRows < 0) {
-                errorDiv.textContent = 'Too many players. Please remove some players.';
+                errorDiv.textContent = translationService.t('player.tooMany');
             } else {
                 errorDiv.textContent = '';
             }

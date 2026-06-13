@@ -1,3 +1,5 @@
+import { translationService } from './business-logic/translation-service.js';
+
 const routes = {
     '/': '<start-page></start-page>',
     '/game': '<game-page></game-page>',
@@ -12,7 +14,7 @@ function updateView() {
     const fullPath = window.location.hash.slice(1) || '/';
     const path = fullPath.split('?')[0]; // Extract the path without query parameters
     const routerView = document.querySelector('router-view');
-    routerView.innerHTML = routes[path] || '<div><h2>404</h2><p>Page not found.</p></div>';
+    routerView.innerHTML = routes[path] || `<div><h2>404</h2><p>${translationService.t('common.pageNotFound')}</p></div>`;
 }
 
 window.addEventListener('hashchange', updateView);

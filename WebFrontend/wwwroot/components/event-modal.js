@@ -1,4 +1,5 @@
 import { WikipediaApiService } from '../business-logic/wikipedia-api-service.js';
+import { translationService } from '../business-logic/translation-service.js';
 
 export class EventModal extends HTMLElement {
   constructor() {
@@ -71,7 +72,7 @@ export class EventModal extends HTMLElement {
       <div class="overlay"></div>
       <div class="modal">
         <div class="close-btn-row">
-          <button class="close-btn btn btn-primary" title="Close" aria-label="Close">
+          <button class="close-btn btn btn-primary" title="${translationService.t('modal.close')}" aria-label="${translationService.t('modal.close')}">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;">
               <line x1="4" y1="4" x2="16" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               <line x1="16" y1="4" x2="4" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -91,7 +92,7 @@ export class EventModal extends HTMLElement {
     if (this.eventData) {
       content.innerHTML = `
         <h2>${this.eventData.year} - ${this.eventData.title}</h2>
-        <p>${this.eventData.description || 'No description available.'}</p>
+        <p>${this.eventData.description || translationService.t('modal.noDescription')}</p>
       `;
 
       if (this.eventData.wiki_title) {
@@ -99,17 +100,17 @@ export class EventModal extends HTMLElement {
           const summary = await this.wikipediaApiService.getSummary(this.eventData.wiki_title);
           const summaryCard = `
           <div class="wiki-summary">
-            <i>Wikipedia Summary</i>
+            <i>${translationService.t('modal.wikipediaSummary')}</i>
             <h3>${summary.title}</h3>
             ${summary.thumbnail ? `<img src="${summary.thumbnail.source}" max-height="${summary.thumbnail.height}" max-width="${summary.thumbnail.width}" alt="${summary.title}" >` : ''}
             <div>${summary.extract_html}</div>
-            <a class="link" href="${summary.page}" target="_blank">Read more on Wikipedia</a>
+            <a class="link" href="${summary.page}" target="_blank">${translationService.t('modal.readMore')}</a>
           </div>
         `;
           content.innerHTML += summaryCard;
         } catch (error) {
           console.error('Error fetching Wikipedia summary:', error);
-          content.innerHTML += `<p>Failed to load Wikipedia summary.</p>`;
+          content.innerHTML += `<p>${translationService.t('modal.wikipediaFailed')}</p>`;
         }
       }
     }

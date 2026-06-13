@@ -1,4 +1,5 @@
 import { audioService } from '../business-logic/audio-service.js';
+import { translationService } from '../business-logic/translation-service.js';
 
 export class MuteButton extends HTMLElement {
   constructor() {
@@ -25,14 +26,16 @@ export class MuteButton extends HTMLElement {
       audioService.toggleMute();
       this.updateButton();
     });
+    window.addEventListener('language-changed', () => this.updateButton());
     this.updateButton();
   }
 
   updateButton() {
     const muted = audioService.muted;
+    const label = translationService.t(muted ? 'mute.unmute' : 'mute.mute');
     this.button.textContent = muted ? '\u{1F507}' : '\u{1F50A}';
-    this.button.title = muted ? 'Unmute audio' : 'Mute audio';
-    this.button.setAttribute('aria-label', muted ? 'Unmute audio' : 'Mute audio');
+    this.button.title = label;
+    this.button.setAttribute('aria-label', label);
   }
 }
 

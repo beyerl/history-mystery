@@ -2,6 +2,7 @@ import { audioService } from '../business-logic/audio-service.js';
 import { SoundEnum } from '../models/sound-enum.js';
 import { gameStateService } from '../business-logic/game-state-service.js';
 import { mistakeService } from '../business-logic/mistake-service.js';
+import { translationService } from '../business-logic/translation-service.js';
 import { AnswerResultEnum } from '../models/answer-result.js';
 import { GameStateEnum } from '../models/game-state.js';
 
@@ -62,7 +63,7 @@ class GamePage extends HTMLElement {
       </style>      
       <toast-component id="toast"></toast-component>
       <footer id="footer">
-        <button id="back-to-menu" class="btn btn-primary" style="margin-left: 10px;">Back to Menu</button>
+        <button id="back-to-menu" class="btn btn-primary" style="margin-left: 10px;">${translationService.t('game.backToMenu')}</button>
       </footer>
       <drag-drop-list id="dragDropList"></drag-drop-list>
 
@@ -74,10 +75,11 @@ class GamePage extends HTMLElement {
     import('../components/win-overlay.js');
     import('../components/toast-component.js');
 
-    import('../data/historic-events.js').then(({ historicEvents }) => {
+    import('../data/historic-events.js').then(async ({ historicEvents }) => {
+      const localizedEvents = await translationService.localizeEvents(historicEvents);
       const dragDropList = this.shadowRoot.getElementById('dragDropList');
       if (dragDropList) {
-        dragDropList.setAttribute('events', JSON.stringify(historicEvents));
+        dragDropList.setAttribute('events', JSON.stringify(localizedEvents));
       }
     });
 
@@ -112,7 +114,7 @@ class GamePage extends HTMLElement {
           // Create the win overlay
           audioService.play(SoundEnum.WIN);
           const winOverlay = document.createElement('win-overlay');
-          winOverlay.setAttribute('message', 'You win!');
+          winOverlay.setAttribute('message', translationService.t('game.youWin'));
           document.body.appendChild(winOverlay);
 
           // Remove the overlay after sound has finished playing
@@ -147,7 +149,7 @@ class GamePage extends HTMLElement {
       if (this.changedScores.length > 0) {
         var oldestChangedScore = this.changedScores.shift()
         if (!oldestChangedScore || oldestChangedScore.score === 0) return;
-        this.showToast(`${oldestChangedScore.playerId} has ${oldestChangedScore.score} points`);
+        this.showToast(translationService.t('game.playerPoints', { player: oldestChangedScore.playerId, points: oldestChangedScore.score }));
       }
     }, 100);
   }

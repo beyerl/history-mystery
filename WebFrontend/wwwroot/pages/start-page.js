@@ -1,19 +1,31 @@
 import { audioService } from '../business-logic/audio-service.js';
 import { SoundEnum } from '../models/sound-enum.js';
+import { translationService } from '../business-logic/translation-service.js';
 
 class StartPage extends HTMLElement {
     connectedCallback() {
         audioService.play(SoundEnum.MENU, true);
+        this.render();
+    }
+
+    render() {
+        const t = (key) => translationService.t(key);
+        const languageOptions = translationService.getAvailableLanguages()
+            .map(language => `<option value="${language.code}" ${language.code === translationService.getLanguage() ? 'selected' : ''}>${language.name}</option>`)
+            .join('');
 
         this.innerHTML = `
             <div class="padding-x-5" style="height: 100vh; display: flex; flex-direction: column; justify-content: end; align-items: center;">
                 <div class="card w-100" style="text-align:center;">
                     <h1 style="font-family: 'CrimsonPro', Times;color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);margin-top:0px">Herstory Mystery</h1>
                     <div style="text-align: center; margin-top: 20px; display: flex; flex-direction: column; align-items: stretch;width:100%">
-                    <button id="start-game-button" class="btn btn-primary btn-block">Start Game</button>
-                    <button id="join-game-button" class="btn btn-primary btn-block">Join Game</button>
-                    <button id="tutorial-button" class="btn btn-primary btn-block">Tutorial</button>
-                    <button id="credits" class="btn btn-primary btn-block">Credits</button>
+                    <button id="start-game-button" class="btn btn-primary btn-block">${t('start.startGame')}</button>
+                    <button id="join-game-button" class="btn btn-primary btn-block">${t('start.joinGame')}</button>
+                    <button id="tutorial-button" class="btn btn-primary btn-block">${t('start.tutorial')}</button>
+                    <button id="credits" class="btn btn-primary btn-block">${t('start.credits')}</button>
+                    <select id="language-select" class="input" style="margin-top: 10px;" title="${t('start.language')}" aria-label="${t('start.language')}">
+                        ${languageOptions}
+                    </select>
                     </div>
                 </div>
             </div>
@@ -37,6 +49,11 @@ class StartPage extends HTMLElement {
 
         this.querySelector('#credits').addEventListener('click', () => {
             window.location.hash = '/credits';
+        });
+
+        this.querySelector('#language-select').addEventListener('change', (event) => {
+            translationService.setLanguage(event.target.value);
+            this.render();
         });
     }
 }

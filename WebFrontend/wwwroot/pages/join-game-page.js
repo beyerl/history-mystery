@@ -1,22 +1,24 @@
 import { gameStateService } from '../business-logic/game-state-service.js';
+import { translationService } from '../business-logic/translation-service.js';
 import './player-registration.js'; // Import the PlayerRegistration component
 
 class JoinGamePage extends HTMLElement {
     connectedCallback() {
+        const t = (key) => translationService.t(key);
         this.innerHTML = `
         <div class="padding-x-5">
             <div id="join-game-container" class="card">
-                <h1>Join Game</h1>
+                <h1>${t('join.title')}</h1>
                 <div>
-                    <label>Game Id:</label>
+                    <label>${t('common.gameId')}</label>
                     <div class="input-group">
-                        <input class="input" type="text" id="game-id-input" placeholder="Enter Game ID" />
-                        <button class="btn btn-primary" id="join-game-button">Join</button>
+                        <input class="input" type="text" id="game-id-input" placeholder="${t('join.enterGameId')}" />
+                        <button class="btn btn-primary" id="join-game-button">${t('join.join')}</button>
                     </div>
                 </div>
                 <div id="game-id-message" style="height: 20px;"></div>
                 <div id="player-registration-container"></div>
-                <button class="btn btn-primary btn-block" id="back-to-menu-button">Back to Main Menu</button>
+                <button class="btn btn-primary btn-block" id="back-to-menu-button">${t('common.backToMainMenu')}</button>
             </div>
         </div>
         `;
@@ -33,13 +35,13 @@ class JoinGamePage extends HTMLElement {
         this.querySelector('#join-game-button').addEventListener('click', async () => {
             const gameHash = this.querySelector('#game-id-input').value.trim();
             if (!gameHash) {
-                this.querySelector('#game-id-message').textContent = 'Please enter a valid Game ID.';
+                this.querySelector('#game-id-message').textContent = translationService.t('join.invalidGameId');
                 return;
             }
 
             const game = await gameStateService.GetGameAsync(gameHash);
             if (!game) {
-                this.querySelector('#game-id-message').textContent = 'Game not found. Please check the Game ID.';
+                this.querySelector('#game-id-message').textContent = translationService.t('join.gameNotFound');
                 return;
             }
 
