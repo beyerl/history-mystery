@@ -10,4 +10,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Referenced so `dotnet publish` emits the engine assets at wwwroot/_content/QuizEngine/.
+         In production this API also serves the static frontend (see deploy workflow). -->
+    <ProjectReference Include="..\QuizEngine\QuizEngine.csproj" />
+  </ItemGroup>
+
 </Project>

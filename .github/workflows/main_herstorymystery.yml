@@ -25,10 +25,12 @@ jobs:
       - name: Restore backend dependencies
         run: dotnet restore GameStateApi/GameStateApi.csproj
 
-      - name: Copy frontend files into backend wwwroot
+      - name: Copy Herstory Mystery content into backend wwwroot
         run: |
           mkdir -p GameStateApi/wwwroot
-          cp -r WebFrontend/wwwroot/* GameStateApi/wwwroot/
+          cp -r HerstoryMystery/wwwroot/* GameStateApi/wwwroot/
+          # The content-agnostic engine assets are added automatically at publish
+          # time as wwwroot/_content/QuizEngine/ because GameStateApi references QuizEngine.
 
       - name: Build backend
         run: dotnet build GameStateApi/GameStateApi.csproj --configuration Release

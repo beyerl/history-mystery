@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <!--
+    Content-agnostic quiz engine. Ships only static web assets (ES modules + CSS)
+    under wwwroot/, which consuming web apps see at /_content/QuizEngine/...
+    Contains no quiz-specific content; consumers supply that via quiz.config.js.
+  -->
+
+</Project>
