@@ -12,7 +12,7 @@ class GameScoresPage extends HTMLElement {
     gameStateIntervalId = null;
 
     async connectedCallback() {
-        audioService.play(SoundEnum.MENU, true);
+        audioService.play(SoundEnum.MENU);
 
         const urlParams = new URLSearchParams(window.location.hash.split('?')[1]);
         this.gameId = urlParams.get('gameId');

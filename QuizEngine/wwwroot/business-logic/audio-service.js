@@ -11,29 +11,37 @@ export class AudioService {
         if (instance) {
             return instance;
         }
-        this.activeLoopAudios = {};
+        // Every sound that is currently playing is tracked here (keyed by sound)
+        // so it can be muted or stopped later, whether or not it loops.
+        this.activeAudios = {};
         this.muted = localStorage.getItem('audioMuted') === 'true';
         instance = this;
     }
 
     play(sound, loop = false) {
-        if (this.activeLoopAudios[sound]) { return; }
+        // A given sound only ever has one instance playing at a time; this keeps
+        // background tracks (e.g. the menu music) from stacking on page re-entry.
+        if (this.activeAudios[sound]) { return; }
         const src = configService.sounds[sound];
         if (!src) return;
         const audio = new Audio(src);
         audio.loop = loop;
         audio.volume = 1;
         audio.muted = this.muted;
+        // Stop tracking a non-looping sound once it finishes on its own.
+        audio.addEventListener('ended', () => {
+            if (this.activeAudios[sound] === audio) {
+                delete this.activeAudios[sound];
+            }
+        });
+        this.activeAudios[sound] = audio;
         audio.play();
-        if (loop) {
-            this.activeLoopAudios[sound] = audio;
-        }
     }
 
     setMuted(muted) {
         this.muted = muted;
         localStorage.setItem('audioMuted', muted);
-        Object.values(this.activeLoopAudios).forEach(audio => { audio.muted = muted; });
+        Object.values(this.activeAudios).forEach(audio => { audio.muted = muted; });
     }
 
     toggleMute() {
@@ -42,21 +50,22 @@ export class AudioService {
     }
 
     stop(sound) {
-        const audio = this.activeLoopAudios[sound];
+        const audio = this.activeAudios[sound];
         if (!audio) return;
+        delete this.activeAudios[sound];
         const fadeDuration = 2000; // ms
         const fadeSteps = 20;
         const fadeStepTime = fadeDuration / fadeSteps;
         let currentStep = 0;
+        const startVolume = audio.volume;
         const fadeOut = () => {
             if (currentStep < fadeSteps) {
-                audio.volume = Math.max(0, 1 - currentStep / fadeSteps);
+                audio.volume = Math.max(0, startVolume * (1 - currentStep / fadeSteps));
                 currentStep++;
                 setTimeout(fadeOut, fadeStepTime);
             } else {
                 audio.pause();
                 audio.currentTime = 0;
-                delete this.activeLoopAudios[sound];
             }
         };
         fadeOut();

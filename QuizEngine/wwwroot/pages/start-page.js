@@ -5,7 +5,7 @@ import { configService } from '../business-logic/config-service.js';
 
 class StartPage extends HTMLElement {
     connectedCallback() {
-        audioService.play(SoundEnum.MENU, true);
+        audioService.play(SoundEnum.MENU);
         this.render();
     }
 
