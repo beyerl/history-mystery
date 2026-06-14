@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mystery Quizzes</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+  <header>
+    <h1>Mystery Quizzes</h1>
+    <p>Pick a timeline challenge.</p>
+  </header>
+
+  <main class="grid" id="quiz-grid"></main>
+
+  <footer>A family of quizzes built on the same engine.</footer>
+
+  <script type="module">
+    import { quizzes } from './links.js';
+    const grid = document.getElementById('quiz-grid');
+    grid.innerHTML = quizzes.map(q => `
+      <a class="quiz-card" href="${q.url}">
+        <h2>${q.name}</h2>
+        <p>${q.tagline}</p>
+      </a>
+    `).join('');
+  </script>
+</body>
+
+</html>

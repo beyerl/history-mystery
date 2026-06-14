@@ -16,7 +16,7 @@ on:
       - 'MetalMystery/wwwroot/**'
       - 'ArtMystery/wwwroot/**'
       - 'tools/build-web.mjs'
-      - 'tools/build-pages-index.mjs'
+      - 'MysteryQuizzes/wwwroot/**'
       - 'mobile/apps.json'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
@@ -49,7 +49,9 @@ jobs:
           for app in herstory spacerace metal art; do
             node tools/build-web.mjs "$app" "dist/$app"
           done
-          node tools/build-pages-index.mjs dist
+          # The MysteryQuizzes overview (#12) is the site root, linking to the
+          # quizzes (sub-folders here; subdomains in production).
+          cp -r MysteryQuizzes/wwwroot/* dist/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
