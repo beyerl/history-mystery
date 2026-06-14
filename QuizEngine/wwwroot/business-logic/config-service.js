@@ -32,6 +32,18 @@ export class ConfigService {
     // hidden YouTube player for each presented question. Null/absent = no audio.
     get audioConfig() { return activeConfig?.audio ?? null; }
 
+    // Optional picture variant. { enabled: true } shows image cards with a
+    // full-screen button instead of a text caption. Null/absent = no pictures.
+    get pictureConfig() { return activeConfig?.picture ?? null; }
+
+    // The active card presentation mode ('audio' | 'picture' | null), applied by
+    // the game page as a CSS mode class on the timeline list.
+    get cardMode() {
+        if (this.audioConfig?.enabled) return 'audio';
+        if (this.pictureConfig?.enabled) return 'picture';
+        return null;
+    }
+
     /**
      * Returns the per-language question translations (keyed by English title),
      * or an empty object when the consumer provides none.

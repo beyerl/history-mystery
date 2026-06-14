@@ -56,6 +56,7 @@ export const translations = {
         "common.backToMainMenu": "Back to Main Menu",
         "common.gameId": "Game Id:",
         "common.more": "more",
+        "common.fullscreen": "View image full screen",
         "common.pageNotFound": "Page not found.",
         "start.startGame": "Start Game",
         "start.joinGame": "Join Game",
@@ -123,6 +124,7 @@ export const translations = {
     de: {
         "common.backToMainMenu": "Zurück zum Hauptmenü",
         "common.gameId": "Spiel-ID:",
+        "common.fullscreen": "Bild im Vollbild anzeigen",
         "common.more": "mehr",
         "common.pageNotFound": "Seite nicht gefunden.",
         "start.startGame": "Spiel starten",

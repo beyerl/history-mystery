@@ -2,6 +2,7 @@ import Sortable from '../3rdparty/sortable.js'; // Import Sortable.js
 import { AnswerResultEnum } from '../models/answer-result.js';
 import { QuestionService } from '../business-logic/question-service.js';
 import { InfoModal } from './info-modal.js';
+import { ImageOverlay } from './image-overlay.js';
 import { translationService } from '../business-logic/translation-service.js';
 import { configService } from '../business-logic/config-service.js';
 
@@ -76,9 +77,14 @@ class DragDropList extends HTMLElement {
     this.populateSlots(events.slice(1).sort((a, b) => a.year - b.year));
     this.populateTopSlot(events[0]);
     this.shadowRoot.addEventListener('click', (e) => {
-      if (e.target.classList.contains('more')) {
-        const eventData = JSON.parse(e.target.getAttribute('data-event'));
-        this.openEventModal(eventData);
+      const moreBtn = e.target.closest('.more');
+      if (moreBtn) {
+        this.openEventModal(JSON.parse(moreBtn.getAttribute('data-event')));
+        return;
+      }
+      const fullscreenBtn = e.target.closest('.fullscreen-btn');
+      if (fullscreenBtn) {
+        this.openImageOverlay(fullscreenBtn.getAttribute('data-image'), fullscreenBtn.getAttribute('data-title'));
       }
     });
   }
@@ -185,13 +191,20 @@ class DragDropList extends HTMLElement {
     const moreButton = configService.infoProvider
       ? `<button class="btn btn-primary btn-sm more" data-event='${this.escapeHtml(JSON.stringify(event))}'>${translationService.t('common.more')}</button>`
       : '';
-    // `artist` is an optional, content-supplied field (used by the audio quiz);
-    // quizzes without it simply render nothing here.
+    // `artist` is an optional, content-supplied field (used by the audio and
+    // picture quizzes); quizzes without it simply render nothing here.
     const artist = event.artist
       ? `<div class="artist">${this.escapeHtml(event.artist)}</div>`
       : '';
+    // `image` is optional (picture quiz): a reference thumbnail plus a button to
+    // view it full-screen, shown instead of a text caption on the active card.
+    const picture = event.image
+      ? `<img class="card-thumb" src="${this.escapeHtml(event.image)}" alt="" loading="lazy">
+         <button class="btn btn-primary btn-sm fullscreen-btn" data-image="${this.escapeHtml(event.image)}" data-title="${this.escapeHtml(event.title)}" title="${translationService.t('common.fullscreen')}" aria-label="${translationService.t('common.fullscreen')}">&#9974;</button>`
+      : '';
     return `
       <div class="audio-icon" aria-hidden="true">🎵</div>
+      ${picture}
       <div class="year">${event.year}${configService.valueSuffix}</div>
       ${artist}
       <div class="title">${this.escapeHtml(event.title)}</div>
@@ -221,6 +234,14 @@ class DragDropList extends HTMLElement {
       bubbles: true,
       composed: true
     }));
+  }
+
+  openImageOverlay(imageUrl, title) {
+    document.querySelector('image-overlay')?.remove();
+    const overlay = new ImageOverlay();
+    overlay.setAttribute('data-image', imageUrl);
+    if (title) overlay.setAttribute('data-title', title);
+    document.body.appendChild(overlay);
   }
 
   initSortable() {

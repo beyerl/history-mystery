@@ -76,12 +76,16 @@ class GamePage extends HTMLElement {
     import('../components/win-overlay.js');
     import('../components/toast-component.js');
 
-    // Opt-in audio variant: mount the hidden YouTube player and switch the list
-    // into "audio mode" (unlabeled cards). Awaited so the player is listening
-    // before the first question-presented event fires.
+    // Opt-in card presentation modes (audio/picture) switch the list into the
+    // matching CSS mode (unlabeled cards revealed on placement).
+    const cardMode = configService.cardMode;
+    if (cardMode) {
+      this.shadowRoot.getElementById('dragDropList')?.classList.add(`${cardMode}-mode`);
+    }
+    // The audio variant also mounts a hidden YouTube player. Awaited so it is
+    // listening before the first question-presented event fires.
     if (configService.audioConfig?.enabled) {
       await import('../components/youtube-audio-player.js');
-      this.shadowRoot.getElementById('dragDropList')?.classList.add('audio-mode');
       this.shadowRoot.appendChild(document.createElement('youtube-audio-player'));
     }
 

@@ -74,15 +74,31 @@
     line-height: 1;
 }
 
-/* Audio variant: the unplaced/dragging card is unlabeled (just a music note);
-   artist/title/year are revealed only once the card becomes a placed pill. */
+/* Audio/picture variants: the unplaced/dragging card hides the answer labels
+   (artist/title/year); they are revealed once the card becomes a placed pill.
+   The year is already hidden on .drag-element by the rule above. */
 :host(.audio-mode) .drag-element .title,
-:host(.audio-mode) .drag-element .artist {
+:host(.audio-mode) .drag-element .artist,
+:host(.picture-mode) .drag-element .title,
+:host(.picture-mode) .drag-element .artist {
     display: none;
 }
 
+/* Audio variant shows a music-note placeholder on the unplaced card. */
 :host(.audio-mode) .drag-element .audio-icon {
     display: block;
+}
+
+/* Picture variant: a reference thumbnail plus a full-screen button. */
+.card-thumb {
+    max-height: 100%;
+    max-width: 64px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.fullscreen-btn {
+    flex: 0 0 auto;
 }
 
 .pill {
