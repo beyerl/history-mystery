@@ -89,3 +89,6 @@ mobile/node_modules/
 mobile/www/
 mobile/android/
 mobile/capacitor.config.json
+
+# Static web export (GitHub Pages) — generated on demand / in CI
+dist/

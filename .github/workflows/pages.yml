@@ -1,0 +1,68 @@
+# Deploys the quiz frontends as static sites to GitHub Pages, separately from the
+# GameState API (which stays on Azure). Each frontend is built into its own
+# sub-folder with base-path-independent (relative) asset references, so it works
+# both at user.github.io/<repo>/<app>/ and when mapped to a subdomain.
+
+name: Deploy frontends to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'QuizEngine/wwwroot/**'
+      - 'HerstoryMystery/wwwroot/**'
+      - 'SampleQuiz/wwwroot/**'
+      - 'MetalMystery/wwwroot/**'
+      - 'ArtMystery/wwwroot/**'
+      - 'tools/build-web.mjs'
+      - 'tools/build-pages-index.mjs'
+      - 'mobile/apps.json'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build static frontends
+        # API_BASE_ADDRESS secret points the deployed frontends at the Azure API.
+        env:
+          API_BASE_ADDRESS: ${{ secrets.API_BASE_ADDRESS }}
+        run: |
+          for app in herstory spacerace metal art; do
+            node tools/build-web.mjs "$app" "dist/$app"
+          done
+          node tools/build-pages-index.mjs dist
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

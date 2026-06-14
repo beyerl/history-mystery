@@ -10,13 +10,31 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// CORS
-var allowedOrigin = builder.Configuration["BaseUrl"] ?? "http://localhost:3000";
+// CORS — the API is deployed once and shared by several frontends (the combined
+// Azure app plus frontends deployed separately, e.g. to GitHub Pages and their
+// own subdomains), so it must allow more than one origin. Origins come from the
+// "AllowedOrigins" config array, with the legacy single "BaseUrl" and a
+// comma-separated "AllowedOriginsCsv" (handy for env vars) folded in.
+var origins = new List<string>();
+var configuredOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
+if (configuredOrigins is { Length: > 0 })
+    origins.AddRange(configuredOrigins);
+var baseUrl = builder.Configuration["BaseUrl"];
+if (!string.IsNullOrWhiteSpace(baseUrl))
+    origins.Add(baseUrl);
+var originsCsv = builder.Configuration["AllowedOriginsCsv"];
+if (!string.IsNullOrWhiteSpace(originsCsv))
+    origins.AddRange(originsCsv.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
+if (origins.Count == 0)
+    origins.Add("http://localhost:3000");
+// CORS origins must not carry a trailing slash.
+var allowedOrigins = origins.Select(o => o.TrimEnd('/')).Distinct().ToArray();
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins(allowedOrigin)
+        policy.WithOrigins(allowedOrigins)
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
