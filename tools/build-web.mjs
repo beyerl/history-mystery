@@ -56,8 +56,14 @@ relativize(resolve(out, 'quiz.config.js'));
 // Point the build at the deployed GameState API when provided.
 const apiBase = process.env.API_BASE_ADDRESS;
 if (apiBase) {
-  writeFileSync(resolve(out, 'config.js'), `export const API_BASE_ADDRESS = '${apiBase.replace(/\/?$/, '/')}';\n`);
-  console.log(`Set API_BASE_ADDRESS = ${apiBase}`);
+  // Normalise: ensure an absolute https:// URL with a trailing slash. Without a
+  // scheme the value would be treated as a relative path and requests would be
+  // sent to the page's own origin instead of the API.
+  let base = apiBase.trim();
+  if (!/^https?:\/\//i.test(base)) base = `https://${base}`;
+  base = base.replace(/\/?$/, '/');
+  writeFileSync(resolve(out, 'config.js'), `export const API_BASE_ADDRESS = '${base}';\n`);
+  console.log(`Set API_BASE_ADDRESS = ${base}`);
 } else {
   console.warn('WARNING: API_BASE_ADDRESS is not set — keeping the source default in config.js (localhost). A deployed build MUST set it, or multiplayer will fail with a cross-origin error.');
 }

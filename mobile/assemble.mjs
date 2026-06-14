@@ -54,9 +54,14 @@ cpSync(engineWwwroot, resolve(www, '_content', 'QuizEngine'), { recursive: true 
 // 3. Point the bundled app at the deployed GameState API when provided.
 const apiBase = process.env.API_BASE_ADDRESS;
 if (apiBase) {
+  // Normalise to an absolute https:// URL with a trailing slash (a scheme-less
+  // value would be treated as a relative path at runtime).
+  let base = apiBase.trim();
+  if (!/^https?:\/\//i.test(base)) base = `https://${base}`;
+  base = base.replace(/\/?$/, '/');
   const configPath = resolve(www, 'config.js');
-  writeFileSync(configPath, `export const API_BASE_ADDRESS = '${apiBase.replace(/\/?$/, '/')}';\n`);
-  console.log(`Set API_BASE_ADDRESS = ${apiBase}`);
+  writeFileSync(configPath, `export const API_BASE_ADDRESS = '${base}';\n`);
+  console.log(`Set API_BASE_ADDRESS = ${base}`);
 } else {
   console.warn('WARNING: API_BASE_ADDRESS is not set — the bundled config.js keeps the localhost default. A packaged app MUST set it, or multiplayer will fail.');
 }
