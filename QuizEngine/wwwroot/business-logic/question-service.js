@@ -36,10 +36,22 @@ export class QuestionService {
 
     // Fisher–Yates shuffle to create unbiased permutation https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
     shuffleArray(array) {
+        return QuestionService.shuffleArray(array);
+    }
+
+    static shuffleArray(array) {
         for (let i = array.length - 1; i >= 1; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
         }
         return array;
+    }
+
+    // Produces a shuffled order (array of indexes 0..length-1). The creating
+    // client persists this to the backend so every player shares the same
+    // question sequence; joining clients reorder their questions by it instead
+    // of shuffling locally.
+    static createShuffledOrder(length) {
+        return QuestionService.shuffleArray([...Array(length).keys()]);
     }
 }

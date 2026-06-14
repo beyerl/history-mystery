@@ -16,7 +16,7 @@ class GameStateService extends IGameStateService {
         var responseJson = await response.json()
 
         this.validateGameState(responseJson);
-        return new GameState(responseJson.gameId, responseJson.playerScores, responseJson.state);
+        return new GameState(responseJson.gameId, responseJson.playerScores, responseJson.state, responseJson.questionOrder);
     }
 
     async GetGameAsync(gameId) {
@@ -24,7 +24,7 @@ class GameStateService extends IGameStateService {
             const response = await fetch(`${this.baseAddress}api/GameState/${gameId}`);
             var responseJson = await response.json()
             this.validateGameState(responseJson);
-            return new GameState(responseJson.gameId, responseJson.playerScores, responseJson.state);
+            return new GameState(responseJson.gameId, responseJson.playerScores, responseJson.state, responseJson.questionOrder);
         } catch (error) {
             console.error('Error fetching game state:', error);
             return null; // Return null if the game is not found or an error occurs
@@ -55,6 +55,15 @@ class GameStateService extends IGameStateService {
     async ResetScores(gameId) {
         const response = await fetch(`${this.baseAddress}api/GameState/${gameId}/restart`, {
             method: 'POST',
+        });
+        return response.status === 200;
+    }
+
+    async SetQuestionOrderAsync(gameId, questionOrder) {
+        const response = await fetch(`${this.baseAddress}api/GameState/${gameId}/question-order`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(questionOrder),
         });
         return response.status === 200;
     }

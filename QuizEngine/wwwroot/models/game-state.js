@@ -6,9 +6,10 @@ export const GameStateEnum = {
 
 // GameState class
 export class GameState {
-    constructor(gameId, playerScores, state) {
+    constructor(gameId, playerScores, state, questionOrder = []) {
         this.gameId = gameId;
         this.playerScores = playerScores; // Array of objects with playerId and score
         this.state = state;
+        this.questionOrder = questionOrder; // Array of int indexes; shared across clients
     }
 }

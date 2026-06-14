@@ -76,9 +76,23 @@ class GamePage extends HTMLElement {
     import('../components/win-overlay.js');
     import('../components/toast-component.js');
 
-    translationService.localizeEvents(configService.questions).then(localizedQuestions => {
+    Promise.all([
+      translationService.localizeEvents(configService.questions),
+      this.gameStateService.GetGameAsync(this.gameId),
+    ]).then(([localizedQuestions, game]) => {
       const dragDropList = this.shadowRoot.getElementById('dragDropList');
-      if (dragDropList) {
+      if (!dragDropList) {
+        return;
+      }
+      // Apply the order the creating client persisted so all players see the
+      // same sequence. Reordering by valid indexes only; fall back to local
+      // shuffle when no order was stored (e.g. legacy games).
+      const order = game?.questionOrder;
+      if (Array.isArray(order) && order.length === localizedQuestions.length) {
+        const ordered = order.map(index => localizedQuestions[index]);
+        dragDropList.setAttribute('no-shuffle', '');
+        dragDropList.setAttribute('events', JSON.stringify(ordered));
+      } else {
         dragDropList.setAttribute('events', JSON.stringify(localizedQuestions));
       }
     });

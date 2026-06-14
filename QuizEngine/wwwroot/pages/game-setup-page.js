@@ -1,6 +1,8 @@
 import { HashHelper } from '../helpers/hash-helper.js';
 import { gameStateService } from '../business-logic/game-state-service.js';
 import { translationService } from '../business-logic/translation-service.js';
+import { configService } from '../business-logic/config-service.js';
+import { QuestionService } from '../business-logic/question-service.js';
 import './player-registration.js'; // Import the new PlayerRegistration component
 
 class GameSetupPage extends HTMLElement {
@@ -13,6 +15,13 @@ class GameSetupPage extends HTMLElement {
 
         const gameHash = HashHelper.generateGameHash();
         await gameStateService.CreateGameAsync(gameHash); // Create a new game
+
+        // Decide the question order once, here on the creating client, and
+        // persist it so every player who joins sees the same sequence. The
+        // backend only stores the integer indexes; it stays agnostic of the
+        // question content.
+        const questionOrder = QuestionService.createShuffledOrder(configService.questions.length);
+        await gameStateService.SetQuestionOrderAsync(gameHash, questionOrder);
 
         const t = (key) => translationService.t(key);
         this.shadowRoot.innerHTML = `

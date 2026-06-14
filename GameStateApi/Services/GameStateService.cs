@@ -15,10 +15,25 @@ namespace GameStateApi.Services
                 GameId = gameId,
                 PlayerScores = new Dictionary<string, int>(),
                 State = GameStateEnum.Setup,
+                QuestionOrder = new List<int>(),
                 LastUpdated = DateTime.UtcNow
             };
             _gameStates[gameId] = newGame;
             return newGame.ToDto();
+        }
+
+        // Persists the order in which questions are presented for a game, as a
+        // list of integer indexes. The order is decided by the creating client
+        // and shared with everyone who joins, so all clients see the same
+        // sequence. The API stays agnostic of what the indexes refer to.
+        public bool SetQuestionOrder(string gameId, List<int> questionOrder)
+        {
+            if (!_gameStates.TryGetValue(gameId, out var game) || game.State != GameStateEnum.Setup)
+                return false;
+
+            game.QuestionOrder = questionOrder ?? new List<int>();
+            game.LastUpdated = DateTime.UtcNow;
+            return true;
         }
 
         public GameStateDto? GetGame(string gameId)
@@ -117,6 +132,7 @@ namespace GameStateApi.Services
         public string GameId { get; set; } = null!;
         public Dictionary<string, int> PlayerScores { get; set; } = null!;
         public GameStateEnum State { get; set; }
+        public List<int> QuestionOrder { get; set; } = new();
         public DateTime LastUpdated { get; set; } // New property to track last update time
 
         public GameStateDto ToDto()
@@ -125,7 +141,8 @@ namespace GameStateApi.Services
             {
                 GameId = GameId,
                 PlayerScores = PlayerScores.Select(ps => new PlayerScoreDto { PlayerId = ps.Key, Score = ps.Value }).ToList(),
-                State = State
+                State = State,
+                QuestionOrder = QuestionOrder
             };
         }
     }
@@ -144,6 +161,8 @@ namespace GameStateApi.Services
         public List<PlayerScoreDto> PlayerScores { get; set; } = null!;
 
         public GameStateEnum State { get; set; }
+
+        public List<int> QuestionOrder { get; set; } = new();
     }
 
     public class PlayerScoreDto

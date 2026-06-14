@@ -64,6 +64,14 @@ namespace GameStateApi.Controllers
             return _gameStateService.IncrementPlayerScore(gameId, playerId) ? Ok() : BadRequest();
         }
 
+        // Stores the question order (integer indexes) chosen by the creating
+        // client so every player in the game sees the same sequence.
+        [HttpPost("{gameId}/question-order")]
+        public IActionResult SetQuestionOrder(string gameId, [FromBody] List<int> questionOrder)
+        {
+            return _gameStateService.SetQuestionOrder(gameId, questionOrder) ? Ok() : BadRequest();
+        }
+
 
     }
 }
