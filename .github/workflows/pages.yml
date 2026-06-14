@@ -41,6 +41,17 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Verify API base address is configured
+        # Fail fast instead of silently shipping the localhost default, which
+        # would make multiplayer break with a cross-origin error in production.
+        env:
+          API_BASE_ADDRESS: ${{ secrets.API_BASE_ADDRESS }}
+        run: |
+          if [ -z "$API_BASE_ADDRESS" ]; then
+            echo "::error::Repository secret API_BASE_ADDRESS is not set. Deployed frontends would point at localhost. Set it in Settings → Secrets and variables → Actions, then re-run."
+            exit 1
+          fi
+
       - name: Build static frontends
         # API_BASE_ADDRESS secret points the deployed frontends at the Azure API.
         env:

@@ -57,6 +57,8 @@ if (apiBase) {
   const configPath = resolve(www, 'config.js');
   writeFileSync(configPath, `export const API_BASE_ADDRESS = '${apiBase.replace(/\/?$/, '/')}';\n`);
   console.log(`Set API_BASE_ADDRESS = ${apiBase}`);
+} else {
+  console.warn('WARNING: API_BASE_ADDRESS is not set — the bundled config.js keeps the localhost default. A packaged app MUST set it, or multiplayer will fail.');
 }
 
 // 4. Capacitor config for this app.

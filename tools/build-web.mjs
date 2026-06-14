@@ -58,6 +58,8 @@ const apiBase = process.env.API_BASE_ADDRESS;
 if (apiBase) {
   writeFileSync(resolve(out, 'config.js'), `export const API_BASE_ADDRESS = '${apiBase.replace(/\/?$/, '/')}';\n`);
   console.log(`Set API_BASE_ADDRESS = ${apiBase}`);
+} else {
+  console.warn('WARNING: API_BASE_ADDRESS is not set — keeping the source default in config.js (localhost). A deployed build MUST set it, or multiplayer will fail with a cross-origin error.');
 }
 
 console.log('Done.');
