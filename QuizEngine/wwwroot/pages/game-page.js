@@ -87,6 +87,11 @@ class GamePage extends HTMLElement {
       // Apply the order the creating client persisted so all players see the
       // same sequence. Reordering by valid indexes only; fall back to local
       // shuffle when no order was stored (e.g. legacy games).
+      // Slow mode gives each player a per-question timer; set it before the
+      // events attribute so the list picks it up when it initializes.
+      if (game?.slowMode) {
+        dragDropList.setAttribute('slow-mode', '');
+      }
       const order = game?.questionOrder;
       if (Array.isArray(order) && order.length === localizedQuestions.length) {
         const ordered = order.map(index => localizedQuestions[index]);

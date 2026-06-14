@@ -26,6 +26,23 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+
+.slow-timer {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: var(--popover-bg);
+    color: var(--popover-text);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 16px;
+    z-index: 20;
+}
+
+.slow-timer[hidden] {
+    display: none;
 }
 
 .drag-element {

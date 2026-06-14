@@ -41,6 +41,11 @@ class GameSetupPage extends HTMLElement {
                         <br>
                     </div>
                     <player-registration game-hash="${gameHash}"></player-registration>
+                    <label class="input-group" style="align-items: center; gap: 8px; margin: 8px 0;">
+                        <input type="checkbox" id="slow-mode-toggle" />
+                        <span>${t('setup.slowMode')}</span>
+                    </label>
+                    <p style="font-size: 0.85em; margin: 0 0 12px;">${t('setup.slowModeDescription')}</p>
                     <button id="start-game-button" class="btn btn-primary btn-block">${t('setup.begin')}</button>
                     <button id="back-to-menu-button" class="btn btn-primary btn-block">${t('common.backToMainMenu')}</button>
                 </div>
@@ -68,6 +73,10 @@ class GameSetupPage extends HTMLElement {
                 this.shadowRoot.querySelector('player-registration').setError(translationService.t('setup.noPlayers'));
                 return;
             }
+            // Persist the slow-mode choice while still in Setup so every player
+            // gets the same mode once the game starts.
+            const slowMode = this.shadowRoot.getElementById('slow-mode-toggle').checked;
+            await gameStateService.SetSlowModeAsync(gameId, slowMode);
             if (gameStateService.StartGame(gameId)) { // Start the game
                 window.location.hash = `/game?gameId=${gameId}`;
             } else {

@@ -4,6 +4,9 @@ import { QuestionService } from '../business-logic/question-service.js';
 import { InfoModal } from './info-modal.js';
 import { translationService } from '../business-logic/translation-service.js';
 import { configService } from '../business-logic/config-service.js';
+
+const DEFAULT_SLOW_MODE_SECONDS = 15;
+
 class DragDropList extends HTMLElement {
   constructor() {
     super();
@@ -23,6 +26,7 @@ class DragDropList extends HTMLElement {
     const template = document.createElement('template');
     template.innerHTML = `
       <div class="container">
+        <div class="slow-timer" hidden></div>
         <div class="top-slot-container"></div>
         <div class="drop-list-wrapper"><div class="drop-list"></div></div>
       </div>
@@ -58,7 +62,15 @@ class DragDropList extends HTMLElement {
     return ['events'];
   }
 
+  disconnectedCallback() {
+    this.clearSlowModeTimer();
+  }
+
   initializeEvents() {
+    // Slow mode (a per-question answer timer) is opt-in via attribute and set
+    // by the game page from the shared game state.
+    this.slowMode = this.hasAttribute('slow-mode');
+    this.slowModeSeconds = Number(this.getAttribute('slow-mode-seconds')) || DEFAULT_SLOW_MODE_SECONDS;
     this._eventService = new QuestionService(this.events, !this.hasAttribute('no-shuffle'));
     const events = [this._eventService.get(), this._eventService.get(), this._eventService.get()];
     this.populateSlots(events.slice(1).sort((a, b) => a.year - b.year));
@@ -89,10 +101,75 @@ class DragDropList extends HTMLElement {
       Sortable.create(topSlot, {
         group: 'dragDropList'
       });
-
+      if (this.slowMode) {
+        this.startSlowModeTimer();
+      }
     } else {
       console.warn('Invalid event object or missing title:', event);
       topSlot.innerHTML = ''; // Clear the top slot if event is invalid
+      this.clearSlowModeTimer();
+    }
+  }
+
+  // Slow mode: each question gets a fixed time window. The placement stays
+  // editable for the whole window and is only judged when time runs out.
+  startSlowModeTimer() {
+    this.clearSlowModeTimer();
+    this._placedElement = null;
+    let remaining = this.slowModeSeconds;
+    const timerEl = this.shadowRoot.querySelector('.slow-timer');
+    const renderRemaining = () => {
+      if (timerEl) {
+        timerEl.hidden = false;
+        timerEl.textContent = translationService.t('game.timeLeft', { seconds: Math.max(0, remaining) });
+      }
+    };
+    renderRemaining();
+    this._slowModeIntervalId = setInterval(() => {
+      remaining -= 1;
+      renderRemaining();
+      if (remaining <= 0) {
+        this.finalizeSlowAnswer();
+      }
+    }, 1000);
+  }
+
+  clearSlowModeTimer() {
+    if (this._slowModeIntervalId) {
+      clearInterval(this._slowModeIntervalId);
+      this._slowModeIntervalId = null;
+    }
+    const timerEl = this.shadowRoot?.querySelector('.slow-timer');
+    if (timerEl) {
+      timerEl.hidden = true;
+    }
+  }
+
+  // Called when the slow-mode window closes: judge the final position of the
+  // card the player placed (or count it as a mistake if none was placed).
+  finalizeSlowAnswer() {
+    this.clearSlowModeTimer();
+    const dropList = this.shadowRoot.querySelector('.drop-list');
+    const placed = this._placedElement;
+    this._placedElement = null;
+
+    if (!placed || !dropList.contains(placed)) {
+      // No answer placed in time -> counts as a mistake; move on.
+      this.dispatchMessage(AnswerResultEnum.INCORRECT, this.currentTopEvent);
+      this.populateTopSlot(this._eventService.get());
+      return;
+    }
+
+    const siblings = Array.from(dropList.children);
+    const index = siblings.indexOf(placed);
+    const draggedYear = Number(placed.getAttribute('data-year'));
+    const previousYear = index > 0 ? Number(siblings[index - 1].getAttribute('data-year')) : -999999999;
+    const nextYear = index < siblings.length - 1 ? Number(siblings[index + 1].getAttribute('data-year')) : 999999999;
+
+    if (draggedYear < previousYear || draggedYear > nextYear) {
+      this.markIncorrect(placed, draggedYear);
+    } else {
+      this.markCorrect(placed);
     }
   }
 
@@ -145,6 +222,13 @@ class DragDropList extends HTMLElement {
   }
 
   onAdd(evt) {
+    // In slow mode the placement is not judged on drop; remember it and let
+    // the player keep reordering until the timer closes the window.
+    if (this.slowMode) {
+      this._placedElement = evt.item;
+      return;
+    }
+
     const draggedElement = evt.item;
     const draggedYear = Number(draggedElement.getAttribute('data-year'));
     const previousElement = evt.to.children[evt.newIndex - 1];
@@ -153,42 +237,50 @@ class DragDropList extends HTMLElement {
     const nextYear = nextElement ? Number(nextElement.getAttribute('data-year')) : 999999999;
 
     if (draggedYear < previousYear || draggedYear > nextYear) {
-      this.dispatchMessage(AnswerResultEnum.INCORRECT, this.currentTopEvent);
-      draggedElement.classList.add('ignore-elements');
-      draggedElement.classList.add('incorrect-answer');
-      draggedElement.classList.add('incorrect-answer-animation');
-
-      // Show correct year in a popover
-      const popover = document.createElement('div');
-      popover.className = 'popover';
-      popover.textContent = `${draggedYear}`;
-
-      draggedElement.style.position = 'relative';
-      draggedElement.appendChild(popover);
-
-      setTimeout(() => {
-        draggedElement.classList.remove('incorrect-answer-animation');
-        popover.remove();
-        draggedElement.remove();
-        this.populateTopSlot(this._eventService.get());
-      }, 800);
+      this.markIncorrect(draggedElement, draggedYear);
     } else {
-      this.dispatchMessage(AnswerResultEnum.CORRECT);
-      // style drag element like a regular slot
-      draggedElement.children[0].classList.remove('drag-element');
-      draggedElement.children[0].classList.add('pill');
-
-      draggedElement.classList.add('ignore-elements');
-      draggedElement.classList.add('correct-answer');
-      draggedElement.classList.add('correct-answer-animation');
-
-      setTimeout(() => {
-        draggedElement.classList.remove('correct-answer');
-        draggedElement.classList.remove('correct-answer-animation');
-
-        this.populateTopSlot(this._eventService.get());
-      }, 800);
+      this.markCorrect(draggedElement);
     }
+  }
+
+  markIncorrect(draggedElement, draggedYear) {
+    this.dispatchMessage(AnswerResultEnum.INCORRECT, this.currentTopEvent);
+    draggedElement.classList.add('ignore-elements');
+    draggedElement.classList.add('incorrect-answer');
+    draggedElement.classList.add('incorrect-answer-animation');
+
+    // Show correct year in a popover
+    const popover = document.createElement('div');
+    popover.className = 'popover';
+    popover.textContent = `${draggedYear}`;
+
+    draggedElement.style.position = 'relative';
+    draggedElement.appendChild(popover);
+
+    setTimeout(() => {
+      draggedElement.classList.remove('incorrect-answer-animation');
+      popover.remove();
+      draggedElement.remove();
+      this.populateTopSlot(this._eventService.get());
+    }, 800);
+  }
+
+  markCorrect(draggedElement) {
+    this.dispatchMessage(AnswerResultEnum.CORRECT);
+    // style drag element like a regular slot
+    draggedElement.children[0].classList.remove('drag-element');
+    draggedElement.children[0].classList.add('pill');
+
+    draggedElement.classList.add('ignore-elements');
+    draggedElement.classList.add('correct-answer');
+    draggedElement.classList.add('correct-answer-animation');
+
+    setTimeout(() => {
+      draggedElement.classList.remove('correct-answer');
+      draggedElement.classList.remove('correct-answer-animation');
+
+      this.populateTopSlot(this._eventService.get());
+    }, 800);
   }
 
   dispatchMessage(answerResult, eventData = null) {

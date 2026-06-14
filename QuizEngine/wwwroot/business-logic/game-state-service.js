@@ -16,7 +16,7 @@ class GameStateService extends IGameStateService {
         var responseJson = await response.json()
 
         this.validateGameState(responseJson);
-        return new GameState(responseJson.gameId, responseJson.playerScores, responseJson.state, responseJson.questionOrder);
+        return new GameState(responseJson.gameId, responseJson.playerScores, responseJson.state, responseJson.questionOrder, responseJson.slowMode);
     }
 
     async GetGameAsync(gameId) {
@@ -24,7 +24,7 @@ class GameStateService extends IGameStateService {
             const response = await fetch(`${this.baseAddress}api/GameState/${gameId}`);
             var responseJson = await response.json()
             this.validateGameState(responseJson);
-            return new GameState(responseJson.gameId, responseJson.playerScores, responseJson.state, responseJson.questionOrder);
+            return new GameState(responseJson.gameId, responseJson.playerScores, responseJson.state, responseJson.questionOrder, responseJson.slowMode);
         } catch (error) {
             console.error('Error fetching game state:', error);
             return null; // Return null if the game is not found or an error occurs
@@ -64,6 +64,15 @@ class GameStateService extends IGameStateService {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(questionOrder),
+        });
+        return response.status === 200;
+    }
+
+    async SetSlowModeAsync(gameId, slowMode) {
+        const response = await fetch(`${this.baseAddress}api/GameState/${gameId}/slow-mode`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(slowMode),
         });
         return response.status === 200;
     }

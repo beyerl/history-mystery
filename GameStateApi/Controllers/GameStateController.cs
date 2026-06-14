@@ -72,6 +72,13 @@ namespace GameStateApi.Controllers
             return _gameStateService.SetQuestionOrder(gameId, questionOrder) ? Ok() : BadRequest();
         }
 
+        // Enables/disables slow mode (per-question answer timer) for a game.
+        [HttpPost("{gameId}/slow-mode")]
+        public IActionResult SetSlowMode(string gameId, [FromBody] bool slowMode)
+        {
+            return _gameStateService.SetSlowMode(gameId, slowMode) ? Ok() : BadRequest();
+        }
+
 
     }
 }

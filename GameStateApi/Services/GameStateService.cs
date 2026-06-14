@@ -16,10 +16,23 @@ namespace GameStateApi.Services
                 PlayerScores = new Dictionary<string, int>(),
                 State = GameStateEnum.Setup,
                 QuestionOrder = new List<int>(),
+                SlowMode = false,
                 LastUpdated = DateTime.UtcNow
             };
             _gameStates[gameId] = newGame;
             return newGame.ToDto();
+        }
+
+        // Enables/disables slow mode (a per-question answer timer) for a game.
+        // Decided by the creating client and shared with everyone who joins.
+        public bool SetSlowMode(string gameId, bool slowMode)
+        {
+            if (!_gameStates.TryGetValue(gameId, out var game) || game.State != GameStateEnum.Setup)
+                return false;
+
+            game.SlowMode = slowMode;
+            game.LastUpdated = DateTime.UtcNow;
+            return true;
         }
 
         // Persists the order in which questions are presented for a game, as a
@@ -133,6 +146,7 @@ namespace GameStateApi.Services
         public Dictionary<string, int> PlayerScores { get; set; } = null!;
         public GameStateEnum State { get; set; }
         public List<int> QuestionOrder { get; set; } = new();
+        public bool SlowMode { get; set; }
         public DateTime LastUpdated { get; set; } // New property to track last update time
 
         public GameStateDto ToDto()
@@ -142,7 +156,8 @@ namespace GameStateApi.Services
                 GameId = GameId,
                 PlayerScores = PlayerScores.Select(ps => new PlayerScoreDto { PlayerId = ps.Key, Score = ps.Value }).ToList(),
                 State = State,
-                QuestionOrder = QuestionOrder
+                QuestionOrder = QuestionOrder,
+                SlowMode = SlowMode
             };
         }
     }
@@ -163,6 +178,8 @@ namespace GameStateApi.Services
         public GameStateEnum State { get; set; }
 
         public List<int> QuestionOrder { get; set; } = new();
+
+        public bool SlowMode { get; set; }
     }
 
     public class PlayerScoreDto
