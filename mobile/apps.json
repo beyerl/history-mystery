@@ -1,0 +1,6 @@
+[
+  { "key": "herstory",  "dir": "HerstoryMystery", "appId": "com.historymystery.herstory",  "appName": "Herstory Mystery" },
+  { "key": "spacerace", "dir": "SampleQuiz",       "appId": "com.historymystery.spacerace", "appName": "Space Race" },
+  { "key": "metal",     "dir": "MetalMystery",     "appId": "com.historymystery.metal",     "appName": "Metal Mystery" },
+  { "key": "art",       "dir": "ArtMystery",       "appId": "com.historymystery.art",       "appName": "Art Mystery" }
+]

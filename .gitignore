@@ -83,3 +83,9 @@ $RECYCLE.BIN/
 # bin and obj folders
 bin/
 obj/
+
+# Capacitor (Android wrappers) — generated on demand / in CI
+mobile/node_modules/
+mobile/www/
+mobile/android/
+mobile/capacitor.config.json

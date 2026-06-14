@@ -1,0 +1,72 @@
+# Builds an Android (Capacitor) APK for each quiz web frontend and uploads it as
+# a build artifact. Debug APKs are signed with the Android debug key and are
+# meant for testing/sideloading; see mobile/README.md for release signing.
+
+name: Build Android apps
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'mobile/**'
+      - 'QuizEngine/wwwroot/**'
+      - 'HerstoryMystery/wwwroot/**'
+      - 'SampleQuiz/wwwroot/**'
+      - 'MetalMystery/wwwroot/**'
+      - 'ArtMystery/wwwroot/**'
+      - '.github/workflows/android.yml'
+  workflow_dispatch:
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [herstory, spacerace, metal, art]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Install Capacitor dependencies
+        working-directory: mobile
+        run: npm install
+
+      - name: Assemble web assets for ${{ matrix.app }}
+        working-directory: mobile
+        # Set the API_BASE_ADDRESS secret to the deployed GameState API so the
+        # bundled app can reach multiplayer; otherwise it keeps the local default.
+        env:
+          API_BASE_ADDRESS: ${{ secrets.API_BASE_ADDRESS }}
+        run: node assemble.mjs ${{ matrix.app }}
+
+      - name: Add Android platform
+        working-directory: mobile
+        run: npx cap add android
+
+      - name: Sync Capacitor
+        working-directory: mobile
+        run: npx cap sync android
+
+      - name: Build debug APK
+        working-directory: mobile/android
+        run: ./gradlew assembleDebug --no-daemon
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.app }}-debug-apk
+          path: mobile/android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
