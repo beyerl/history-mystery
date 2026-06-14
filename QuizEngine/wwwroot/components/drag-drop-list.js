@@ -104,6 +104,14 @@ class DragDropList extends HTMLElement {
       if (this.slowMode) {
         this.startSlowModeTimer();
       }
+      // Generic lifecycle signal: a new question is now active. Optional
+      // behaviours (e.g. the audio variant's hidden player) subscribe to this;
+      // the core engine itself does nothing else with it.
+      this.dispatchEvent(new CustomEvent('question-presented', {
+        detail: { question: event },
+        bubbles: true,
+        composed: true,
+      }));
     } else {
       console.warn('Invalid event object or missing title:', event);
       topSlot.innerHTML = ''; // Clear the top slot if event is invalid
@@ -177,8 +185,15 @@ class DragDropList extends HTMLElement {
     const moreButton = configService.infoProvider
       ? `<button class="btn btn-primary btn-sm more" data-event='${this.escapeHtml(JSON.stringify(event))}'>${translationService.t('common.more')}</button>`
       : '';
+    // `artist` is an optional, content-supplied field (used by the audio quiz);
+    // quizzes without it simply render nothing here.
+    const artist = event.artist
+      ? `<div class="artist">${this.escapeHtml(event.artist)}</div>`
+      : '';
     return `
+      <div class="audio-icon" aria-hidden="true">🎵</div>
       <div class="year">${event.year}${configService.valueSuffix}</div>
+      ${artist}
       <div class="title">${this.escapeHtml(event.title)}</div>
       ${moreButton}`
   }

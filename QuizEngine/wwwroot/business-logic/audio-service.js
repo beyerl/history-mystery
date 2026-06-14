@@ -42,6 +42,8 @@ export class AudioService {
         this.muted = muted;
         localStorage.setItem('audioMuted', muted);
         Object.values(this.activeAudios).forEach(audio => { audio.muted = muted; });
+        // Let other players (e.g. the hidden YouTube audio player) follow suit.
+        window.dispatchEvent(new CustomEvent('mute-changed', { detail: { muted } }));
     }
 
     toggleMute() {

@@ -67,6 +67,24 @@
     display: none;
 }
 
+/* The music-note placeholder is only shown for the audio variant; hidden by default. */
+.audio-icon {
+    display: none;
+    font-size: 24px;
+    line-height: 1;
+}
+
+/* Audio variant: the unplaced/dragging card is unlabeled (just a music note);
+   artist/title/year are revealed only once the card becomes a placed pill. */
+:host(.audio-mode) .drag-element .title,
+:host(.audio-mode) .drag-element .artist {
+    display: none;
+}
+
+:host(.audio-mode) .drag-element .audio-icon {
+    display: block;
+}
+
 .pill {
     box-sizing: border-box;
     border: 1px solid var(--border-color-grey);

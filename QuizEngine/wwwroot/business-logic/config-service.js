@@ -28,6 +28,10 @@ export class ConfigService {
     get credits() { return activeConfig?.credits ?? { dedication: '', rows: [] }; }
     get sounds() { return activeConfig?.assets?.sounds ?? {}; }
 
+    // Optional audio variant. { enabled: true, videoField: 'videos' } streams a
+    // hidden YouTube player for each presented question. Null/absent = no audio.
+    get audioConfig() { return activeConfig?.audio ?? null; }
+
     /**
      * Returns the per-language question translations (keyed by English title),
      * or an empty object when the consumer provides none.

@@ -9,7 +9,13 @@ import { translationService } from './translation-service.js';
 // language is resolved via Wikipedia's langlinks and its summary is shown,
 // falling back to the English article when no translation exists.
 export class WikipediaInfoProvider {
-    async getSummary(articleTitle) {
+    // Can render any question that references a Wikipedia article.
+    appliesTo(event) {
+        return !!event?.wiki_title;
+    }
+
+    async getSummary(event) {
+        const articleTitle = event.wiki_title;
         const language = translationService.getLanguage();
         if (language && language !== 'en') {
             const localizedTitle = await this.resolveLocalizedTitle(articleTitle, language);

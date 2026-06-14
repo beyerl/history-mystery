@@ -1,4 +1,5 @@
 import { WikipediaInfoProvider } from '../business-logic/wikipedia-info-provider.js';
+import { GenreInfoProvider } from '../business-logic/genre-info-provider.js';
 import { translationService } from '../business-logic/translation-service.js';
 import { configService } from '../business-logic/config-service.js';
 
@@ -7,6 +8,7 @@ function resolveInfoProvider() {
   const descriptor = configService.infoProvider;
   if (!descriptor) return null;
   if (descriptor.type === 'wikipedia') return new WikipediaInfoProvider();
+  if (descriptor.type === 'genre') return new GenreInfoProvider(descriptor);
   return null;
 }
 
@@ -104,21 +106,23 @@ export class InfoModal extends HTMLElement {
         <p>${this.eventData.description || translationService.t('modal.noDescription')}</p>
       `;
 
-      if (this.infoProvider && this.eventData.wiki_title) {
+      if (this.infoProvider && this.infoProvider.appliesTo(this.eventData)) {
         try {
-          const summary = await this.infoProvider.getSummary(this.eventData.wiki_title);
+          const summary = await this.infoProvider.getSummary(this.eventData);
+          const heading = summary.heading ?? translationService.t('modal.wikipediaSummary');
+          const linkLabel = summary.linkLabel ?? translationService.t('modal.readMore');
           const summaryCard = `
           <div class="wiki-summary">
-            <i>${translationService.t('modal.wikipediaSummary')}</i>
+            <i>${heading}</i>
             <h3>${summary.title}</h3>
             ${summary.thumbnail ? `<img src="${summary.thumbnail.source}" max-height="${summary.thumbnail.height}" max-width="${summary.thumbnail.width}" alt="${summary.title}" >` : ''}
             <div>${summary.extract_html}</div>
-            <a class="link" href="${summary.page}" target="_blank">${translationService.t('modal.readMore')}</a>
+            ${summary.page ? `<a class="link" href="${summary.page}" target="_blank" rel="noopener">${linkLabel}</a>` : ''}
           </div>
         `;
           content.innerHTML += summaryCard;
         } catch (error) {
-          console.error('Error fetching Wikipedia summary:', error);
+          console.error('Error fetching info summary:', error);
           content.innerHTML += `<p>${translationService.t('modal.wikipediaFailed')}</p>`;
         }
       }
