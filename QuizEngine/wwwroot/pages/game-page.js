@@ -211,6 +211,20 @@ class GamePage extends HTMLElement {
     document.dispatchEvent(new CustomEvent('game-over'));
   }
 
+  // Checks right after the local player's score is incremented whether that move
+  // won the game, so the audio is stopped before the board would otherwise
+  // present (and play) the next song.
+  async checkLocalPlayerWon() {
+    if (this.gameOver) return;
+    const game = await this.gameStateService.GetGameAsync(this.gameId);
+    if (!game) return;
+    const playerName = localStorage.getItem('playerName');
+    const myScore = game.playerScores.find(player => player.playerId === playerName)?.score ?? 0;
+    if (myScore >= this.maxScore) {
+      await this.handleWin();
+    }
+  }
+
   toastGameStateChanges() {
     this.toastGameStateId = setInterval(() => {
       if (this.changedScores.length > 0) {
@@ -239,6 +253,12 @@ class GamePage extends HTMLElement {
         case AnswerResultEnum.CORRECT:
           audioService.play(SoundEnum.SUCCESS);
           await this.gameStateService.IncrementPlayerScore(this.gameId, localStorage.getItem('playerName'));
+          // For audio quizzes, react to a winning move immediately so the hidden
+          // player is stopped before the board presents (and plays) the next
+          // song. Other quizzes rely on the poll below.
+          if (configService.audioConfig?.enabled) {
+            await this.checkLocalPlayerWon();
+          }
           break;
         case AnswerResultEnum.INCORRECT:
           audioService.play(SoundEnum.FAILURE);

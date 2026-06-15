@@ -6,6 +6,7 @@
 //
 //   'question-presented' (document) -> stream the question's video ids
 //   'answer-result'      (document) -> stop
+//   'game-over'          (document) -> stop and ignore further questions
 //
 // Quizzes opt in via config.audio = { enabled: true, videoField: 'videos' }.
 
@@ -48,8 +49,10 @@ class YoutubeAudioPlayer extends HTMLElement {
         this._onPresented = (e) => this.handlePresented(e);
         this._onResult = () => this.stop();
         this._onMute = () => this.applyMute();
+        this._onGameOver = () => this.handleGameOver();
         document.addEventListener('question-presented', this._onPresented);
         document.addEventListener('answer-result', this._onResult);
+        document.addEventListener('game-over', this._onGameOver);
         window.addEventListener('mute-changed', this._onMute);
         this.initPlayer();
     }
@@ -57,6 +60,7 @@ class YoutubeAudioPlayer extends HTMLElement {
     disconnectedCallback() {
         document.removeEventListener('question-presented', this._onPresented);
         document.removeEventListener('answer-result', this._onResult);
+        document.removeEventListener('game-over', this._onGameOver);
         window.removeEventListener('mute-changed', this._onMute);
         this.stop();
     }
@@ -76,6 +80,7 @@ class YoutubeAudioPlayer extends HTMLElement {
                 onReady: () => {
                     this._ready = true;
                     this.applyMute();
+                    if (this._gameOver) return;
                     if (this._pending) {
                         const ids = this._pending;
                         this._pending = null;
@@ -90,12 +95,22 @@ class YoutubeAudioPlayer extends HTMLElement {
     }
 
     handlePresented(e) {
+        // Once the game is over, ignore any further questions the board still
+        // presents (e.g. the next card scheduled right after the winning move),
+        // so no new song starts under the win overlay / on the way to scores.
+        if (this._gameOver) return;
         const ids = e.detail?.question?.[this._videoField];
         if (Array.isArray(ids) && ids.length) {
             this.play(ids);
         } else {
             this.stop();
         }
+    }
+
+    handleGameOver() {
+        this._gameOver = true;
+        this._pending = null;
+        this.stop();
     }
 
     play(videoIds) {
