@@ -111,6 +111,9 @@ h1 {
 
 .table tbody tr:hover {
   background-color: var(--color-mint);
+  /* --color-mint is a dark accent in some themes (e.g. Art's gold, Metal's
+     red); pair it with its themed foreground so the row text stays readable. */
+  color: var(--color-brown);
 }
 
 /* Bootstrap-like button classes */
