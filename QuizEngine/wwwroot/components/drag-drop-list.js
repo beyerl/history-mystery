@@ -27,7 +27,6 @@ class DragDropList extends HTMLElement {
     const template = document.createElement('template');
     template.innerHTML = `
       <div class="container">
-        <div class="slow-timer" hidden></div>
         <div class="top-slot-container"></div>
         <div class="drop-list-wrapper"><div class="drop-list"></div></div>
       </div>
@@ -68,6 +67,15 @@ class DragDropList extends HTMLElement {
   }
 
   initializeEvents() {
+    // Guard against double initialization. On element upgrade both
+    // attributeChangedCallback (for a pre-set `events` attribute) and
+    // connectedCallback can fire; without this guard the list would build two
+    // QuestionService instances and two slow-mode timers, so a second question
+    // sequence runs out of step with the visible timer.
+    if (this._initialized) {
+      return;
+    }
+    this._initialized = true;
     // Slow mode (a per-question answer timer) is opt-in via attribute and set
     // by the game page from the shared game state.
     this.slowMode = this.hasAttribute('slow-mode');
@@ -131,17 +139,13 @@ class DragDropList extends HTMLElement {
     this.clearSlowModeTimer();
     this._placedElement = null;
     let remaining = this.slowModeSeconds;
-    const timerEl = this.shadowRoot.querySelector('.slow-timer');
-    const renderRemaining = () => {
-      if (timerEl) {
-        timerEl.hidden = false;
-        timerEl.textContent = translationService.t('game.timeLeft', { seconds: Math.max(0, remaining) });
-      }
-    };
-    renderRemaining();
+    // The countdown is rendered by the host (game page) in the top toolbar via
+    // this event, so it no longer overlaps the question card.
+    const emit = () => this.emitSlowTimer(Math.max(0, remaining), true);
+    emit();
     this._slowModeIntervalId = setInterval(() => {
       remaining -= 1;
-      renderRemaining();
+      emit();
       if (remaining <= 0) {
         this.finalizeSlowAnswer();
       }
@@ -153,10 +157,15 @@ class DragDropList extends HTMLElement {
       clearInterval(this._slowModeIntervalId);
       this._slowModeIntervalId = null;
     }
-    const timerEl = this.shadowRoot?.querySelector('.slow-timer');
-    if (timerEl) {
-      timerEl.hidden = true;
-    }
+    this.emitSlowTimer(0, false);
+  }
+
+  emitSlowTimer(seconds, active) {
+    this.dispatchEvent(new CustomEvent('slow-timer', {
+      detail: { seconds, active },
+      bubbles: true,
+      composed: true,
+    }));
   }
 
   // Called when the slow-mode window closes: judge the final position of the

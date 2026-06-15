@@ -65,6 +65,7 @@ class GamePage extends HTMLElement {
       <toast-component id="toast"></toast-component>
       <footer id="footer">
         <button id="back-to-menu" class="btn btn-primary" style="margin-left: 10px;">${translationService.t('game.backToMenu')}</button>
+        <span id="slow-timer" hidden style="margin-left: 12px; padding: 4px 10px; border-radius: 12px; background: var(--color-popover-bg, #333); color: var(--color-popover-text, #fff);"></span>
       </footer>
       <drag-drop-list id="dragDropList"></drag-drop-list>
 
@@ -187,6 +188,18 @@ class GamePage extends HTMLElement {
   }
 
   addEventListeners() {
+    // Slow-mode countdown is shown in the toolbar (emitted by the drag-drop list).
+    this.shadowRoot.addEventListener('slow-timer', (event) => {
+      const timerEl = this.shadowRoot.getElementById('slow-timer');
+      if (!timerEl) return;
+      if (event.detail.active) {
+        timerEl.hidden = false;
+        timerEl.textContent = translationService.t('game.timeLeft', { seconds: event.detail.seconds });
+      } else {
+        timerEl.hidden = true;
+      }
+    });
+
     this.shadowRoot.addEventListener('answer-result', async (event) => {
       switch (event.detail.answerResult) {
         case AnswerResultEnum.CORRECT:
