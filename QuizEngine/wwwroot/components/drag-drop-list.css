@@ -107,6 +107,24 @@
     padding: 5px;
 }
 
+/* Audio intro: the reference song currently being previewed at game start. */
+.slot.intro-active .pill {
+    outline: 3px solid var(--color-gold);
+    outline-offset: 2px;
+    box-shadow: 0 0 14px var(--color-gold);
+    animation: intro-pulse 1.1s ease-in-out infinite;
+}
+
+@keyframes intro-pulse {
+    0%, 100% {
+        box-shadow: 0 0 6px var(--color-gold);
+    }
+
+    50% {
+        box-shadow: 0 0 18px var(--color-gold);
+    }
+}
+
 .top-slot-container {
     height: calc((var(--container-height) - var(--top-slot-margin)) / 13);
     width: 100%;

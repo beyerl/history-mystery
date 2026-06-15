@@ -28,8 +28,10 @@ export class ConfigService {
     get credits() { return activeConfig?.credits ?? { dedication: '', rows: [] }; }
     get sounds() { return activeConfig?.assets?.sounds ?? {}; }
 
-    // Optional audio variant. { enabled: true, videoField: 'videos' } streams a
-    // hidden YouTube player for each presented question. Null/absent = no audio.
+    // Optional audio variant. { enabled: true, videoField: 'videos',
+    // previewSeconds: 10 } streams a hidden YouTube player for each presented
+    // question; previewSeconds controls the opening reference-song preview.
+    // Null/absent = no audio.
     get audioConfig() { return activeConfig?.audio ?? null; }
 
     // Optional picture variant. { enabled: true } shows image cards with a

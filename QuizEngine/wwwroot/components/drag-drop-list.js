@@ -64,6 +64,7 @@ class DragDropList extends HTMLElement {
 
   disconnectedCallback() {
     this.clearSlowModeTimer();
+    this.clearIntroTimer();
   }
 
   initializeEvents() {
@@ -82,8 +83,19 @@ class DragDropList extends HTMLElement {
     this.slowModeSeconds = Number(this.getAttribute('slow-mode-seconds')) || DEFAULT_SLOW_MODE_SECONDS;
     this._eventService = new QuestionService(this.events, !this.hasAttribute('no-shuffle'));
     const events = [this._eventService.get(), this._eventService.get(), this._eventService.get()];
-    this.populateSlots(events.slice(1).sort((a, b) => a.year - b.year));
-    this.populateTopSlot(events[0]);
+    const initialPlaced = events.slice(1).sort((a, b) => a.year - b.year);
+    this.populateSlots(initialPlaced);
+    // Audio variant: before unlocking the board, play a short snippet of each
+    // pre-placed reference song so players can anchor by ear. The card to guess
+    // is only presented — and dragging only possible — once that opening
+    // preview finishes. The game page opts in via the `audio-intro` attribute
+    // (it is the place that also mounts the hidden player); every other quiz
+    // and the tutorial start immediately.
+    if (this.hasAttribute('audio-intro')) {
+      this.runIntroPreview(initialPlaced, events[0]);
+    } else {
+      this.populateTopSlot(events[0]);
+    }
     this.shadowRoot.addEventListener('click', (e) => {
       const moreBtn = e.target.closest('.more');
       if (moreBtn) {
@@ -130,6 +142,46 @@ class DragDropList extends HTMLElement {
       console.warn('Invalid event object or missing title:', event);
       topSlot.innerHTML = ''; // Clear the top slot if event is invalid
       this.clearSlowModeTimer();
+    }
+  }
+
+  // Audio intro: walk through the pre-placed reference songs one by one,
+  // highlighting each and streaming a short snippet, before the first card to
+  // guess is shown. Audio is decoupled: we emit the same generic
+  // `question-presented` event the hidden player already listens for, so it
+  // simply switches tracks as each song (and finally the real question) is
+  // presented; no `answer-result` is dispatched, so nothing is judged.
+  async runIntroPreview(placedEvents, topEvent) {
+    const seconds = Number(configService.audioConfig?.previewSeconds) || 10;
+    const slots = Array.from(this.shadowRoot.querySelectorAll('.drop-list .slot'));
+    for (let i = 0; i < placedEvents.length; i++) {
+      if (!this.isConnected) return; // player navigated away mid-preview
+      const slot = slots[i];
+      slot?.classList.add('intro-active');
+      this.dispatchEvent(new CustomEvent('question-presented', {
+        detail: { question: placedEvents[i] },
+        bubbles: true,
+        composed: true,
+      }));
+      await this.waitIntro(seconds * 1000);
+      slot?.classList.remove('intro-active');
+    }
+    if (!this.isConnected) return;
+    // Unlock the board: present the card to guess (this also starts the
+    // slow-mode timer and streams the question's own song).
+    this.populateTopSlot(topEvent);
+  }
+
+  waitIntro(ms) {
+    return new Promise(resolve => {
+      this._introTimeoutId = setTimeout(resolve, ms);
+    });
+  }
+
+  clearIntroTimer() {
+    if (this._introTimeoutId) {
+      clearTimeout(this._introTimeoutId);
+      this._introTimeoutId = null;
     }
   }
 

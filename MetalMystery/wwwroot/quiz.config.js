@@ -17,7 +17,9 @@ export const quizConfig = {
     questions,
 
     // Audio variant: a hidden YouTube player streams the question's videos[] ids.
-    audio: { enabled: true, videoField: 'videos' },
+    // previewSeconds: how long each of the two opening reference songs is played
+    // (highlighted) before the board unlocks for the first guess.
+    audio: { enabled: true, videoField: 'videos', previewSeconds: 10 },
 
     // "More" shows the genre info carried on each question (Map of Metal) and a
     // source/attribution link, instead of a Wikipedia summary.

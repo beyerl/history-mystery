@@ -88,6 +88,11 @@ class GamePage extends HTMLElement {
     if (configService.audioConfig?.enabled) {
       await import('../components/youtube-audio-player.js');
       this.shadowRoot.appendChild(document.createElement('youtube-audio-player'));
+      // Ask the list to run the opening song preview (play each reference song
+      // before unlocking the board). Set before the `events` attribute below so
+      // it is present when the list initializes. Only the game page opts in, so
+      // the tutorial — which has no hidden player — is unaffected.
+      this.shadowRoot.getElementById('dragDropList')?.setAttribute('audio-intro', '');
     }
 
     Promise.all([
