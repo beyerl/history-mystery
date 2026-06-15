@@ -34,6 +34,10 @@
   --color-popover-text: #fff;
   --color-table-border: var(--color-black);
   --color-card-bg: rgba(122, 73, 24, 0.7);
+  /* Text drawn directly on a .card surface. Cards are a dark/translucent
+     surface in every theme, so this defaults to a light colour; themes may
+     override it. */
+  --color-card-text: var(--color-white);
 }
 
 /* Fonts are content: the consuming app supplies @font-face rules and the
@@ -94,7 +98,10 @@ h1 {
 .table thead th {
   vertical-align: bottom;
   background-color: var(--color-yellow);
-  color: var(--color-black);
+  /* --color-brown is the themed foreground for the accent colour --color-yellow
+     (same pairing as buttons), so the header stays readable when a theme makes
+     --color-yellow dark (e.g. Metal's red). */
+  color: var(--color-brown);
   border-bottom: 2px solid var(--color-table-border);
 }
 
@@ -212,6 +219,7 @@ h1 {
 /* Bootstrap-like card styles */
 .card {
   background-color: var(--color-card-bg, rgba(122, 73, 24, 0.7));
+  color: var(--color-card-text, var(--color-white));
   border: 1px solid var(--color-brown);
   border-radius: 0.75rem;
   box-shadow: 0 2px 8px rgba(153, 114, 41, 0.08);

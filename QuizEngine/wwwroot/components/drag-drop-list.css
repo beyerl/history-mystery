@@ -35,6 +35,11 @@
     height: 100%;
     width: 100%;
     background-color: var(--bg-color-lightblue);
+    /* --color-brown is the themed foreground for these accent surfaces, so the
+       artist/title/year stay readable when a theme makes the card background
+       dark (Metal/Art). Without this the labels inherit black and vanish on the
+       dark pill once a card is placed. */
+    color: var(--color-brown);
     padding: 5px 10px;
     text-align: center;
     display: flex;
@@ -89,6 +94,8 @@
     border: 1px solid var(--border-color-grey);
     border-radius: 12px;
     background-color: var(--bg-color-lightgrey);
+    /* Keep the revealed labels readable on the (theme-dependent) pill colour. */
+    color: var(--color-brown);
     text-align: center;
     font-size: 14px;
     height: 100%;

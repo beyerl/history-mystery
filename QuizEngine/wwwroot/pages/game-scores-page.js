@@ -36,6 +36,9 @@ class GameScoresPage extends HTMLElement {
                 border-radius: 12px;
                 width: 100%;
                 background-color: var(--color-mint);
+                /* themed foreground for the --color-mint surface (dark in
+                   Metal/Art) so the year/title stay readable */
+                color: var(--color-brown);
                 padding: 5px 10px;
                 text-align: center;
                 display: flex;
