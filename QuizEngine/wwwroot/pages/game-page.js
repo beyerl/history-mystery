@@ -13,6 +13,9 @@ class GamePage extends HTMLElement {
   toastGameStateId = null;
   pollGameStateId = null;
   maxScore = configService.maxScore;
+  // Set once the game has ended for this client, so the win/redirect flow runs
+  // exactly once whether it is triggered by the winning move or by polling.
+  gameOver = false;
 
   constructor() {
     super();
@@ -145,34 +148,18 @@ class GamePage extends HTMLElement {
         let currentPlayerIsWinner = playersWithMaxScore.find(player => player.playerId === localStorage.getItem('playerName'))
 
         if (currentPlayerIsWinner) {
-          clearInterval(this.toastGameStateId);
-          clearInterval(this.pollGameStateId);
-          this.gameStateService.EndGame(this.gameId);
-
-          // Create the win overlay
-          audioService.play(SoundEnum.WIN);
-          const winOverlay = document.createElement('win-overlay');
-          winOverlay.setAttribute('message', translationService.t('game.youWin'));
-          document.body.appendChild(winOverlay);
-
-          // Remove the overlay after sound has finished playing
-          const winSoundDuration = await audioService.getSoundLength(SoundEnum.WIN);
-          setTimeout(() => {
-            document.body.removeChild(winOverlay);
-            window.location.hash = `/scores?gameId=${this.gameId}`;
-          }, winSoundDuration);
+          await this.handleWin();
+          return;
         } else if (playersWithMaxScore.length > 0 && !currentPlayerIsWinner) {
           this.gameStateService.EndGame(this.gameId);
-          clearInterval(this.toastGameStateId);
-          clearInterval(this.pollGameStateId);
-          window.location.hash = `/scores?gameId=${this.gameId}`;
+          this.endGameAndGoToScores();
+          return;
         }
       }
 
       if (gameState && gameState.state === GameStateEnum.ENDED) {
-        clearInterval(this.toastGameStateId);
-        clearInterval(this.pollGameStateId);
-        window.location.hash = `/scores?gameId=${this.gameId}`;
+        this.endGameAndGoToScores();
+        return;
       }
 
       this.previousPlayerScores = gameState.playerScores.reduce((acc, player) => {
@@ -180,6 +167,48 @@ class GamePage extends HTMLElement {
         return acc;
       }, {});
     }, 1000);
+  }
+
+  // Shows the win overlay for the local winner and then redirects to the scores
+  // screen. Runs at most once (guarded by gameOver) whether it is triggered by
+  // the winning move (checkLocalPlayerWon) or by the poll.
+  async handleWin() {
+    if (this.gameOver) return;
+    this.stopGame();
+
+    this.gameStateService.EndGame(this.gameId);
+    audioService.play(SoundEnum.WIN);
+
+    const winOverlay = document.createElement('win-overlay');
+    winOverlay.setAttribute('message', translationService.t('game.youWin'));
+    document.body.appendChild(winOverlay);
+
+    // Keep the overlay up for the length of the win sound; quizzes without a
+    // configured win sound (e.g. the audio variants) fall back to a short delay
+    // so the redirect to the scores screen still happens.
+    const winSoundDuration = await audioService.getSoundLength(SoundEnum.WIN).catch(() => 4000);
+    setTimeout(() => {
+      winOverlay.remove();
+      window.location.hash = `/scores?gameId=${this.gameId}`;
+    }, winSoundDuration);
+  }
+
+  // A non-winning end (another player won, or the game was ended elsewhere):
+  // stop and go straight to the scores screen.
+  endGameAndGoToScores() {
+    if (this.gameOver) return;
+    this.stopGame();
+    window.location.hash = `/scores?gameId=${this.gameId}`;
+  }
+
+  // Stops all game activity: marks the game over, halts polling, and tells the
+  // hidden audio player (if any) to stop and not start another track, so no new
+  // song plays once the game is decided.
+  stopGame() {
+    this.gameOver = true;
+    clearInterval(this.toastGameStateId);
+    clearInterval(this.pollGameStateId);
+    document.dispatchEvent(new CustomEvent('game-over'));
   }
 
   toastGameStateChanges() {
