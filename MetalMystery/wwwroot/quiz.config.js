@@ -41,7 +41,7 @@ export const quizConfig = {
         },
         bodyFont: "system-ui, 'Segoe UI', sans-serif",
         titleFont: "'Impact', 'Haettenschweiler', system-ui, sans-serif",
-        background: '', // solid near-black from --color-black
+        background: '/assets/menu-background.webp',
     },
 
     // No bundled sound effects; the streamed song is the audio.
