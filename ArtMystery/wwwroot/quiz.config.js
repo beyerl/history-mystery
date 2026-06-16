@@ -41,7 +41,7 @@ export const quizConfig = {
         },
         bodyFont: "Georgia, 'Times New Roman', serif",
         titleFont: "Georgia, 'Times New Roman', serif",
-        background: '', // solid charcoal from --color-black
+        background: '/assets/menu-background.webp',
     },
 
     assets: { 
