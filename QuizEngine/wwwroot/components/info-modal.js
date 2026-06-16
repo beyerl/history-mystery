@@ -76,6 +76,9 @@ export class InfoModal extends HTMLElement {
              (Art/Metal Mystery). */
           color: var(--color-modal-close);
         }
+        .audio-controls {
+          margin: 4px 0 12px;
+        }
         .wiki-summary {
             padding: 10px;
             border: 1px solid var(--color-gray-400);
@@ -95,6 +98,7 @@ export class InfoModal extends HTMLElement {
             </svg>
           </button>
         </div>
+        <div class="audio-controls"></div>
         <div class="content"></div>
       </div>
     `;
@@ -110,6 +114,8 @@ export class InfoModal extends HTMLElement {
         <h2>${this.eventData.year} - ${this.eventData.title}</h2>
         <p>${this.eventData.description || translationService.t('modal.noDescription')}</p>
       `;
+
+      this.setupAudioPlayback();
 
       if (this.infoProvider && this.infoProvider.appliesTo(this.eventData)) {
         try {
@@ -134,7 +140,46 @@ export class InfoModal extends HTMLElement {
     }
   }
 
+  // For audio quizzes (e.g. Metal Mystery), let the player listen to the song
+  // behind this entry — handy for replaying a track they placed wrong from the
+  // scores page's failure list. The button toggles play/pause; the song stops
+  // when the modal closes.
+  setupAudioPlayback() {
+    const container = this.shadowRoot.querySelector('.audio-controls');
+    if (!container) return;
+    container.innerHTML = '';
+    const audio = configService.audioConfig;
+    const videoIds = this.eventData?.[audio?.videoField || 'videos'];
+    if (!audio?.enabled || !Array.isArray(videoIds) || videoIds.length === 0) {
+      return;
+    }
+    const button = document.createElement('button');
+    button.className = 'btn btn-primary play-button';
+    button.textContent = translationService.t('modal.play');
+    let playing = false;
+    button.addEventListener('click', async () => {
+      if (!this._audioPlayer) {
+        await import('./youtube-audio-player.js');
+        this._audioPlayer = document.createElement('youtube-audio-player');
+        this.shadowRoot.appendChild(this._audioPlayer);
+        this._audioPlayer.play(videoIds);
+      } else if (playing) {
+        this._audioPlayer.pause();
+      } else {
+        this._audioPlayer.resume();
+      }
+      playing = !playing;
+      button.textContent = translationService.t(playing ? 'modal.pause' : 'modal.play');
+    });
+    container.appendChild(button);
+  }
+
   close() {
+    if (this._audioPlayer) {
+      this._audioPlayer.stop();
+      this._audioPlayer.remove();
+      this._audioPlayer = null;
+    }
     this.remove();
   }
 }

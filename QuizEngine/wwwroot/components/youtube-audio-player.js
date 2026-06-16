@@ -143,6 +143,22 @@ class YoutubeAudioPlayer extends HTMLElement {
         }
     }
 
+    // Pause/resume the current track without losing its position. Used by the
+    // info modal's play/pause control (e.g. replaying a missed song) where the
+    // listener wants to toggle, not restart.
+    pause() {
+        if (this._player && this._ready) {
+            try { this._player.pauseVideo(); } catch { /* player not ready */ }
+        }
+    }
+
+    resume() {
+        if (this._player && this._ready) {
+            this.applyMute();
+            try { this._player.playVideo(); } catch { /* player not ready */ }
+        }
+    }
+
     applyMute() {
         if (!this._player || !this._ready) return;
         try {
