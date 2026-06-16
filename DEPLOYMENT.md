@@ -12,7 +12,7 @@ frontends are no longer bundled into the API's DLL.
                                    │ links to
         ┌──────────────┬───────────┴───────────┬──────────────┐
         ▼              ▼                         ▼              ▼
-  herstory.<dom>   spacerace.<dom>          metal.<dom>     art.<dom>     (subdomains)
+  herstory.<dom>                           metal.<dom>     art.<dom>     (subdomains)
    (frontends — static, GitHub Pages; relative asset paths)
         └──────────────┴───────────┬───────────┴──────────────┘
                                    │ fetch (CORS)
@@ -44,7 +44,7 @@ The API allows multiple origins (see `GameStateApi/Program.cs`), sourced from:
 On the Azure App Service (Configuration → Application settings), add the
 deployed frontend origins, e.g.:
 
-- `AllowedOriginsCsv = https://<user>.github.io,https://herstory.<domain>,https://spacerace.<domain>,https://metal.<domain>,https://art.<domain>`
+- `AllowedOriginsCsv = https://<user>.github.io,https://herstory.<domain>,https://metal.<domain>,https://art.<domain>`
 
 or individually as `AllowedOrigins__0`, `AllowedOrigins__1`, … Restart the app.
 Origins must have **no trailing slash** and **no path** (scheme + host + port only;

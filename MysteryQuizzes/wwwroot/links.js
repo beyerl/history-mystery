@@ -10,11 +10,6 @@ export const quizzes = [
         url: './herstory/',
     },
     {
-        name: 'Space Race',
-        tagline: 'Order the milestones of space exploration.',
-        url: './spacerace/',
-    },
-    {
         name: 'Metal Mystery',
         tagline: 'Hear a track and guess where it falls in metal history.',
         url: './metal/',

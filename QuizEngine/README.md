@@ -35,8 +35,8 @@ The engine's static files are served to the consuming app under
    optional per-language translations) and a `wwwroot/assets/` folder (favicon,
    background, fonts, sounds). No engine code is touched.
 
-See `../HerstoryMystery` (full-featured) and `../SampleQuiz` (minimal) for
-working examples.
+See `../HerstoryMystery` (full-featured) and `../MetalMystery` (audio variant)
+for working examples.
 
 ## Config schema (`quiz.config.js`)
 
