@@ -5,6 +5,7 @@ import { SoundEnum } from '../models/sound-enum.js';
 import { mistakeService } from '../business-logic/mistake-service.js';
 import { translationService } from '../business-logic/translation-service.js';
 import { configService } from '../business-logic/config-service.js';
+import { QuestionService } from '../business-logic/question-service.js';
 import { InfoModal } from '../components/info-modal.js';
 
 class GameScoresPage extends HTMLElement {
@@ -92,10 +93,16 @@ class GameScoresPage extends HTMLElement {
             window.location.hash = '#/';
         });
 
-        this.querySelector('#rematch-button').addEventListener('click', () => {
+        this.querySelector('#rematch-button').addEventListener('click', async () => {
             // Start a new game with the same players
             clearInterval(this.gameStateIntervalId);
-            gameStateService.ResetScores(this.gameId);
+            // Reshuffle the questions for the rematch and persist the new order
+            // (while the game is still Ended, before the restart flips it to
+            // Running) so every player gets the same fresh sequence — mirroring
+            // what the setup page does for the first game.
+            const questionOrder = QuestionService.createShuffledOrder(configService.questions.length);
+            await gameStateService.SetQuestionOrderAsync(this.gameId, questionOrder);
+            await gameStateService.ResetScores(this.gameId);
             window.location.hash = '#/game?gameId=' + this.gameId;
         });
         this.querySelectorAll('.more').forEach(button => {

@@ -41,7 +41,10 @@ namespace GameStateApi.Services
         // sequence. The API stays agnostic of what the indexes refer to.
         public bool SetQuestionOrder(string gameId, List<int> questionOrder)
         {
-            if (!_gameStates.TryGetValue(gameId, out var game) || game.State != GameStateEnum.Setup)
+            // Allowed while the game is not running: in Setup (the initial order)
+            // and once it has Ended (reshuffling for a rematch). Rejected while
+            // Running so the sequence can't change underneath players mid-game.
+            if (!_gameStates.TryGetValue(gameId, out var game) || game.State == GameStateEnum.Running)
                 return false;
 
             game.QuestionOrder = questionOrder ?? new List<int>();
