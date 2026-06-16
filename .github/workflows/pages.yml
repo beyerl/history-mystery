@@ -11,6 +11,7 @@ on:
       - main
     paths:
       - 'QuizEngine/wwwroot/**'
+      - 'HistoryMystery/wwwroot/**'
       - 'HerstoryMystery/wwwroot/**'
       - 'MetalMystery/wwwroot/**'
       - 'ArtMystery/wwwroot/**'
@@ -56,7 +57,7 @@ jobs:
         env:
           API_BASE_ADDRESS: ${{ secrets.API_BASE_ADDRESS }}
         run: |
-          for app in herstory metal art; do
+          for app in history herstory metal art; do
             node tools/build-web.mjs "$app" "dist/$app"
           done
           # The MysteryQuizzes overview (#12) is the site root, linking to the

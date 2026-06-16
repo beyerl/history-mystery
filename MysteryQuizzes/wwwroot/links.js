@@ -5,6 +5,11 @@
 // when the quizzes are published alongside it (e.g. GitHub Pages sub-folders).
 export const quizzes = [
     {
+        name: 'History Mystery',
+        tagline: 'Order 300 events from across all of human history.',
+        url: './history/',
+    },
+    {
         name: 'Herstory Mystery',
         tagline: 'Place the women who shaped history on the timeline.',
         url: './herstory/',

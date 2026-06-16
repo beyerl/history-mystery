@@ -8,6 +8,7 @@ Apps built (see [`apps.json`](./apps.json)):
 
 | key         | source project   | app name         | applicationId                  |
 |-------------|------------------|------------------|--------------------------------|
+| `history`   | `HistoryMystery` | History Mystery  | `com.historymystery.history`   |
 | `herstory`  | `HerstoryMystery`| Herstory Mystery | `com.historymystery.herstory`  |
 | `metal`     | `MetalMystery`   | Metal Mystery    | `com.historymystery.metal`     |
 | `art`       | `ArtMystery`     | Art Mystery      | `com.historymystery.art`       |
