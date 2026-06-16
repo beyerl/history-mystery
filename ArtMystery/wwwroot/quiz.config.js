@@ -48,11 +48,11 @@ export const quizConfig = {
     assets: { sounds: {} },
 
     credits: {
-        dedication: 'A tour through art history',
+        dedication: '',
         rows: [
-            { label: 'Engine', value: 'QuizEngine' },
-            { label: 'Artwork images & info', value: 'Wikipedia / Wikimedia Commons' },
-            { label: 'Content', value: '200 works from art history' },
+            { label: 'Concept', value: 'Lorenz' },
+            { label: 'Menu Music', value: '' },
+            { label: 'Menu Art, Content, Programming', value: 'ChatGPT, Claude Code' },
         ],
     },
 };

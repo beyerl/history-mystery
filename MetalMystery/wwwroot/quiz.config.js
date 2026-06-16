@@ -44,7 +44,6 @@ export const quizConfig = {
         background: '/assets/menu-background.webp',
     },
 
-    // No bundled sound effects; the streamed song is the audio.
     assets: {         
         sounds: {
             FAILURE: '/assets/sound/Failure.mp3',
@@ -55,11 +54,11 @@ export const quizConfig = {
     },
 
     credits: {
-        dedication: 'For everyone who headbangs',
+        dedication: '',
         rows: [
-            { label: 'Engine', value: 'QuizEngine' },
-            { label: 'Content & genre info', value: 'Map of Metal (CC BY-SA 4.0)' },
-            { label: 'Data source', value: 'github.com/patrickgalbraith/mapofmetal' },
+            { label: 'Concept', value: 'Lorenz' },
+            { label: 'Menu Music', value: 'Suno' },
+            { label: 'Menu Art, Content, Programming', value: 'ChatGPT, Claude Code' },
         ],
     },
 };

@@ -76,7 +76,7 @@ export const quizConfig = {
         rows: [
             { label: 'Concept, Programming, Music Production', value: 'Lorenz' },
             { label: 'Menu Music', value: 'John Dowland - The Frog Galliard' },
-            { label: 'Menu Art, Content, Programming', value: 'ChatGPT 4o & 4.1, Copilot' },
+            { label: 'Menu Art, Content, Programming', value: 'ChatGPT 4o & 4.1, Copilot, Claude Code' },
         ],
     },
 };
