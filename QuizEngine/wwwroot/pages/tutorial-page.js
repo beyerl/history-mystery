@@ -35,8 +35,23 @@ class TutorialPage extends HTMLElement {
     this.render();
     this.addEventListeners();
     this.showStep();
+    const dragDropList = this.shadowRoot.getElementById('dragDropList');
+    // Audio/picture variants (e.g. Metal Mystery): make the tutorial behave like
+    // the real game. Switch the list into the matching card mode so the active
+    // card's answer labels (artist/title/year) stay hidden until it is placed…
+    const cardMode = configService.cardMode;
+    if (cardMode) {
+      dragDropList.classList.add(`${cardMode}-mode`);
+    }
+    // …and, for the audio variant, mount the hidden YouTube player so the
+    // presented track actually plays (it listens for the engine's
+    // `question-presented` / `answer-result` lifecycle events).
+    if (configService.audioConfig?.enabled) {
+      await import('../components/youtube-audio-player.js');
+      this.shadowRoot.appendChild(document.createElement('youtube-audio-player'));
+    }
     const localizedEvents = await translationService.localizeEvents(configService.questions);
-    this.shadowRoot.getElementById('dragDropList').setAttribute('events', JSON.stringify(localizedEvents));
+    dragDropList.setAttribute('events', JSON.stringify(localizedEvents));
   }
 
   render() {
