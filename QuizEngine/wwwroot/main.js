@@ -31,7 +31,23 @@ export function startQuizApp(config) {
     configService.set(config);
     applyTheme(config);
     translationService.applyDocumentLanguage();
+    setupBackendErrorToast();
     startRouter();
+}
+
+// Shows a toast whenever a backend request fails (dispatched by the game state
+// service). One document-level toast is reused so any page benefits without
+// having to mount its own.
+function setupBackendErrorToast() {
+    let toast = null;
+    window.addEventListener('backend-error', async () => {
+        await import('./components/toast-component.js');
+        if (!toast || !toast.isConnected) {
+            toast = document.createElement('toast-component');
+            document.body.appendChild(toast);
+        }
+        toast.show(translationService.t('errors.backendUnavailable'));
+    });
 }
 
 function applyTheme(config) {
