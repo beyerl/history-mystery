@@ -70,6 +70,11 @@ export class InfoModal extends HTMLElement {
           background: none;
           border: none;
           cursor: pointer;
+          /* The X is drawn with currentColor; pin it to the dedicated close
+             colour so it stays visible against the (light) modal background in
+             every theme, including ones where --color-brown is itself light
+             (Art/Metal Mystery). */
+          color: var(--color-modal-close);
         }
         .wiki-summary {
             padding: 10px;
