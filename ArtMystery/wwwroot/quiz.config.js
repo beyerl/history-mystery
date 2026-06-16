@@ -44,8 +44,14 @@ export const quizConfig = {
         background: '', // solid charcoal from --color-black
     },
 
-    // No bundled sound effects for this demo.
-    assets: { sounds: {} },
+    assets: { 
+        sounds: {
+            FAILURE: '/assets/sound/Failure.mp3',
+            MENU: '/assets/sound/Menu-short.mp3',
+            SUCCESS: '/assets/sound/Success.mp3',
+            WIN: '/assets/sound/Win.mp3',
+        },  
+    },
 
     credits: {
         dedication: '',
