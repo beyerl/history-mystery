@@ -28,6 +28,12 @@ export class ConfigService {
     get credits() { return activeConfig?.credits ?? { dedication: '', rows: [] }; }
     get sounds() { return activeConfig?.assets?.sounds ?? {}; }
 
+    // Optional per-app overrides for engine UI strings, keyed by language then
+    // translation key: { en: { 'tutorial.welcome': '…' }, de: { … } }. Lets a
+    // quiz reword generic copy (e.g. the tutorial) for its own topic without
+    // touching the shared engine translations. Absent = no overrides.
+    get translationOverrides() { return activeConfig?.translations ?? {}; }
+
     // Optional audio variant. { enabled: true, videoField: 'videos',
     // previewSeconds: 10 } streams a hidden YouTube player for each presented
     // question; previewSeconds controls the opening reference-song preview.
