@@ -39,7 +39,16 @@ export class TranslationService {
      * @returns {string}
      */
     t(key, params = {}) {
-        const text = translations[this.language]?.[key] ?? translations.en[key] ?? key;
+        // Precedence: app override for the current language, then the engine
+        // string for the current language, then the app's English override,
+        // then the engine English fallback, then the key itself.
+        const overrides = configService.translationOverrides;
+        const text =
+            overrides[this.language]?.[key] ??
+            translations[this.language]?.[key] ??
+            overrides.en?.[key] ??
+            translations.en[key] ??
+            key;
         return text.replace(/\{(\w+)\}/g, (match, name) => params[name] ?? match);
     }
 

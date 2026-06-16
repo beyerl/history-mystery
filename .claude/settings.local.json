@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh issue *)",
+      "PowerShell(gh issue list --state open --limit 100 --json number,title,body,labels)",
+      "PowerShell(Invoke-RestMethod -Uri \"https://api.github.com/repos/beyerl/history-mystery/issues?state=open&per_page=100\" | Where-Object { -not $_.pull_request } | ForEach-Object { \"#$\\($_.number\\): $\\($_.title\\)`n---`n$\\($_.body\\)`n=====\" })",
+      "PowerShell($cred = \"protocol=https`nhost=github.com`n\" | git credential fill; $token = \\($cred | Where-Object { $_ -match '^password=' }\\) -replace '^password='; $issues = Invoke-RestMethod -Uri \"https://api.github.com/repos/beyerl/history-mystery/issues?state=open&per_page=100\" -Headers @{Authorization=\"Bearer $token\"}; $issues | Where-Object { -not $_.pull_request } | ForEach-Object { \"ISSUE #$\\($_.number\\): $\\($_.title\\)`n$\\($_.body\\)`n========\" })",
+      "PowerShell(dotnet run *)",
+      "mcp__plugin_backpressured_playwright__browser_navigate",
+      "mcp__plugin_backpressured_playwright__browser_snapshot",
+      "mcp__plugin_backpressured_playwright__browser_console_messages",
+      "mcp__plugin_backpressured_playwright__browser_click",
+      "mcp__plugin_backpressured_playwright__browser_evaluate",
+      "PowerShell(Get-NetTCPConnection *)",
+      "PowerShell(curl.exe -sk -D - -o NUL -H \"Origin: http://localhost:5091\" https://localhost:7227/api/GameState/testgame)",
+      "mcp__plugin_backpressured_playwright__browser_take_screenshot",
+      "PowerShell(Get-ChildItem *)",
+      "mcp__plugin_backpressured_playwright__browser_close",
+      "mcp__plugin_backpressured_playwright__browser_drag",
+      "PowerShell(git ls-remote *)",
+      "PowerShell($files = 'business-logic/translation-service.js','pages/start-page.js','pages/game-setup-page.js','pages/join-game-page.js','pages/player-registration.js','pages/credits-page.js','pages/game-page.js','pages/game-scores-page.js','pages/tutorial-page.js','components/event-modal.js','components/drag-drop-list.js','components/mute-button.js','data/translations.js'; foreach \\($f in $files\\) { node --check \"WebFrontend/wwwroot/$f\"; if \\($LASTEXITCODE -ne 0\\) { \"FAIL: $f\" } }; \"syntax check done\")",
+      "PowerShell(Write-Output \"=== .i18n-temp ===\"; if \\(Test-Path .i18n-temp\\) { Get-ChildItem .i18n-temp | ForEach-Object { \"{0}  {1} bytes\" -f $_.Name, $_.Length } } else { \"\\(none\\)\" }; Write-Output \"=== event-translations ===\"; if \\(Test-Path WebFrontend/wwwroot/data/event-translations\\) { Get-ChildItem WebFrontend/wwwroot/data/event-translations | ForEach-Object { \"{0}  {1} bytes\" -f $_.Name, $_.Length } } else { \"\\(none\\)\" })",
+      "mcp__plugin_backpressured_playwright__browser_select_option",
+      "PowerShell($cred = \"protocol=https`nhost=github.com`n\" | git credential fill; $token = \\($cred | Where-Object { $_ -match '^password=' }\\) -replace '^password='; $issue = Invoke-RestMethod -Uri \"https://api.github.com/repos/beyerl/history-mystery/issues/6\" -Headers @{Authorization=\"Bearer $token\"}; \"TITLE: $\\($issue.title\\)`nUPDATED: $\\($issue.updated_at\\)`n`n$\\($issue.body\\)\")",
+      "PowerShell(gh issue list --state open --limit 100 --json number,title,labels,body)",
+      "PowerShell(git remote *)",
+      "PowerShell(git commit *)",
+      "PowerShell(git push *)",
+      "PowerShell(git add *)",
+      "PowerShell(winget list *)",
+      "PowerShell(try { \\(Invoke-RestMethod -Uri \"https://api.github.com/repos/beyerl/history-mystery/issues?state=open&per_page=100\" -Headers @{ \"User-Agent\"=\"claude\" }\\) | Select-Object number,title,@{n='labels';e={\\($_.labels.name\\) -join ','}} | Sort-Object number | Format-Table -AutoSize | Out-String -Width 200 } catch { $_.Exception.Message })",
+      "PowerShell($t = $env:GH_TOKEN; if\\(-not $t\\){$t=$env:GITHUB_TOKEN}; if\\(-not $t\\){\"no env token\"} else {\"have token\"}; try { \\(Invoke-RestMethod -Uri \"https://api.github.com/repos/beyerl/history-mystery\" -Headers @{ \"User-Agent\"=\"claude\" }\\) | Select-Object full_name,private,visibility | Format-List } catch { \"repo fetch: \" + $_.Exception.Message })",
+      "PowerShell(git *)",
+      "Bash(curl -s http://localhost:5095/_content/QuizEngine/components/drag-drop-list.js)",
+      "Bash(git check-ignore *)",
+      "Bash(echo \"---exit:$?\")",
+      "Bash(git *)",
+      "Bash(cat)",
+      "Bash(curl -s \"https://api.github.com/repos/beyerl/history-mystery/issues?state=open&per_page=100\")"
+    ]
+  }
+}

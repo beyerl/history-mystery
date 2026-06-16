@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Second consumer of the engine, proving content swappability.
-         Its assets are served at /_content/QuizEngine/ -->
+    <!-- Consume the content-agnostic engine; its assets are served at /_content/QuizEngine/ -->
     <ProjectReference Include="..\QuizEngine\QuizEngine.csproj" />
   </ItemGroup>
 

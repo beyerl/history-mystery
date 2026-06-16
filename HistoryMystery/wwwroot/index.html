@@ -4,14 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Engine base styles (served from the QuizEngine Razor Class Library) -->
   <link rel="stylesheet" href="/_content/QuizEngine/styles.css">
-  <title>Space Race</title>
+  <title>History Mystery</title>
   <style>
     html,
     body {
       height: 100%;
       margin: 0;
-      background-color: #0b132b;
+      background-color: #2b2117;
     }
 
     .container {
@@ -29,6 +30,7 @@
     <router-view style="flex-grow: 1;"></router-view>
   </div>
 
+  <!-- Bootstrap the engine with this app's quiz content -->
   <script type="module">
     import { startQuizApp } from '/_content/QuizEngine/main.js';
     import { quizConfig } from './quiz.config.js';

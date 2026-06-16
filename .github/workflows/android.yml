@@ -11,8 +11,8 @@ on:
     paths:
       - 'mobile/**'
       - 'QuizEngine/wwwroot/**'
+      - 'HistoryMystery/wwwroot/**'
       - 'HerstoryMystery/wwwroot/**'
-      - 'SampleQuiz/wwwroot/**'
       - 'MetalMystery/wwwroot/**'
       - 'ArtMystery/wwwroot/**'
       - '.github/workflows/android.yml'
@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        app: [herstory, spacerace, metal, art]
+        app: [history, herstory, metal, art]
 
     steps:
       - uses: actions/checkout@v4

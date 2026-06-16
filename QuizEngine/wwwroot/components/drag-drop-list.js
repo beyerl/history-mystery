@@ -229,8 +229,12 @@ class DragDropList extends HTMLElement {
     this._placedElement = null;
 
     if (!placed || !dropList.contains(placed)) {
-      // No answer placed in time -> counts as a mistake; move on.
+      // Time ran out before an answer was locked in (nothing placed, or the card
+      // was still being dragged) -> count it as a mistake and move on. If a drag
+      // is still in progress, remember its element so the late drop is discarded
+      // instead of being left in the list unevaluated.
       this.dispatchMessage(AnswerResultEnum.INCORRECT, this.currentTopEvent);
+      this._voidElement = this.shadowRoot.querySelector('.top-slot');
       this.populateTopSlot(this._eventService.get());
       return;
     }
@@ -319,6 +323,15 @@ class DragDropList extends HTMLElement {
   }
 
   onAdd(evt) {
+    // A card whose slow-mode window already closed while it was still being
+    // dragged: the timer already counted it as wrong and moved on, so discard
+    // this late drop instead of leaving an unevaluated card in the list.
+    if (this._voidElement && evt.item === this._voidElement) {
+      this._voidElement = null;
+      evt.item.remove();
+      return;
+    }
+
     // In slow mode the placement is not judged on drop; remember it and let
     // the player keep reordering until the timer closes the window.
     if (this.slowMode) {
