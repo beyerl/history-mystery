@@ -43,7 +43,7 @@ export const quizConfig = {
         bodyFont: "system-ui, 'Segoe UI', sans-serif",
         titleFont: "Georgia, 'Times New Roman', serif",
         favicon: '/assets/favicon.ico',
-        background: '', // solid colour from --color-black via the engine defaults
+        background: '/assets/menu-background.webp',
     },
 
     assets: {
