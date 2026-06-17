@@ -577,10 +577,6 @@ export const events ={
     "title": "American Gothic",
     "description": "Grant Wood"
   },
-  "Sculptural Ensemble of Constantin Brâncuși at Târgu Jiu": {
-    "title": "Skulpturenensemble von Constantin Brâncuși in Târgu Jiu",
-    "description": "Constantin Brâncuși"
-  },
   "Campbell's Soup Cans": {
     "title": "Campbell’s Soup Cans",
     "description": "Andy Warhol"
@@ -596,10 +592,6 @@ export const events ={
   "Maman (sculpture)": {
     "title": "Maman",
     "description": "Louise Bourgeois"
-  },
-  "Olafur Eliasson": {
-    "title": "Ólafur Elíasson",
-    "description": "Olafur Eliasson"
   }
 };
 

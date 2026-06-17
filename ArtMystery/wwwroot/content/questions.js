@@ -1475,15 +1475,7 @@ export const questions =[
     "image": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Die_Zwitscher-Maschine_%28Twittering_Machine%29%2C_1922_-_Paul_Klee.jpg",
     "wiki_title": "Twittering_Machine"
   },
-  {
-    "title": "Bird in Space",
-    "artist": "Constantin Brâncuși",
-    "year": 1923,
-    "description": "Constantin Brâncuși",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Bird_in_Space.jpg/1280px-Bird_in_Space.jpg",
-    "wiki_title": "Bird_in_Space"
-  },
-  {
+   {
     "title": "Black Iris (painting)",
     "artist": "Georgia O'Keeffe",
     "year": 1926,
@@ -1586,14 +1578,6 @@ export const questions =[
     "description": "Louise Bourgeois",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Giant_spider_strikes_again%21.jpg/1280px-Giant_spider_strikes_again%21.jpg",
     "wiki_title": "Maman_(sculpture)"
-  },
-  {
-    "title": "Olafur Eliasson",
-    "artist": "Olafur Eliasson",
-    "year": 2003,
-    "description": "Olafur Eliasson",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/%C3%93lafur_El%C3%ADasson_Internationale_Jury_Berlinale_2017_%28cropped%29.jpg/1280px-%C3%93lafur_El%C3%ADasson_Internationale_Jury_Berlinale_2017_%28cropped%29.jpg",
-    "wiki_title": "Olafur_Eliasson"
   },
   {
     "title": "The Gates",
