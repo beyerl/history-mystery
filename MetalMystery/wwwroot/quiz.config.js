@@ -68,6 +68,7 @@ export const quizConfig = {
         },
         bodyFont: "system-ui, 'Segoe UI', sans-serif",
         titleFont: "'Impact', 'Haettenschweiler', system-ui, sans-serif",
+        favicon: '/assets/favicon.ico',
         background: '/assets/menu-background.webp',
     },
 
