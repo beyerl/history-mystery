@@ -56,6 +56,12 @@ jobs:
         working-directory: mobile
         run: npx cap add android
 
+      - name: Generate launcher icons for ${{ matrix.app }}
+        working-directory: mobile
+        # assemble.mjs staged the app's icon sources into mobile/assets/;
+        # turn them into Android mipmaps (legacy + adaptive).
+        run: npx capacitor-assets generate --android
+
       - name: Sync Capacitor
         working-directory: mobile
         run: npx cap sync android

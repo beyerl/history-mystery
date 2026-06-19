@@ -23,8 +23,24 @@ combines them into `mobile/www` and writes a per-app `capacitor.config.json`:
 node assemble.mjs <key>      # e.g. node assemble.mjs metal
 ```
 
-The generated `www/`, `android/`, `node_modules/` and `capacitor.config.json`
-are not committed — they are produced on demand and in CI.
+The generated `www/`, `assets/`, `android/`, `node_modules/` and
+`capacitor.config.json` are not committed — they are produced on demand and in
+CI.
+
+## App icons
+
+Each app's launcher icon is a pixel-art character matching its web favicon. The
+committed sources live in [`icons/<key>/`](./icons), each providing `icon.png`
+(legacy), plus `icon-foreground.png` / `icon-background.png` for Android 8+
+adaptive icons. `assemble.mjs` copies the selected app's sources into
+`mobile/assets/`, and [`@capacitor/assets`](https://github.com/ionic-team/capacitor-assets)
+turns them into the platform mipmaps:
+
+```
+node assemble.mjs <key>
+npx cap add android        # creates android/ with default icons
+npx capacitor-assets generate --android   # overwrites them with icons/<key>/
+```
 
 ## CI
 
@@ -43,6 +59,7 @@ cd mobile
 npm install
 node assemble.mjs metal           # pick an app key
 npx cap add android               # first time only (regenerates android/)
+npx capacitor-assets generate --android   # apply the app's launcher icon
 npx cap sync android
 cd android && ./gradlew assembleDebug
 # APK: mobile/android/app/build/outputs/apk/debug/app-debug.apk

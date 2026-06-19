@@ -51,6 +51,20 @@ cpSync(appWwwroot, www, { recursive: true });
 // 2. The shared engine, mounted where the app expects it (/_content/QuizEngine/).
 cpSync(engineWwwroot, resolve(www, '_content', 'QuizEngine'), { recursive: true });
 
+// 2b. Stage this app's launcher-icon sources where @capacitor/assets looks for
+// them (mobile/assets/). The committed sources live in mobile/icons/<key>/ as
+// icon.png (legacy) plus icon-foreground.png/icon-background.png (adaptive);
+// the CI "capacitor-assets generate" step turns them into Android mipmaps.
+const iconSrc = resolve(here, 'icons', app.key);
+const assetsDir = resolve(here, 'assets');
+rmSync(assetsDir, { recursive: true, force: true });
+if (existsSync(iconSrc)) {
+  cpSync(iconSrc, assetsDir, { recursive: true });
+  console.log(`Staged launcher icons from icons/${app.key}/`);
+} else {
+  console.warn(`WARNING: no launcher icons at icons/${app.key}/ — the app will keep Capacitor's default icon.`);
+}
+
 // 3. Point the bundled app at the deployed GameState API when provided.
 const apiBase = process.env.API_BASE_ADDRESS;
 if (apiBase) {

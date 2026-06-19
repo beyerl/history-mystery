@@ -87,6 +87,7 @@ obj/
 # Capacitor (Android wrappers) — generated on demand / in CI
 mobile/node_modules/
 mobile/www/
+mobile/assets/
 mobile/android/
 mobile/capacitor.config.json
 
