@@ -17,8 +17,11 @@ export const quizConfig = {
     // description, wiki_title? }.
     questions,
 
-    // English-only content; the engine falls back to the English question text
-    // when no per-language translations are supplied.
+    // Per-language question titles and descriptions (English is the source;
+    // German supplied). The engine falls back to the English text for any
+    // language or question without a translation.
+    loadQuestionTranslations: (lang) =>
+        import(`./content/translations/${lang}.js`).then(m => m.events).catch(() => ({})),
 
     // Built-in Wikipedia "more info" provider; set to null to hide the info button.
     infoProvider: { type: 'wikipedia' },
