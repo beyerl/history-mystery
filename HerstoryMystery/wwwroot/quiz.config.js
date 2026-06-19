@@ -25,10 +25,10 @@ export const quizConfig = {
     theme: {
         colors: {
             'color-gold': '#997229',
-            'color-mint': '#B1CBC5',
+            'color-mint': '#E6C57A',
             'color-yellow': '#F1C064',
             'color-brown': '#7A4918',
-            'color-beige': '#D6D8B1',
+            'color-beige': '#EBD9A8',
             'color-gray-100': '#f8f9fa',
             'color-gray-200': '#e9ecef',
             'color-gray-300': '#dee2e6',

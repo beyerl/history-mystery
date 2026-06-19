@@ -33,7 +33,7 @@ export const quizConfig = {
         colors: {
             'color-yellow': '#c9a25e',   // button background (aged gold)
             'color-gold': '#8a6d3b',     // hover background (darker gold)
-            'color-mint': '#cdd6c2',     // accents / hover rows (sage)
+            'color-mint': '#d8c39a',     // accents / hover rows (warm tan, matches the firelit background)
             'color-beige': '#e7dcc3',    // pill background (parchment)
             'color-brown': '#4a3b28',    // button + card/pill text (dark sepia)
             'color-green': '#4CAF50',    // correct-answer flash

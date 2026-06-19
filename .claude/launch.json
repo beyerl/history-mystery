@@ -6,6 +6,12 @@
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "8099", "--directory", "MysteryQuizzes/wwwroot"],
       "port": 8099
+    },
+    {
+      "name": "app-preview",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8100", "--directory", "mobile/www"],
+      "port": 8100
     }
   ]
 }

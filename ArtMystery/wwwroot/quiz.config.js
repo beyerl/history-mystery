@@ -28,12 +28,12 @@ export const quizConfig = {
     theme: {
         // Elegant "gallery at night" palette: charcoal, gold accents, light text.
         colors: {
-            'color-black': '#1a1a1a',                  // page background
-            'color-card-bg': 'rgba(28, 26, 24, 0.85)', // cards / footer
+            'color-black': '#16120c',                  // page background (warm near-black, matches the dim gallery)
+            'color-card-bg': 'rgba(24, 20, 13, 0.85)', // cards / footer (warm dark)
             'color-yellow': '#9b7d3f',                 // button background (gold)
             'color-gold': '#b8975a',                   // hover background (light gold)
             'color-brown': '#f2efe9',                  // button + card text / borders (light)
-            'color-beige': '#2a2826',                  // pill background (dark)
+            'color-beige': '#241f17',                  // pill background (warm dark)
             'color-mint': '#9b7d3f',                   // accents / borders / hover rows
             'color-green': '#5a8f5a',                  // correct-answer flash
             'color-popover-bg': '#9b7d3f',             // "correct year" popover
