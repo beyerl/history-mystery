@@ -1195,7 +1195,6 @@ export const questions =[
     "description": "Helloween",
     "videos": [
       "-2E_GayndtA",
-      "68lwA6EfSAo",
       "pJaJ8G2xEHw",
       "VgBuR46pkys"
     ],
@@ -1221,15 +1220,15 @@ export const questions =[
     }
   },
   {
-    "title": "Over From Under The Excrement",
-    "artist": "Melvins",
-    "year": 1987,
-    "description": "Melvins",
+    "title": "Souls At Zero",
+    "artist": "Neurosis",
+    "year": 1992,
+    "description": "Neurosis",
     "videos": [
-      "kGqDeuUUxWw",
-      "_2k-smylSbQ",
-      "4zXuLzqmYCk",
-      "8xicK9ilcKU"
+      "TICmWym9DmU",
+      "L9ZH2efYuow",
+      "fJ4jUOtj3gc",
+      "G_hz7A4jgR4"
     ],
     "genre": {
       "title": "Sludge Metal",
@@ -1605,15 +1604,15 @@ export const questions =[
     }
   },
   {
-    "title": "One Rode To Asa Bay",
-    "artist": "Bathory",
-    "year": 1990,
-    "description": "Bathory",
+    "title": "Hail Me",
+    "artist": "Mithotyn",
+    "year": 1997,
+    "description": "Mithotyn",
     "videos": [
-      "hDpc-831GPs",
-      "eAQs7-gzlz0",
-      "_q21xlYHCgw",
-      "7THRPYKlJck"
+      "FnsZCZwKBCw",
+      "oTqeRKN3fLM",
+      "js6kDCE1r8A",
+      "dtOeX5tDlN0"
     ],
     "genre": {
       "title": "Viking metal",
@@ -2450,15 +2449,15 @@ export const questions =[
     }
   },
   {
-    "title": "Shemhamforash",
-    "artist": "Grand belials key",
+    "title": "Highland Tyrant Attack",
+    "artist": "Absu",
     "year": 1997,
-    "description": "Grand belials key",
+    "description": "Absu",
     "videos": [
-      "XwcsSwhZPmY",
-      "2HiQ1x2Thvk",
-      "i1D0OcGyWEU",
-      "1XBGJhbvwr0"
+      "rqiXjauKyjU",
+      "NOYpA17TpgI",
+      "6jBuZJM7stc",
+      "sfDWHLYssC8"
     ],
     "genre": {
       "title": "US Black Metal",
@@ -2578,15 +2577,14 @@ export const questions =[
     }
   },
   {
-    "title": "Blandt Grå Monumenter",
-    "artist": "Sortsind",
-    "year": 1999,
-    "description": "Sortsind",
+    "title": "Ren Djävla Angest",
+    "artist": "Shining",
+    "year": 2000,
+    "description": "Shining",
     "videos": [
-      "I5nHPD2pO_M",
-      "r_V9IVcSvj4",
-      "5IdLCLUOplM",
-      "tBlhIrNGEFA"
+      "qHdgtRI-zhg",
+      "S0R2WtNOPmw",
+      "-oi152GWxhU"
     ],
     "genre": {
       "title": "Depressive Suicidal Black Metal",
@@ -2738,22 +2736,32 @@ export const questions =[
     }
   },
   {
-    "title": "Sankirihauta",
-    "artist": "Moonsorrow",
-    "year": 2001,
-    "description": "Moonsorrow",
-    "videos": "0abn",
+    "title": "Cry Of The Land",
+    "artist": "Skyclad",
+    "year": 1993,
+    "description": "Skyclad",
+    "videos": [
+      "pb0kTS78fIQ",
+      "INtK8sOHwk8",
+      "Pzwf_I_AsDo",
+      "bJtB4BwpyG8"
+    ],
     "genre": {
       "title": "Folk Metal",
       "description": "Folk metal is a sub-genre of heavy metal music that developed in Europe during the 1990s. As the name suggests, the genre is a fusion of heavy metal with traditional folk music. This includes the widespread use of folk instruments and, to a lesser extent, traditional singing styles. The earliest exponent of folk metal was the English band Skyclad. Their debut album The Wayward Sons of Mother Earth was released in 1990. It was not until 1994 and 1995 that other early contributors in the genre began to emerge from different regions of Europe as well as in Israel. Among these early groups, the Irish band Cruachan and the German band Subway to Sally each spearheaded a different regional variation that over time became known as Celtic metal and medieval metal respectively. Despite their contributions, folk metal remained little known with few representatives during the 1990s. It was not until the early 2000s when the genre exploded into prominence, particularly in Finland with the efforts of such groups as Finntroll, Ensiferum, Korpiklaani, Turisas, and Moonsorrow. The music of folk metal is characterised by its diversity with bands known to perform different styles of both heavy metal music and folk music. A large variety of folk instruments are used in the genre with many bands consequently featuring six or more members in their regular line-ups. A few bands are also known to rely on keyboards to simulate the sound of folk instruments. Lyrics in the genre commonly deal with paganism, nature, fantasy, mythology and history. (Source)"
     }
   },
   {
-    "title": "Ein Blatt Im Wind (Eng. A Leaf In The Wind)",
-    "artist": "Schattentantz",
-    "year": 2001,
-    "description": "Schattentantz",
-    "videos": "a8bu",
+    "title": "Sieben (Eng. Seven)",
+    "artist": "Subway to Sally",
+    "year": 2005,
+    "description": "Subway to Sally",
+    "videos": [
+      "OLZ8jYHRdFw",
+      "lXBHpw73ZQQ",
+      "AZ3BrHPpH6Q",
+      "rEDLM_d88To"
+    ],
     "genre": {
       "title": "Medieval Metal",
       "description": "Medieval metal or medieval rock is a subgenre of folk metal that blends hard rock or heavy metal music with medieval folk music. Medieval metal is mostly restricted to Germany where it is known as Mittelalter-Metal or Mittelalter-Rock. The genre emerged from the middle of the 1990s with contributions from Subway to Sally, In Extremo and Schandmaul. The style is characterised by the prominent use of a wide variety of traditional folk and medieval instruments. Like its parent genre, medieval rock features the same typical instruments found in heavy metal music: guitars, bass, drums and vocalist. Bands in the genre are known to supplement their sound with a wide range of folk and traditional instruments. Woodwind instruments like the bagpipes, flutes and shawm, string instruments like the violin, lute, hurdy gurdy, cello, harp and mandolin. Bands in the genre are also known to sing mostly or only in German, including Subway to Sally, Morgenstern and Letzte Instanz. (Source)"
