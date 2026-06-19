@@ -5,26 +5,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mystery Quizzes</title>
+  <link rel="icon" href="./assets/history.png">
   <link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
   <header>
+    <p class="eyebrow">A family of timeline quizzes</p>
     <h1>Mystery Quizzes</h1>
-    <p>Pick a timeline challenge.</p>
+    <p class="lede">Same engine, four very different worlds. Pick your challenge.</p>
   </header>
 
   <main class="grid" id="quiz-grid"></main>
 
-  <footer>A family of quizzes built on the same engine.</footer>
+  <footer>Built on one shared QuizEngine · drag, drop, and date the timeline.</footer>
 
   <script type="module">
     import { quizzes } from './links.js';
     const grid = document.getElementById('quiz-grid');
     grid.innerHTML = quizzes.map(q => `
-      <a class="quiz-card" href="${q.url}">
-        <h2>${q.name}</h2>
-        <p>${q.tagline}</p>
+      <a class="quiz-card" href="${q.url}" style="
+           --accent:${q.theme.accent};
+           --accent2:${q.theme.accent2};
+           --top:${q.theme.top};
+           --bottom:${q.theme.bottom};
+           --title-font:${q.theme.titleFont};">
+        <span class="frame">
+          <img class="icon" src="${q.icon}" alt="${q.name} icon" width="120" height="120" loading="lazy">
+        </span>
+        <span class="body">
+          <h2>${q.name}</h2>
+          <p>${q.tagline}</p>
+        </span>
+        <span class="cta">Play <span class="arrow" aria-hidden="true">→</span></span>
       </a>
     `).join('');
   </script>

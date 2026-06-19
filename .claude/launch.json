@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mystery-overview",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8099", "--directory", "MysteryQuizzes/wwwroot"],
+      "port": 8099
+    }
+  ]
+}
