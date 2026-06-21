@@ -84,6 +84,13 @@ export class InfoModal extends HTMLElement {
             border: 1px solid var(--color-gray-400);
             background-color: var(--color-gray-100);
         }
+        /* Keep the Wikipedia thumbnail inside the card; without this it renders
+           at its natural size and overflows the modal on narrow screens. */
+        .wiki-summary img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
         h3 {
           margin-top: 0;
         }
@@ -126,7 +133,7 @@ export class InfoModal extends HTMLElement {
           <div class="wiki-summary">
             <i>${heading}</i>
             <h3>${summary.title}</h3>
-            ${summary.thumbnail ? `<img src="${summary.thumbnail.source}" max-height="${summary.thumbnail.height}" max-width="${summary.thumbnail.width}" alt="${summary.title}" >` : ''}
+            ${summary.thumbnail ? `<img src="${summary.thumbnail.source}" alt="${summary.title}">` : ''}
             <div>${summary.extract_html}</div>
             ${summary.page ? `<a class="link" href="${summary.page}" target="_blank" rel="noopener">${linkLabel}</a>` : ''}
           </div>
