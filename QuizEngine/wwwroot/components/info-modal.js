@@ -116,20 +116,33 @@ export class InfoModal extends HTMLElement {
 
   async updateContent() {
     const content = this.shadowRoot.querySelector('.content');
-    if (this.eventData) {
-      content.innerHTML = `
-        <h2>${this.eventData.year} - ${this.eventData.title}</h2>
-        <p>${this.eventData.description || translationService.t('modal.noDescription')}</p>
-      `;
+    // Snapshot the event this render is for. Both the header and the (async)
+    // summary must describe the SAME event: reading this.eventData again after
+    // the await let a fetch that resolved late paint its summary under a
+    // different event's header (#40). The request id discards such stale
+    // responses entirely.
+    const event = this.eventData;
+    if (!event) {
+      return;
+    }
+    const requestId = (this._requestId = (this._requestId ?? 0) + 1);
 
-      this.setupAudioPlayback();
+    content.innerHTML = `
+      <h2>${event.year} - ${event.title}</h2>
+      <p>${event.description || translationService.t('modal.noDescription')}</p>
+      <div class="summary-slot"></div>
+    `;
 
-      if (this.infoProvider && this.infoProvider.appliesTo(this.eventData)) {
-        try {
-          const summary = await this.infoProvider.getSummary(this.eventData);
-          const heading = summary.heading ?? translationService.t('modal.wikipediaSummary');
-          const linkLabel = summary.linkLabel ?? translationService.t('modal.readMore');
-          const summaryCard = `
+    this.setupAudioPlayback();
+
+    if (this.infoProvider && this.infoProvider.appliesTo(event)) {
+      const slot = content.querySelector('.summary-slot');
+      try {
+        const summary = await this.infoProvider.getSummary(event);
+        if (requestId !== this._requestId) return; // a newer event is showing
+        const heading = summary.heading ?? translationService.t('modal.wikipediaSummary');
+        const linkLabel = summary.linkLabel ?? translationService.t('modal.readMore');
+        slot.innerHTML = `
           <div class="wiki-summary">
             <i>${heading}</i>
             <h3>${summary.title}</h3>
@@ -138,11 +151,10 @@ export class InfoModal extends HTMLElement {
             ${summary.page ? `<a class="link" href="${summary.page}" target="_blank" rel="noopener">${linkLabel}</a>` : ''}
           </div>
         `;
-          content.innerHTML += summaryCard;
-        } catch (error) {
-          console.error('Error fetching info summary:', error);
-          content.innerHTML += `<p>${translationService.t('modal.wikipediaFailed')}</p>`;
-        }
+      } catch (error) {
+        if (requestId !== this._requestId) return;
+        console.error('Error fetching info summary:', error);
+        slot.innerHTML = `<p>${translationService.t('modal.wikipediaFailed')}</p>`;
       }
     }
   }
