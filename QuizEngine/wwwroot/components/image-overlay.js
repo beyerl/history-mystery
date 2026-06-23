@@ -43,12 +43,10 @@ export class ImageOverlay extends HTMLElement {
           background: none; border: none; color: #fff;
           font-size: 28px; cursor: pointer; line-height: 1;
         }
-        .caption { color: #fff; margin-top: 10px; text-align: center; }
       </style>
       <div class="overlay">
         <button class="close-btn" title="${translationService.t('modal.close')}" aria-label="${translationService.t('modal.close')}">&times;</button>
         <img src="${src}" alt="${title}">
-        ${title ? `<div class="caption">${title}</div>` : ''}
       </div>
     `;
     this.shadowRoot.querySelector('.overlay').addEventListener('click', (e) => {
