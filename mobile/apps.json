@@ -2,5 +2,6 @@
   { "key": "history",   "dir": "HistoryMystery",  "appId": "com.historymystery.history",   "appName": "History Mystery" },
   { "key": "herstory",  "dir": "HerstoryMystery", "appId": "com.historymystery.herstory",  "appName": "Herstory Mystery" },
   { "key": "metal",     "dir": "MetalMystery",     "appId": "com.historymystery.metal",     "appName": "Metal Mystery" },
-  { "key": "art",       "dir": "ArtMystery",       "appId": "com.historymystery.art",       "appName": "Art Mystery" }
+  { "key": "art",       "dir": "ArtMystery",       "appId": "com.historymystery.art",       "appName": "Art Mystery" },
+  { "key": "artmusic",  "dir": "ArtMusicMystery",  "appId": "com.historymystery.artmusic",  "appName": "Art Music Mystery" }
 ]

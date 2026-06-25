@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Audio-variant consumer of the engine (Art Music Mystery).
+         Engine assets are served at /_content/QuizEngine/ -->
+    <ProjectReference Include="..\QuizEngine\QuizEngine.csproj" />
+  </ItemGroup>
+
+</Project>

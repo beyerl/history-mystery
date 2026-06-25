@@ -62,4 +62,17 @@ export const quizzes = [
             titleFont: "Georgia, 'Times New Roman', serif",
         },
     },
+    {
+        name: 'Art Music Mystery',
+        tagline: 'Hear a piece and place it on the timeline of classical music.',
+        url: './artmusic/',
+        icon: './assets/artmusic.png',
+        theme: {
+            accent: '#d4af6a',
+            accent2: '#6b7fa3',
+            top: '#1a2236',
+            bottom: '#0e1422',
+            titleFont: "'Playfair Display', Georgia, 'Times New Roman', serif",
+        },
+    },
 ];
