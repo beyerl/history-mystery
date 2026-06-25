@@ -75,4 +75,17 @@ export const quizzes = [
             titleFont: "'Playfair Display', Georgia, 'Times New Roman', serif",
         },
     },
+    {
+        name: 'Techno Mystery',
+        tagline: 'Hear a track and guess where it falls in techno history.',
+        url: './techno/',
+        icon: './assets/techno.png',
+        theme: {
+            accent: '#21e6dd',
+            accent2: '#ff2bd6',
+            top: '#10131c',
+            bottom: '#050507',
+            titleFont: "'Bahnschrift', 'Eurostile', system-ui, sans-serif",
+        },
+    },
 ];
