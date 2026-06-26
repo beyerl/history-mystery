@@ -19,7 +19,9 @@ export const quizConfig = {
     // Audio variant: a hidden YouTube player streams the question's videos[] ids.
     // previewSeconds: how long each of the two opening reference tracks is played
     // (highlighted) before the board unlocks for the first guess.
-    audio: { enabled: true, videoField: 'videos', previewSeconds: 10 },
+    // startFraction: techno tracks open with long build-ups, so begin each one
+    // 30% in to drop straight into the groove.
+    audio: { enabled: true, videoField: 'videos', previewSeconds: 10, startFraction: 0.3 },
 
     // "More" shows the subgenre info carried on each question and a source link,
     // instead of a Wikipedia summary.

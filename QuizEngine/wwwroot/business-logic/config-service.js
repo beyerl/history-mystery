@@ -35,9 +35,10 @@ export class ConfigService {
     get translationOverrides() { return activeConfig?.translations ?? {}; }
 
     // Optional audio variant. { enabled: true, videoField: 'videos',
-    // previewSeconds: 10 } streams a hidden YouTube player for each presented
-    // question; previewSeconds controls the opening reference-song preview.
-    // Null/absent = no audio.
+    // previewSeconds: 10, startFraction: 0.3 } streams a hidden YouTube player
+    // for each presented question; previewSeconds controls the opening
+    // reference-song preview, and the optional startFraction (0..1) starts every
+    // track that far into its duration. Null/absent = no audio.
     get audioConfig() { return activeConfig?.audio ?? null; }
 
     // Optional picture variant. { enabled: true } shows image cards with a

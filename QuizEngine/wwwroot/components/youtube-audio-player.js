@@ -9,6 +9,9 @@
 //   'game-over'          (document) -> stop and ignore further questions
 //
 // Quizzes opt in via config.audio = { enabled: true, videoField: 'videos' }.
+// Optional config.audio.startFraction (0..1) starts every track that far into
+// its duration (e.g. 0.3 = 30% in), so the snippet drops straight into the body
+// of the song rather than its intro.
 
 import { audioService } from '../business-logic/audio-service.js';
 import { configService } from '../business-logic/config-service.js';
@@ -43,6 +46,10 @@ function loadYouTubeApi() {
 class YoutubeAudioPlayer extends HTMLElement {
     connectedCallback() {
         this._videoField = configService.audioConfig?.videoField || 'videos';
+        // Optional: start each track this fraction (0..1) into its duration.
+        const fraction = Number(configService.audioConfig?.startFraction) || 0;
+        this._startFraction = fraction > 0 && fraction < 1 ? fraction : 0;
+        this._offsetApplied = false;
         this._queue = [];
         this._ready = false;
         // Keep bound handlers so they can be removed on disconnect.
@@ -90,6 +97,10 @@ class YoutubeAudioPlayer extends HTMLElement {
                 // A dead/region-locked/embedding-disabled video falls through to
                 // the next fallback id the dataset ships for the track.
                 onError: () => this.playNextFallback(),
+                // Once a freshly loaded track starts playing, jump it to the
+                // configured start fraction (if any). Duration is only known by
+                // then; we apply the seek once per loaded video.
+                onStateChange: (e) => this.handleStateChange(e),
             },
         });
     }
@@ -126,7 +137,21 @@ class YoutubeAudioPlayer extends HTMLElement {
     loadCurrent() {
         const id = this._queue.shift();
         if (id && this._player) {
+            this._offsetApplied = false; // re-apply the start offset for the new track
             this._player.loadVideoById(id);
+        }
+    }
+
+    // When a newly loaded track first reaches PLAYING, seek it to the configured
+    // start fraction of its (now-known) duration. Guarded so it runs once per
+    // load and never on a pause/resume.
+    handleStateChange(e) {
+        if (!this._startFraction || this._offsetApplied) return;
+        if (e?.data !== window.YT?.PlayerState?.PLAYING) return;
+        const duration = this._player?.getDuration?.() || 0;
+        if (duration > 0) {
+            this._offsetApplied = true;
+            this._player.seekTo(duration * this._startFraction, true);
         }
     }
 
