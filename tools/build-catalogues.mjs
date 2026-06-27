@@ -27,6 +27,9 @@ const RAW = 'https://raw.githubusercontent.com/beyerl/history-mystery/refs/heads
 const QUIZZES = [
   { key: 'art',        name: 'Art Mystery',        file: 'ArtMystery/wwwroot/content/questions.js' },
   { key: 'game',       name: 'Game Mystery',       file: 'GameMystery/wwwroot/content/questions.js' },
+  { key: 'history',    name: 'History Mystery',    file: 'HistoryMystery/wwwroot/content/questions.js' },
+  { key: 'herstory',   name: 'Herstory Mystery',   file: 'HerstoryMystery/wwwroot/content/historic-events.js' },
+  { key: 'literature', name: 'Literature Mystery', file: 'LiteratureMystery/wwwroot/content/works.js' },
 ];
 
 const out = resolve(repoRoot, process.argv[2] ?? resolve('dist', 'catalogue'));

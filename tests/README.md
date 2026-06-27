@@ -26,9 +26,29 @@ Migrated from the original GitLab project
 node tools/build-tests.mjs            # -> dist/video-check/{metal,artmusic,techno}/
 ```
 
+## Catalogue pages (link tests)
+
+[`catalogue.template.html`](./catalogue.template.html) is a second QA page,
+migrated and generalized from
+[`lenzbeyer/art-mystery-test`](https://gitlab.com/lenzbeyer/art-mystery-test)
+(issues #58, #59). It fetches a quiz's question file **live from GitHub raw**,
+renders every entry (artwork/screenshot for picture quizzes; title + description
+for text quizzes), and offers a **"Check Wikipedia links"** button that verifies
+each entry's `wiki_title` resolves to a real article.
+
+[`../tools/build-catalogues.mjs`](../tools/build-catalogues.mjs) builds one per
+quiz into `dist/catalogue/<quiz>/`:
+
+- **Picture quizzes** (#58): Art, Game
+- **Text quizzes** (#59, Wikipedia-link tests): History, Herstory, Literature
+
+```sh
+node tools/build-catalogues.mjs       # -> dist/catalogue/{art,game,history,herstory,literature}/
+```
+
 ## Deployment
 
 GitHub serves a single Pages site per repo, so these can't be deployed by an
 independent workflow without fighting the quizzes' Pages deploy. They are built
-as a separate step in [`.github/workflows/pages.yml`](../.github/workflows/pages.yml)
-and published under `…/video-check/` alongside the quizzes.
+as separate steps in [`.github/workflows/pages.yml`](../.github/workflows/pages.yml)
+and published under `…/video-check/` and `…/catalogue/` alongside the quizzes.
