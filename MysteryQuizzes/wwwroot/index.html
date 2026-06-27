@@ -32,6 +32,7 @@
            --title-font:${q.theme.titleFont};">
         <span class="frame">
           <img class="icon" src="${q.icon}" alt="${q.name} icon" width="120" height="120" loading="lazy">
+          ${q.earlyAccess ? '<span class="badge">Early Access</span>' : ''}
         </span>
         <span class="body">
           <h2>${q.name}</h2>

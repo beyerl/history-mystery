@@ -67,6 +67,7 @@ export const quizzes = [
         tagline: 'Hear a piece and place it on the timeline of classical music.',
         url: './artmusic/',
         icon: './assets/artmusic.png',
+        earlyAccess: true,
         theme: {
             accent: '#d4af6a',
             accent2: '#6b7fa3',
@@ -80,6 +81,7 @@ export const quizzes = [
         tagline: 'Hear a track and guess where it falls in techno history.',
         url: './techno/',
         icon: './assets/techno.png',
+        earlyAccess: true,
         theme: {
             accent: '#21e6dd',
             accent2: '#ff2bd6',

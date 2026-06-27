@@ -140,6 +140,24 @@ h1 {
     display: block;
 }
 
+/* "Early Access" ribbon pinned to the framed portrait */
+.badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 1;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: #14100c;
+    background: color-mix(in srgb, var(--accent) 88%, #fff);
+    border: 1px solid color-mix(in srgb, var(--accent) 70%, #000);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
 .body { position: relative; }
 
 .quiz-card h2 {
