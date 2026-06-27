@@ -13,8 +13,9 @@ export const quizConfig = {
     maxScore: 10,
     valueSuffix: '',
 
-    // Question contract + picture extras: { title, year, description, artist, image, wiki_title }.
-    // For games, `artist` carries the developer.
+    // Question contract + picture extras: { title, year, description, image, wiki_title }.
+    // The developer studio is deliberately not carried (no `artist`), so cards
+    // reveal only the game's title and release year (#55).
     questions,
 
     // Picture variant: image cards with a full-screen button instead of a caption.
