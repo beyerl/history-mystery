@@ -470,6 +470,22 @@ export const questions =[
     }
   },
   {
+    "title": "Rainbow Theme",
+    "artist": "Saxon",
+    "year": 1979,
+    "description": "Saxon",
+    "videos": [
+      "gT2AwtnI-e4",
+      "4CJwkDjtzKM",
+      "f5zGzhBqJCg",
+      "RVLi0WHVnLY"
+    ],
+    "genre": {
+      "title": "N.W.O.B.H.M.",
+      "description": "The New Wave of British Heavy Metal (frequently abbreviated as NWOBHM) was a heavy metal movement that started in the late 1970s, in Britain, and achieved international attention by the early 1980s. The movement developed as a reaction in part to the decline of early heavy metal bands such as Deep Purple, Led Zeppelin and Black Sabbath. NWOBHM bands toned down the blues influences of earlier acts, incorporated elements of punk, increased the tempo, and adopted a \"tougher\" sound, taking a harder approach to its music. It was a scene directed almost exclusively at heavy metal fans. The era is considered to be a major foundation stone for the extreme metal genres; acts such as the American Thrash Metal band Metallica cite NWOBHM bands like Saxon, Motörhead, Diamond Head, and Iron Maiden as a major influence on their musical style.\n<br><br>\nReviled or ignored by many mainstream critics in both the UK and the US, the NWOBHM nonetheless came to dominate the hard rock scene of the early-mid 1980s. NWOBHM was musically characterized by fast upbeat tempo songs, power chords, fast guitar solos and melodic, soaring vocals, with lyrical themes often drawing inspiration from mythology and fantasy fiction. Many of the bands of this era were signed to Neat Records, who has released volumes of NWOBHM compilations in later years.\n<br>\n<a href=\"http://en.wikipedia.org/wiki/New_Wave_of_British_Heavy_Metal\" target=\"_blank\">(Source)</a>"
+    }
+  },
+  {
     "title": "Kill The Poor",
     "artist": "Dead Kennedys",
     "year": 1980,
@@ -555,8 +571,8 @@ export const questions =[
     "year": 1981,
     "description": "Siouxsie and the Banshees",
     "videos": [
-      "YP-ZUbSmkRM",
       "bfygNGVdJ7g",
+      "YP-ZUbSmkRM",
       "Arx3CjzuLNM",
       "ms6d1ZvR_Oo"
     ],
@@ -646,22 +662,6 @@ export const questions =[
     }
   },
   {
-    "title": "Hallowed Be Thy Name",
-    "artist": "Iron Maiden",
-    "year": 1982,
-    "description": "Iron Maiden",
-    "videos": [
-      "J51LPlP-s9o",
-      "FmNIZAB9d3Y",
-      "BBtLMLQfiRo",
-      "71TJitXU8Z0"
-    ],
-    "genre": {
-      "title": "N.W.O.B.H.M.",
-      "description": "The New Wave of British Heavy Metal (frequently abbreviated as NWOBHM) was a heavy metal movement that started in the late 1970s, in Britain, and achieved international attention by the early 1980s. The movement developed as a reaction in part to the decline of early heavy metal bands such as Deep Purple, Led Zeppelin and Black Sabbath. NWOBHM bands toned down the blues influences of earlier acts, incorporated elements of punk, increased the tempo, and adopted a \"tougher\" sound, taking a harder approach to its music. It was a scene directed almost exclusively at heavy metal fans. The era is considered to be a major foundation stone for the extreme metal genres; acts such as the American Thrash Metal band Metallica cite NWOBHM bands like Saxon, Motörhead, Diamond Head, and Iron Maiden as a major influence on their musical style. Reviled or ignored by many mainstream critics in both the UK and the US, the NWOBHM nonetheless came to dominate the hard rock scene of the early-mid 1980s. NWOBHM was musically characterized by fast upbeat tempo songs, power chords, fast guitar solos and melodic, soaring vocals, with lyrical themes often drawing inspiration from mythology and fantasy fiction. Many of the bands of this era were signed to Neat Records, who has released volumes of NWOBHM compilations in later years. (Source)"
-    }
-  },
-  {
     "title": "Black Metal",
     "artist": "Venom",
     "year": 1983,
@@ -701,8 +701,8 @@ export const questions =[
     "videos": [
       "vJChh7ghGnE",
       "YEXaqVReliM",
-      "9_EzMO27MS0",
-      "kMEz4cFMlZE"
+      "kMEz4cFMlZE",
+      "9_EzMO27MS0"
     ],
     "genre": {
       "title": "Glam Metal",
@@ -742,6 +742,22 @@ export const questions =[
     }
   },
   {
+    "title": "Insanity",
+    "artist": "Hellhammer",
+    "year": 1983,
+    "description": "Hellhammer",
+    "videos": [
+      "0s44Zd5KU0Y",
+      "0mndec12Pao",
+      "j5z-Q9khit4",
+      "FbJopTDia00"
+    ],
+    "genre": {
+      "title": "Black Metal",
+      "description": "Black metal is an extreme subgenre of heavy metal. It often uses fast tempos, shrieked vocals, highly distorted guitars played with tremolo picking, blast beat drumming, raw recording, and unconventional song structure.\n<br><br>\nThe first wave of black metal refers to those bands during the 1980s who influenced the black metal sound and formed a prototype for the genre. They were often speed metal or thrash metal bands. The term \"black metal\" was coined by the English band Venom with their second album Black Metal (1982). Although considered thrash metal rather than black metal by modern standards, the album's lyrics and imagery focused more on anti-Christian and Satanic themes than any before it. Their music was unpolished in production and featured raspy grunted vocals. Venom's members also adopted pseudonyms, a practice that would become widespread among black metal musicians.\n<br><br>\nAnother major influence on black metal was the Swedish band Bathory, led by Thomas Forsberg (under the pseudonym Quorthon). Not only did Bathory use unpolished production and anti-Christian themes, but Quorthon was also the first to use the \"shrieked\" vocals that came to define black metal.\n<br>\n<a href=\"http://en.wikipedia.org/wiki/Black_metal#The_First_Wave\" target=\"_blank\">(Source)</a>"
+    }
+  },
+  {
     "title": "Icarus' Dream Suite Op. 4",
     "artist": "Yngwie Malmsteen",
     "year": 1984,
@@ -771,22 +787,6 @@ export const questions =[
     "genre": {
       "title": "Death Metal",
       "description": "Death metal is an extreme subgenre of heavy metal. It typically employs heavily distorted guitars, tremolo picking, deep growling vocals, blast beat drumming, minor keys or atonality, and complex song structures with multiple tempo changes. Building from the musical structure of thrash metal and early black metal, death metal emerged during the mid 1980s. English heavy metal band Venom crystallized the elements of what later became known as thrash metal, death metal and black metal, with their 1981 album Welcome to Hell. Their dark, blistering sound, harsh vocals, and macabre, proudly Satanic imagery proved a major inspiration for extreme metal bands. Metal acts such as Slayer, Kreator, Celtic Frost were very important influences to the crafting of the genre. Along with the band Death and its frontman Chuck Schuldiner, who is often referred to as \"the father of death metal\", bands such as Possessed, Obituary and Morbid Angel are often considered pioneers of the genre. In the late 1980s and early 1990s, death metal gained more media attention as popular record labels like Earache and Roadrunner began to sign death metal bands at a rapid rate. Since then, death metal has diversified, spawning a variety of subgenres. (Source)"
-    }
-  },
-  {
-    "title": "Hades",
-    "artist": "Bathory",
-    "year": 1984,
-    "description": "Bathory",
-    "videos": [
-      "PcpGUajRXfk",
-      "hm_yZeQ5U_c",
-      "34ATdpFi95s",
-      "oAg4oqCYcPk"
-    ],
-    "genre": {
-      "title": "Black Metal",
-      "description": "Black metal is an extreme subgenre of heavy metal. It often uses fast tempos, shrieked vocals, highly distorted guitars played with tremolo picking, blast beat drumming, raw recording, and unconventional song structure. The first wave of black metal refers to those bands during the 1980s who influenced the black metal sound and formed a prototype for the genre. They were often speed metal or thrash metal bands. The term \"black metal\" was coined by the English band Venom with their second album Black Metal (1982). Although considered thrash metal rather than black metal by modern standards, the album's lyrics and imagery focused more on anti-Christian and Satanic themes than any before it. Their music was unpolished in production and featured raspy grunted vocals. Venom's members also adopted pseudonyms, a practice that would become widespread among black metal musicians. Another major influence on black metal was the Swedish band Bathory, led by Thomas Forsberg (under the pseudonym Quorthon). Not only did Bathory use unpolished production and anti-Christian themes, but Quorthon was also the first to use the \"shrieked\" vocals that came to define black metal. (Source)"
     }
   },
   {
@@ -1034,10 +1034,10 @@ export const questions =[
     "year": 1986,
     "description": "Metallica",
     "videos": [
-      "_z-hEyVQDRA",
+      "K6LA7v1PApU",
       "kV-2Q8QtCY4",
       "ac6pgts4PYQ",
-      "K6LA7v1PApU"
+      "_z-hEyVQDRA"
     ],
     "genre": {
       "title": "Thrash Metal",
@@ -1130,10 +1130,10 @@ export const questions =[
     "year": 1987,
     "description": "Dirty Rotten Imbeciles (DRI)",
     "videos": [
-      "S9KK0K3A1hs",
+      "NBaEhPVJoxc",
       "rtsBkxxeIK4",
       "OO-tnUdMVo0",
-      "NBaEhPVJoxc"
+      "S9KK0K3A1hs"
     ],
     "genre": {
       "title": "Crossover Thrash",
@@ -1189,50 +1189,19 @@ export const questions =[
     }
   },
   {
-    "title": "Halloween pt2",
-    "artist": "Helloween",
-    "year": 1987,
-    "description": "Helloween",
-    "videos": [
-      "-2E_GayndtA",
-      "pJaJ8G2xEHw",
-      "VgBuR46pkys"
-    ],
-    "genre": {
-      "title": "Melodic Power Metal",
-      "description": "Often referred to as European power metal, Melodic power metal originated from the New Wave of British Heavy Metal, emerging in the late 1980s and early 1990s with Germany's Helloween, Blind Guardian and Finland's Stratovarius, with a strong focus on melody and uplifting, positive themes. Power metal is today associated with fast tempo and melodic harmonies, the sound tempered by characteristics of speed metal, power metal's musical forerunner. Power metal is highly focused on the vocalist, with \"clean\" vocals being much more prevalent than the growling vocals often associated with death metal and black metal. Following in the tradition of Ronnie James Dio, Ian Gillan, Bruce Dickinson, Rob Halford and other heavy metal vocalists, power metal vocals are often in a high register. The majority of the genre's vocalists sing in the tenor range, capable of hitting very high notes. Helloween one of Melodic power metal's originators mixed fast palm muted speed metal riffs with high-pitched clean vocals. Stratovarius further developed this melodic direction by making heavy use of keyboards. This genre spread over Europe, often incorporating further influences from classical and folk music. The style has become one of the most popular metal subgenres, and has many bands outside of Europe. (Source)"
-    }
-  },
-  {
     "title": "I'm The Man",
     "artist": "Anthrax",
     "year": 1987,
     "description": "Anthrax",
     "videos": [
-      "GiHdr4rWG98",
-      "A15_toteGag",
       "aJIvtjbcfWQ",
+      "A15_toteGag",
+      "GiHdr4rWG98",
       "3PGNCeVuYBw"
     ],
     "genre": {
       "title": "Rap Metal",
       "description": "Rap metal is a subgenre of rap rock and genre of heavy metal fusing vocal and sometimes instrumental elements of hip hop with heavy metal. Rap metal originated from rap rock, a genre fusing vocal and instrumental elements of hip hop with rock. The genre's roots are based both in hip hop acts who sampled heavy metal songs, such as Beastie Boys, Cypress Hill and Run-D.M.C., as well as rock bands who fused heavy metal and hip hop influences. Stuck Mojo, a metal band whose vocalist rapped, is considered to be one of the pioneers of the genre. (Source)"
-    }
-  },
-  {
-    "title": "Souls At Zero",
-    "artist": "Neurosis",
-    "year": 1992,
-    "description": "Neurosis",
-    "videos": [
-      "TICmWym9DmU",
-      "L9ZH2efYuow",
-      "fJ4jUOtj3gc",
-      "G_hz7A4jgR4"
-    ],
-    "genre": {
-      "title": "Sludge Metal",
-      "description": "Sludge metal, or just sludge,[citation needed] is a subgenre of heavy metal that melds the slow tempos, heavy rhythms and dark, pessimistic atmosphere of doom metal with the aggression, shouted vocals and occasional fast tempos of hardcore punk. As The New York Times put it, \"The shorthand term for the kind of rock descending from early Black Sabbath and late Black Flag is sludge, because it's so slow and dense.\" Sludge metal is typically abrasive; often featuring shouted vocals, heavily distorted instruments and sharply contrasting tempos. While the style was anticipated by the Melvins from Washington, many of its earliest pioneers were from the state of Louisiana. Many sludge metal bands from the Southern United States incorporate Southern rock and blues influence, although not all sludge bands share this style. There is some controversy as to whether the term refers to only the style emerging from New Orleans and later the American South more broadly, or to \"a complete consciousness in the heads of like-minded Black Flag/Black Sabbath influenced scenes and individuals all over the world\". So-called \"atmospheric\" sludge bands adopt a more experimental approach and compose music with an ambient atmosphere, reduced aggression and philosophical lyrics. Due to the similarities between sludge and stoner metal, there is often a crossover between the two genres, but sludge metal generally avoids stoner metal's usage of psychedelia. Sludge metal also bears some musical and lyrical resemblance to crust punk, due to the usage of political lyrics and thick, \"dirty\" guitar sounds. (Source)"
     }
   },
   {
@@ -1281,22 +1250,6 @@ export const questions =[
     "genre": {
       "title": "Industrial Metal",
       "description": "Industrial metal is a heavy metal musical genre that draws from industrial music and many different types of heavy metal, using repeating metal guitar riffs, sampling, synthesizer or sequencer lines, and distorted vocals. Founding industrial metal acts include Ministry, Godflesh, and KMFDM. The \"one-man-band\" Nine Inch Nails helped it gain a mass audience. Industrial metal's popularity led to some criticism from other artists associated with the industrial scene. Subsequently, it is most well-known in various European permutations. Industrial metal groups are known to have produced many acclaimed music videos. (Source)"
-    }
-  },
-  {
-    "title": "A Fine Day To Die",
-    "artist": "Bathory",
-    "year": 1988,
-    "description": "Bathory",
-    "videos": [
-      "OyYnstGB3rM",
-      "ut7ED9s2pmM",
-      "qSkXb8DR0Fg",
-      "13-lZhJArRA"
-    ],
-    "genre": {
-      "title": "Viking metal",
-      "description": "Viking metal is a subgenre of heavy metal music characterised by its galloping pace, keyboard-rich anthemic sound, bleakness and dramatic emphasis on Norse mythology, Norse paganism, and the Viking Age. Viking metal is \"noisy, chaotic, and often augmented by sorrowful keyboard melodies.\" Like folk metal bands, Viking metal acts \"generally utilize some acoustic and other unusual instruments in addition to the traditional metal instruments.\" The genre of Viking metal was pioneered by the Swedish band Bathory. The band's fourth album Blood Fire Death was released in 1988 and includes two early examples of Viking metal – the songs \"A Fine Day to Die\" and \"Blood Fire Death\". Eduardo Rivadavia of Allmusic describes this as \"possibly the first true example\" of Viking metal. It was followed in 1990 with the release of Hammerheart, a landmark album that \"formally introduced\" to the metal world the \"archetypical Viking metal album.\" By then the band had completely departed from \"the Satanic mould\" and was \"squarely in Viking mythology.\" The Viking metal music of Bathory was characterised by Wagnerian \"lengthy epics, ostentatious arrangements, chorused vocals, and ambient keyboards.\" (Source)"
     }
   },
   {
@@ -1540,30 +1493,14 @@ export const questions =[
     }
   },
   {
-    "title": "Exhorder",
-    "artist": "Exhorder",
-    "year": 1990,
-    "description": "Exhorder",
-    "videos": [
-      "fynnN8xmiRY",
-      "c52UPq9WrQc",
-      "u-BSrW72UDg",
-      "EgukizxZ5QM"
-    ],
-    "genre": {
-      "title": "Groove Metal",
-      "description": "Groove metal is a subgenre of heavy metal. It was often used to describe Pantera and Exhorder. Pantera's Cowboys from Hell album from 1990 was described as \"groundbreaking\" and \"blueprint-defining\" for the groove metal genre. Tommy Victor of Prong claims that the attitude of groove metal came from Bad Brains. Geoffrey Himes of The Washington Post described the music in 1998, as a \"marriage of hard rock with dance music and hip-hop\"; and stated about groove metal: \"This gives the loud, crunchy guitars a black-flavored dance pulse and gives the wailing vocals the punchy rhythms of rap and funk. Other groove metal bands have incorporated thrash metal, hardcore punk and industrial music. Ian Christe credits Sepultura's Chaos A.D. and Pantera for creating the death metal-derived music of groove metal and influencing later groups in the genre during the 1990s. (Source)"
-    }
-  },
-  {
     "title": "Left Hand Path",
     "artist": "Entombed",
     "year": 1990,
     "description": "Entombed",
     "videos": [
-      "ZdL-wNwXPCg",
-      "oX4KTg3W3Bc",
       "D6exw6xT0oo",
+      "oX4KTg3W3Bc",
+      "ZdL-wNwXPCg",
       "tsdWLtPAVqM"
     ],
     "genre": {
@@ -1601,22 +1538,6 @@ export const questions =[
     "genre": {
       "title": "Tech death",
       "description": "Technical death metal (sometimes called tech death) is a musical subgenre of death metal that focuses on complex rhythms, riffs and song structures. Technical experimentation in death metal began in the late '80s and early '90s. In 1989, Atheist's debut album Piece of Time was released, followed by Nocturnus' The Key, in 1990. In 1991, Death released Human. This and later Death albums have proven influential on '90s technical death metal bands. In 1991, New York's grindcore-influenced Suffocation released the Effigy of the Forgotten debut album, which focused on speed and brutality with \"sophisticated\" sense of songwriting and subsequently became groundbreaking in the genre. Phil Freeman, ex-editor of Metal Edge, has described the sub-genre of technical death metal as \"the hidden side of its genre, having more in common with prog-rock and jazz fusion than with the mechanistic, Satan-obsessed grinding that's the music's dominant public image.\" Often technical death metal albums feature exotic or sci-fi imagery. (Source)"
-    }
-  },
-  {
-    "title": "Hail Me",
-    "artist": "Mithotyn",
-    "year": 1997,
-    "description": "Mithotyn",
-    "videos": [
-      "FnsZCZwKBCw",
-      "oTqeRKN3fLM",
-      "js6kDCE1r8A",
-      "dtOeX5tDlN0"
-    ],
-    "genre": {
-      "title": "Viking metal",
-      "description": "Viking metal is a subgenre of heavy metal music characterised by its galloping pace, keyboard-rich anthemic sound, bleakness and dramatic emphasis on Norse mythology, Norse paganism, and the Viking Age. Viking metal is \"noisy, chaotic, and often augmented by sorrowful keyboard melodies.\" Like folk metal bands, Viking metal acts \"generally utilize some acoustic and other unusual instruments in addition to the traditional metal instruments.\" The genre of Viking metal was pioneered by the Swedish band Bathory. The band's fourth album Blood Fire Death was released in 1988 and includes two early examples of Viking metal – the songs \"A Fine Day to Die\" and \"Blood Fire Death\". Eduardo Rivadavia of Allmusic describes this as \"possibly the first true example\" of Viking metal. It was followed in 1990 with the release of Hammerheart, a landmark album that \"formally introduced\" to the metal world the \"archetypical Viking metal album.\" By then the band had completely departed from \"the Satanic mould\" and was \"squarely in Viking mythology.\" The Viking metal music of Bathory was characterised by Wagnerian \"lengthy epics, ostentatious arrangements, chorused vocals, and ambient keyboards.\" (Source)"
     }
   },
   {
@@ -1697,6 +1618,38 @@ export const questions =[
     "genre": {
       "title": "Tech death",
       "description": "Technical death metal (sometimes called tech death) is a musical subgenre of death metal that focuses on complex rhythms, riffs and song structures. Technical experimentation in death metal began in the late '80s and early '90s. In 1989, Atheist's debut album Piece of Time was released, followed by Nocturnus' The Key, in 1990. In 1991, Death released Human. This and later Death albums have proven influential on '90s technical death metal bands. In 1991, New York's grindcore-influenced Suffocation released the Effigy of the Forgotten debut album, which focused on speed and brutality with \"sophisticated\" sense of songwriting and subsequently became groundbreaking in the genre. Phil Freeman, ex-editor of Metal Edge, has described the sub-genre of technical death metal as \"the hidden side of its genre, having more in common with prog-rock and jazz fusion than with the mechanistic, Satan-obsessed grinding that's the music's dominant public image.\" Often technical death metal albums feature exotic or sci-fi imagery. (Source)"
+    }
+  },
+  {
+    "title": "Souls At Zero",
+    "artist": "Neurosis",
+    "year": 1992,
+    "description": "Neurosis",
+    "videos": [
+      "TICmWym9DmU",
+      "L9ZH2efYuow",
+      "fJ4jUOtj3gc",
+      "G_hz7A4jgR4"
+    ],
+    "genre": {
+      "title": "Sludge Metal",
+      "description": "Sludge metal, or just sludge,[citation needed] is a subgenre of heavy metal that melds the slow tempos, heavy rhythms and dark, pessimistic atmosphere of doom metal with the aggression, shouted vocals and occasional fast tempos of hardcore punk. As The New York Times put it, \"The shorthand term for the kind of rock descending from early Black Sabbath and late Black Flag is sludge, because it's so slow and dense.\" Sludge metal is typically abrasive; often featuring shouted vocals, heavily distorted instruments and sharply contrasting tempos. While the style was anticipated by the Melvins from Washington, many of its earliest pioneers were from the state of Louisiana. Many sludge metal bands from the Southern United States incorporate Southern rock and blues influence, although not all sludge bands share this style. There is some controversy as to whether the term refers to only the style emerging from New Orleans and later the American South more broadly, or to \"a complete consciousness in the heads of like-minded Black Flag/Black Sabbath influenced scenes and individuals all over the world\". So-called \"atmospheric\" sludge bands adopt a more experimental approach and compose music with an ambient atmosphere, reduced aggression and philosophical lyrics. Due to the similarities between sludge and stoner metal, there is often a crossover between the two genres, but sludge metal generally avoids stoner metal's usage of psychedelia. Sludge metal also bears some musical and lyrical resemblance to crust punk, due to the usage of political lyrics and thick, \"dirty\" guitar sounds. (Source)"
+    }
+  },
+  {
+    "title": "The Law",
+    "artist": "Exhorder",
+    "year": 1992,
+    "description": "Exhorder",
+    "videos": [
+      "EgukizxZ5QM",
+      "5VmDR1a4uWk",
+      "IRdaWl6aQ9o",
+      "gZj7VqEqOSs"
+    ],
+    "genre": {
+      "title": "Groove Metal",
+      "description": "Groove metal is a subgenre of heavy metal. It was often used to describe Pantera and Exhorder. Pantera's Cowboys from Hell album from 1990 was described as \"groundbreaking\" and \"blueprint-defining\" for the groove metal genre. Tommy Victor of Prong claims that the attitude of groove metal came from Bad Brains.\n<br><br>\nGeoffrey Himes of The Washington Post described the music in 1998, as a \"marriage of hard rock with dance music and hip-hop\"; and stated about groove metal: \"This gives the loud, crunchy guitars a black-flavored dance pulse and gives the wailing vocals the punchy rhythms of rap and funk. Other groove metal bands have incorporated thrash metal, hardcore punk and industrial music. Ian Christe credits Sepultura's Chaos A.D. and Pantera for creating the death metal-derived music of groove metal and influencing later groups in the genre during the 1990s.\n<br>\n<a href=\"http://en.wikipedia.org/wiki/Groove_metal\" target=\"_blank\">(Source)</a>"
     }
   },
   {
@@ -1849,9 +1802,9 @@ export const questions =[
     "year": 1993,
     "description": "Entombed",
     "videos": [
-      "qvI56MqFxqI",
-      "uNi0tsCU-6g",
       "5GkoShU3xX4",
+      "uNi0tsCU-6g",
+      "qvI56MqFxqI",
       "2lnBmNJgRWs"
     ],
     "genre": {
@@ -1929,8 +1882,8 @@ export const questions =[
     "year": 1993,
     "description": "Lubricant",
     "videos": [
-      "R_P0vVGkSkA",
       "kWK-6F0RSvU",
+      "R_P0vVGkSkA",
       "a07TuWU8D94",
       "xDe6alZAb0M"
     ],
@@ -1953,22 +1906,6 @@ export const questions =[
     "genre": {
       "title": "Goth Metal",
       "description": "Gothic metal or goth metal is a sub-genre of heavy metal music that combines the aggression of doom metal with the dark melancholy of gothic rock. The music of gothic metal is diverse with bands known to adopt the gothic approach to different styles of heavy metal music. The genre originated during the early 1990s in Europe originally as an outgrowth of doom/death, a fusion of death metal and doom metal. Lyrics are generally melodramatic and mournful with inspiration from gothic fiction as well as personal experiences. Norwegian band Theatre of Tragedy developed the \"beauty and the beast\" aesthetic of combining aggressive male vocals with clean female vocals, a contrast that has since been adopted by many gothic metal groups. During the mid-1990s, a number of bands brought the gothic approach to black metal. By the end of the decade, a symphonic metal variant of gothic metal had been developed. In the 21st century, gothic metal has moved towards the mainstream in Europe, particularly in Finland where a number of groups have released hit singles or chart-topping albums. In the US, however, only a few bands such as HIM, Lacuna Coil, and Evanescence have found commercial success. (Source)"
-    }
-  },
-  {
-    "title": "The Sign Of Evil Existence",
-    "artist": "Rotting Christ",
-    "year": 1993,
-    "description": "Rotting Christ",
-    "videos": [
-      "SExkSsD6y3M",
-      "t7bc4rY_63I",
-      "y1wOlSq8GVM",
-      "22j5QNayORY"
-    ],
-    "genre": {
-      "title": "Greek Black metal",
-      "description": "There is something about Greek Black Metal that is primitive yet classy. Varathron are perhaps the oldest and best known Greek Black Metal band. Their first demo tape in 1989 called Procreation of the Unaltered Evil is the larval stage of what would become a legendary name in Hellenic darkness. Teenage occult metal from the Hellenic Republic, the land that brought us olives, democracy, and Yanni. (Source)"
     }
   },
   {
@@ -2009,14 +1946,30 @@ export const questions =[
     "year": 1993,
     "description": "Rage Against the Machine",
     "videos": [
-      "4wXD7ItXAJA",
+      "o_-QGNUYL5g",
       "HUr0jpxVVOM",
       "kmZAsLMUuPw",
-      "o_-QGNUYL5g"
+      "4wXD7ItXAJA"
     ],
     "genre": {
       "title": "Rap Metal",
       "description": "Rap metal is a subgenre of rap rock and genre of heavy metal fusing vocal and sometimes instrumental elements of hip hop with heavy metal. Rap metal originated from rap rock, a genre fusing vocal and instrumental elements of hip hop with rock. The genre's roots are based both in hip hop acts who sampled heavy metal songs, such as Beastie Boys, Cypress Hill and Run-D.M.C., as well as rock bands who fused heavy metal and hip hop influences. Stuck Mojo, a metal band whose vocalist rapped, is considered to be one of the pioneers of the genre. (Source)"
+    }
+  },
+  {
+    "title": "Cry Of The Land",
+    "artist": "Skyclad",
+    "year": 1993,
+    "description": "Skyclad",
+    "videos": [
+      "pb0kTS78fIQ",
+      "INtK8sOHwk8",
+      "Pzwf_I_AsDo",
+      "bJtB4BwpyG8"
+    ],
+    "genre": {
+      "title": "Folk Metal",
+      "description": "Folk metal is a sub-genre of heavy metal music that developed in Europe during the 1990s. As the name suggests, the genre is a fusion of heavy metal with traditional folk music. This includes the widespread use of folk instruments and, to a lesser extent, traditional singing styles. The earliest exponent of folk metal was the English band Skyclad. Their debut album The Wayward Sons of Mother Earth was released in 1990. It was not until 1994 and 1995 that other early contributors in the genre began to emerge from different regions of Europe as well as in Israel. Among these early groups, the Irish band Cruachan and the German band Subway to Sally each spearheaded a different regional variation that over time became known as Celtic metal and medieval metal respectively. Despite their contributions, folk metal remained little known with few representatives during the 1990s. It was not until the early 2000s when the genre exploded into prominence, particularly in Finland with the efforts of such groups as Finntroll, Ensiferum, Korpiklaani, Turisas, and Moonsorrow. The music of folk metal is characterised by its diversity with bands known to perform different styles of both heavy metal music and folk music. A large variety of folk instruments are used in the genre with many bands consequently featuring six or more members in their regular line-ups. A few bands are also known to rely on keyboards to simulate the sound of folk instruments. Lyrics in the genre commonly deal with paganism, nature, fantasy, mythology and history. (Source)"
     }
   },
   {
@@ -2241,6 +2194,21 @@ export const questions =[
     }
   },
   {
+    "title": "Bright Eyes",
+    "artist": "Blind Guardian",
+    "year": 1995,
+    "description": "Blind Guardian",
+    "videos": [
+      "dNKLmCSm0hg",
+      "wTgeDCV9sWk",
+      "bRTFTVen094"
+    ],
+    "genre": {
+      "title": "Melodic Power Metal",
+      "description": "Often referred to as European power metal, Melodic power metal originated from the New Wave of British Heavy Metal, emerging in the late 1980s and early 1990s with Germany's Helloween, Blind Guardian and Finland's Stratovarius, with a strong focus on melody and uplifting, positive themes. Power metal is today associated with fast tempo and melodic harmonies, the sound tempered by characteristics of speed metal, power metal's musical forerunner. Power metal is highly focused on the vocalist, with \"clean\" vocals being much more prevalent than the growling vocals often associated with death metal and black metal. Following in the tradition of Ronnie James Dio, Ian Gillan, Bruce Dickinson, Rob Halford and other heavy metal vocalists, power metal vocals are often in a high register. The majority of the genre's vocalists sing in the tenor range, capable of hitting very high notes. \n<br><br>\nHelloween one of Melodic power metal's originators mixed fast palm muted speed metal riffs with high-pitched clean vocals. Stratovarius further developed this melodic direction by making heavy use of keyboards. This genre spread over Europe, often incorporating further influences from classical and folk music. The style has become one of the most popular metal subgenres, and has many bands outside of Europe.\n<br>\n<a href=\"http://en.wikipedia.org/wiki/Power_metal#European_power_metal\" target=\"_blank\">(Source)</a>"
+    }
+  },
+  {
     "title": "Makeshift Atomsmasher",
     "artist": "Deadguy",
     "year": 1995,
@@ -2254,22 +2222,6 @@ export const questions =[
     "genre": {
       "title": "Mathcore",
       "description": "Mathcore is a rhythmically complex and dissonant style of metalcore. It has its roots in bands such as Converge, Botch, and the Dillinger Escape Plan. The term mathcore is suggested by analogy with math rock. Both math rock and mathcore make use of unusual time signatures. Math rock groups have some influence on mathcore, though mathcore is more closely related to metalcore. Prominent mathcore groups have been associated with grindcore. An early antecedent to mathcore was practiced by Black Flag, in 1984, with the album My War: \"Its seven-minute metal dirges and fusion-style time signatures proved too much for many fans\". Many groups from the mathcore scene paid tribute to Black Flag for the album Black on Black. Stewart-Panko described the sound of these bands as a \"dynamic, violent, discordant, technical, brutal, off-kilter, no rules mixture of metal, hardcore, prog, math rock, grind and jazz.\" However, this term also describes an earlier, more dissonant variant of grindcore, also known as \"noisegrind\", that is less complex and dynamic than the groups subsequently labeled mathcore. (Source)"
-    }
-  },
-  {
-    "title": "Tibetan Quaaludes",
-    "artist": "Earth",
-    "year": 1995,
-    "description": "Earth",
-    "videos": [
-      "8WqL6BV0nfc",
-      "1uVERu-c2JI",
-      "EemF_7ShJU0",
-      "XrwX_a-DhN0"
-    ],
-    "genre": {
-      "title": "Drone Metal",
-      "description": "Drone metal (also known as drone doom) is a style of doom metal that is largely defined by drones; notes or chords that are sustained and repeated throughout a piece of music. Typically, the electric guitar is performed with large amounts of reverb and feedback while vocals, if present, are usually growled or screamed. Songs are often very long and lack beat or rhythm in the traditional sense. Drone doom is generally influenced by drone music, noise music and minimalist music. The style emerged in the early 1990s and was pioneered by Earth, Boris and Sunn O))). (Source)"
     }
   },
   {
@@ -2326,9 +2278,9 @@ export const questions =[
     "year": 1996,
     "description": "Gorefest",
     "videos": [
-      "T-WdUlWLc60",
-      "N0EcW36q534",
       "25Wgpi7JVaY",
+      "N0EcW36q534",
+      "T-WdUlWLc60",
       "V_ee6VmQnSg"
     ],
     "genre": {
@@ -2358,9 +2310,9 @@ export const questions =[
     "year": 1996,
     "description": "Cradle of Filth",
     "videos": [
-      "-yxSCt_uhcA",
-      "db2xhamo1DU",
       "m0hkTPEnNAI",
+      "db2xhamo1DU",
+      "-yxSCt_uhcA",
       "jCfZA3rtIBc"
     ],
     "genre": {
@@ -2433,6 +2385,22 @@ export const questions =[
     }
   },
   {
+    "title": "Hail Me",
+    "artist": "Mithotyn",
+    "year": 1997,
+    "description": "Mithotyn",
+    "videos": [
+      "FnsZCZwKBCw",
+      "oTqeRKN3fLM",
+      "js6kDCE1r8A",
+      "dtOeX5tDlN0"
+    ],
+    "genre": {
+      "title": "Viking metal",
+      "description": "Viking metal is a subgenre of heavy metal music characterised by its galloping pace, keyboard-rich anthemic sound, bleakness and dramatic emphasis on Norse mythology, Norse paganism, and the Viking Age. Viking metal is \"noisy, chaotic, and often augmented by sorrowful keyboard melodies.\" Like folk metal bands, Viking metal acts \"generally utilize some acoustic and other unusual instruments in addition to the traditional metal instruments.\" The genre of Viking metal was pioneered by the Swedish band Bathory. The band's fourth album Blood Fire Death was released in 1988 and includes two early examples of Viking metal – the songs \"A Fine Day to Die\" and \"Blood Fire Death\". Eduardo Rivadavia of Allmusic describes this as \"possibly the first true example\" of Viking metal. It was followed in 1990 with the release of Hammerheart, a landmark album that \"formally introduced\" to the metal world the \"archetypical Viking metal album.\" By then the band had completely departed from \"the Satanic mould\" and was \"squarely in Viking mythology.\" The Viking metal music of Bathory was characterised by Wagnerian \"lengthy epics, ostentatious arrangements, chorused vocals, and ambient keyboards.\" (Source)"
+    }
+  },
+  {
     "title": "The March And The Stream",
     "artist": "Skepticism",
     "year": 1997,
@@ -2465,6 +2433,22 @@ export const questions =[
     }
   },
   {
+    "title": "Walhall",
+    "artist": "Falkenbach",
+    "year": 1998,
+    "description": "Falkenbach",
+    "videos": [
+      "m5KheI9u510",
+      "PfZ5_N9cC4g",
+      "vqqMQclzZpU",
+      "mqiQ6kcGxoY"
+    ],
+    "genre": {
+      "title": "Viking metal",
+      "description": "Viking metal is a subgenre of heavy metal music characterised by its galloping pace, keyboard-rich anthemic sound, bleakness and dramatic emphasis on Norse mythology, Norse paganism, and the Viking Age. Viking metal is \"noisy, chaotic, and often augmented by sorrowful keyboard melodies.\" Like folk metal bands, Viking metal acts \"generally utilize some acoustic and other unusual instruments in addition to the traditional metal instruments.\"\n<br><br>\nThe genre of Viking metal was pioneered by the Swedish band Bathory. The band's fourth album Blood Fire Death was released in 1988 and includes two early examples of Viking metal – the songs \"A Fine Day to Die\" and \"Blood Fire Death\". Eduardo Rivadavia of Allmusic describes this as \"possibly the first true example\" of Viking metal. It was followed in 1990 with the release of Hammerheart, a landmark album that \"formally introduced\" to the metal world the \"archetypical Viking metal album.\" By then the band had completely departed from \"the Satanic mould\" and was \"squarely in Viking mythology.\" The Viking metal music of Bathory was characterised by Wagnerian \"lengthy epics, ostentatious arrangements, chorused vocals, and ambient keyboards.\"\n<br>\n<a href=\"http://en.wikipedia.org/wiki/Viking_metal\" target=\"_blank\">(Source)</a>"
+    }
+  },
+  {
     "title": "New Skin",
     "artist": "Incubus",
     "year": 1998,
@@ -2486,10 +2470,10 @@ export const questions =[
     "year": 1998,
     "description": "Deftones",
     "videos": [
-      "u8XVlAIm6O0",
+      "8Z8uPcghf8I",
       "xEu12J8pax8",
       "XOzs1FehYOA",
-      "8Z8uPcghf8I"
+      "u8XVlAIm6O0"
     ],
     "genre": {
       "title": "Alternative Metal",
@@ -2577,21 +2561,6 @@ export const questions =[
     }
   },
   {
-    "title": "Ren Djävla Angest",
-    "artist": "Shining",
-    "year": 2000,
-    "description": "Shining",
-    "videos": [
-      "qHdgtRI-zhg",
-      "S0R2WtNOPmw",
-      "-oi152GWxhU"
-    ],
-    "genre": {
-      "title": "Depressive Suicidal Black Metal",
-      "description": "Depressive Suicidal Black Metal (DSBM) is a sub genre of black metal, with a slow, dissonant, depressing atmosphere. DSBM is primarily distinguished from traditional forms of black metal by its lyrical content, focusing on suicide, depression, anxiety, and hate rather than traditional anti-Christian themes, with vocals that sound like desperate crys and pained screams."
-    }
-  },
-  {
     "title": "43% Burnt",
     "artist": "The Dillinger Escape Plan",
     "year": 1999,
@@ -2621,6 +2590,21 @@ export const questions =[
     "genre": {
       "title": "Melodic Death",
       "description": "Melodic death metal (also referred to as melodeath) is a musical style, a subgenre of death metal which combines the melody of the new wave of British heavy metal (NWOBHM) with the intensity of death metal. The genre is also known as Gothenburg metal, a reference to the city in Sweden where it originated. Originally the genre combined the harmony style and groove melodies of heavy metal with the harsh thrashing sound and vocals of death metal. Later the genre evolved due to many different influences; a notable evolution in the genre being the addition of keyboards. Melodic death metal contains more melodic guitar riffs, melodic solos, and occasionally acoustic guitar work rather than traditional death metal. (Source)"
+    }
+  },
+  {
+    "title": "Ren Djävla Angest",
+    "artist": "Shining",
+    "year": 2000,
+    "description": "Shining",
+    "videos": [
+      "qHdgtRI-zhg",
+      "S0R2WtNOPmw",
+      "-oi152GWxhU"
+    ],
+    "genre": {
+      "title": "Depressive Suicidal Black Metal",
+      "description": "Depressive Suicidal Black Metal (DSBM) is a sub genre of black metal, with a slow, dissonant, depressing atmosphere. DSBM is primarily distinguished from traditional forms of black metal by its lyrical content, focusing on suicide, depression, anxiety, and hate rather than traditional anti-Christian themes, with vocals that sound like desperate crys and pained screams."
     }
   },
   {
@@ -2736,38 +2720,6 @@ export const questions =[
     }
   },
   {
-    "title": "Cry Of The Land",
-    "artist": "Skyclad",
-    "year": 1993,
-    "description": "Skyclad",
-    "videos": [
-      "pb0kTS78fIQ",
-      "INtK8sOHwk8",
-      "Pzwf_I_AsDo",
-      "bJtB4BwpyG8"
-    ],
-    "genre": {
-      "title": "Folk Metal",
-      "description": "Folk metal is a sub-genre of heavy metal music that developed in Europe during the 1990s. As the name suggests, the genre is a fusion of heavy metal with traditional folk music. This includes the widespread use of folk instruments and, to a lesser extent, traditional singing styles. The earliest exponent of folk metal was the English band Skyclad. Their debut album The Wayward Sons of Mother Earth was released in 1990. It was not until 1994 and 1995 that other early contributors in the genre began to emerge from different regions of Europe as well as in Israel. Among these early groups, the Irish band Cruachan and the German band Subway to Sally each spearheaded a different regional variation that over time became known as Celtic metal and medieval metal respectively. Despite their contributions, folk metal remained little known with few representatives during the 1990s. It was not until the early 2000s when the genre exploded into prominence, particularly in Finland with the efforts of such groups as Finntroll, Ensiferum, Korpiklaani, Turisas, and Moonsorrow. The music of folk metal is characterised by its diversity with bands known to perform different styles of both heavy metal music and folk music. A large variety of folk instruments are used in the genre with many bands consequently featuring six or more members in their regular line-ups. A few bands are also known to rely on keyboards to simulate the sound of folk instruments. Lyrics in the genre commonly deal with paganism, nature, fantasy, mythology and history. (Source)"
-    }
-  },
-  {
-    "title": "Sieben (Eng. Seven)",
-    "artist": "Subway to Sally",
-    "year": 2005,
-    "description": "Subway to Sally",
-    "videos": [
-      "OLZ8jYHRdFw",
-      "lXBHpw73ZQQ",
-      "AZ3BrHPpH6Q",
-      "rEDLM_d88To"
-    ],
-    "genre": {
-      "title": "Medieval Metal",
-      "description": "Medieval metal or medieval rock is a subgenre of folk metal that blends hard rock or heavy metal music with medieval folk music. Medieval metal is mostly restricted to Germany where it is known as Mittelalter-Metal or Mittelalter-Rock. The genre emerged from the middle of the 1990s with contributions from Subway to Sally, In Extremo and Schandmaul. The style is characterised by the prominent use of a wide variety of traditional folk and medieval instruments. Like its parent genre, medieval rock features the same typical instruments found in heavy metal music: guitars, bass, drums and vocalist. Bands in the genre are known to supplement their sound with a wide range of folk and traditional instruments. Woodwind instruments like the bagpipes, flutes and shawm, string instruments like the violin, lute, hurdy gurdy, cello, harp and mandolin. Bands in the genre are also known to sing mostly or only in German, including Subway to Sally, Morgenstern and Letzte Instanz. (Source)"
-    }
-  },
-  {
     "title": "When This World Fades",
     "artist": "As I Lay Dying",
     "year": 2001,
@@ -2813,6 +2765,38 @@ export const questions =[
     "genre": {
       "title": "Drone Metal",
       "description": "Drone metal (also known as drone doom) is a style of doom metal that is largely defined by drones; notes or chords that are sustained and repeated throughout a piece of music. Typically, the electric guitar is performed with large amounts of reverb and feedback while vocals, if present, are usually growled or screamed. Songs are often very long and lack beat or rhythm in the traditional sense. Drone doom is generally influenced by drone music, noise music and minimalist music. The style emerged in the early 1990s and was pioneered by Earth, Boris and Sunn O))). (Source)"
+    }
+  },
+  {
+    "title": "Impending Doom",
+    "artist": "Zemial",
+    "year": 2003,
+    "description": "Zemial",
+    "videos": [
+      "ZbzhlfGPgec",
+      "2vUSQqbxzAs",
+      "hFqlsvaeDc4",
+      "9cCe_zc6E4w"
+    ],
+    "genre": {
+      "title": "Greek Black metal",
+      "description": "There is something about Greek Black Metal that is primitive yet classy. Varathron are perhaps the oldest and best known Greek Black Metal band. Their first demo tape in 1989 called Procreation of the Unaltered Evil is the larval stage of what would become a legendary name in Hellenic darkness. Teenage occult metal from the Hellenic Republic, the land that brought us olives, democracy, and Yanni.\n<br>\n<a href=\"http://cosmichearse.blogspot.com/2009/01/black-metal-ist-greek.html\" target=\"_blank\">(Source)</a>"
+    }
+  },
+  {
+    "title": "Supereclipse II",
+    "artist": "Black Boned Angel",
+    "year": 2003,
+    "description": "Black Boned Angel",
+    "videos": [
+      "dRBYHacC-Bo",
+      "t_hzvkFi4JU",
+      "Gulkng6y168",
+      "QbgHUtFstUg"
+    ],
+    "genre": {
+      "title": "Drone Metal",
+      "description": "Drone metal (also known as drone doom) is a style of doom metal that is largely defined by drones; notes or chords that are sustained and repeated throughout a piece of music. Typically, the electric guitar is performed with large amounts of reverb and feedback while vocals, if present, are usually growled or screamed. Songs are often very long and lack beat or rhythm in the traditional sense. Drone doom is generally influenced by drone music, noise music and minimalist music. The style emerged in the early 1990s and was pioneered by Earth, Boris and Sunn O))).\n<br>\n<a href=\"http://en.wikipedia.org/wiki/Doom_metal#Drone_doom\" target=\"_blank\">(Source)</a>"
     }
   },
   {
@@ -2960,6 +2944,22 @@ export const questions =[
     }
   },
   {
+    "title": "Sieben (Eng. Seven)",
+    "artist": "Subway to Sally",
+    "year": 2005,
+    "description": "Subway to Sally",
+    "videos": [
+      "OLZ8jYHRdFw",
+      "lXBHpw73ZQQ",
+      "AZ3BrHPpH6Q",
+      "rEDLM_d88To"
+    ],
+    "genre": {
+      "title": "Medieval Metal",
+      "description": "Medieval metal or medieval rock is a subgenre of folk metal that blends hard rock or heavy metal music with medieval folk music. Medieval metal is mostly restricted to Germany where it is known as Mittelalter-Metal or Mittelalter-Rock. The genre emerged from the middle of the 1990s with contributions from Subway to Sally, In Extremo and Schandmaul. The style is characterised by the prominent use of a wide variety of traditional folk and medieval instruments. Like its parent genre, medieval rock features the same typical instruments found in heavy metal music: guitars, bass, drums and vocalist. Bands in the genre are known to supplement their sound with a wide range of folk and traditional instruments. Woodwind instruments like the bagpipes, flutes and shawm, string instruments like the violin, lute, hurdy gurdy, cello, harp and mandolin. Bands in the genre are also known to sing mostly or only in German, including Subway to Sally, Morgenstern and Letzte Instanz. (Source)"
+    }
+  },
+  {
     "title": "Masters Of War",
     "artist": "Iskra",
     "year": 2005,
@@ -2981,8 +2981,8 @@ export const questions =[
     "year": 2006,
     "description": "All Shall Perish",
     "videos": [
-      "oD5fTgb9XMw",
       "TFx85CfMvWI",
+      "oD5fTgb9XMw",
       "iELZNGAE8PU",
       "6UjCSR1GNVg"
     ],
