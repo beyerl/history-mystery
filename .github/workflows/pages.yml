@@ -21,6 +21,7 @@ on:
       - 'LiteratureMystery/wwwroot/**'
       - 'tools/build-web.mjs'
       - 'tools/build-tests.mjs'
+      - 'tools/build-catalogues.mjs'
       - 'tests/**'
       - 'MysteryQuizzes/wwwroot/**'
       - 'mobile/apps.json'
@@ -76,6 +77,13 @@ jobs:
       # own into a grouped /video-check/ section of the same artifact.
       - name: Build Video Check QA pages
         run: node tools/build-tests.mjs dist/video-check
+
+      # Separate build for the "Catalogue" QA pages (#58/#59, migrated from
+      # gitlab.com/lenzbeyer/art-mystery-test): a browsable view of each quiz's
+      # question set with a live Wikipedia link checker. Published under
+      # /catalogue/<quiz>/ in the same Pages artifact.
+      - name: Build Catalogue QA pages
+        run: node tools/build-catalogues.mjs dist/catalogue
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
