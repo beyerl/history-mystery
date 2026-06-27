@@ -15,6 +15,9 @@ on:
       - 'HerstoryMystery/wwwroot/**'
       - 'MetalMystery/wwwroot/**'
       - 'ArtMystery/wwwroot/**'
+      - 'ArtMusicMystery/wwwroot/**'
+      - 'TechnoMystery/wwwroot/**'
+      - 'GameMystery/wwwroot/**'
       - '.github/workflows/android.yml'
   workflow_dispatch:
 
@@ -24,7 +27,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        app: [history, herstory, metal, art]
+        app: [history, herstory, metal, art, artmusic, techno, game]
 
     steps:
       - uses: actions/checkout@v4
