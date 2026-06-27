@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/_content/QuizEngine/styles.css">
+  <title>Literature Mystery</title>
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    .container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+</head>
+
+<body>
+
+  <mute-button></mute-button>
+  <div class="container">
+    <router-view style="flex-grow: 1;"></router-view>
+  </div>
+
+  <script type="module">
+    import { startQuizApp } from '/_content/QuizEngine/main.js';
+    import { quizConfig } from './quiz.config.js';
+    startQuizApp(quizConfig);
+  </script>
+
+</body>
+
+</html>

@@ -104,4 +104,18 @@ export const quizzes = [
             titleFont: "'Press Start 2P', 'Consolas', monospace",
         },
     },
+    {
+        name: 'Literature Mystery',
+        tagline: 'Place 300 great works of literature on the timeline by their year.',
+        url: './literature/',
+        icon: './assets/literature.png',
+        earlyAccess: true,
+        theme: {
+            accent: '#b08a4a',
+            accent2: '#7b3f2f',
+            top: '#3a2c1b',
+            bottom: '#211a12',
+            titleFont: "Georgia, 'Times New Roman', serif",
+        },
+    },
 ];
