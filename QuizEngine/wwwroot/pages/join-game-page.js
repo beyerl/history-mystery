@@ -12,7 +12,9 @@ class JoinGamePage extends HTMLElement {
                 <div>
                     <label>${t('common.gameId')}</label>
                     <div class="input-group">
-                        <input class="input" type="text" id="game-id-input" placeholder="${t('join.enterGameId')}" />
+                        <input class="input" type="text" id="game-id-input" placeholder="${t('join.enterGameId')}"
+                               autocapitalize="characters" autocomplete="off" spellcheck="false"
+                               style="text-transform: uppercase;" />
                         <button class="btn btn-primary" id="join-game-button">${t('join.join')}</button>
                     </div>
                 </div>
@@ -32,8 +34,17 @@ class JoinGamePage extends HTMLElement {
             window.location.hash = '#/';
         });
 
+        // Game IDs are always uppercase, so accept any case: normalise as the
+        // user types (keeping the caret position) so the field matches the id.
+        const gameIdInput = this.querySelector('#game-id-input');
+        gameIdInput.addEventListener('input', () => {
+            const start = gameIdInput.selectionStart, end = gameIdInput.selectionEnd;
+            gameIdInput.value = gameIdInput.value.toUpperCase();
+            gameIdInput.setSelectionRange(start, end);
+        });
+
         this.querySelector('#join-game-button').addEventListener('click', async () => {
-            const gameHash = this.querySelector('#game-id-input').value.trim();
+            const gameHash = this.querySelector('#game-id-input').value.trim().toUpperCase();
             if (!gameHash) {
                 this.querySelector('#game-id-message').textContent = translationService.t('join.invalidGameId');
                 return;
