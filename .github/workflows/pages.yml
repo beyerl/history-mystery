@@ -19,6 +19,8 @@ on:
       - 'TechnoMystery/wwwroot/**'
       - 'GameMystery/wwwroot/**'
       - 'tools/build-web.mjs'
+      - 'tools/build-tests.mjs'
+      - 'tests/**'
       - 'MysteryQuizzes/wwwroot/**'
       - 'mobile/apps.json'
       - '.github/workflows/pages.yml'
@@ -66,6 +68,13 @@ jobs:
           # The MysteryQuizzes overview (#12) is the site root, linking to the
           # quizzes (sub-folders here; subdomains in production).
           cp -r MysteryQuizzes/wwwroot/* dist/
+
+      # Separate build for the "Video Check" QA pages (#53, migrated from
+      # gitlab.com/lenzbeyer/metal-mystery-test). A GitHub repo has a single
+      # Pages site, so rather than a competing workflow these are built on their
+      # own into a grouped /video-check/ section of the same artifact.
+      - name: Build Video Check QA pages
+        run: node tools/build-tests.mjs dist/video-check
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
