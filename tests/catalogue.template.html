@@ -104,6 +104,10 @@
   .panel h2{ font-family:'Fraunces', serif; font-style:italic; font-weight:500; font-size:26px; margin:0 0 6px; line-height:1.2; }
   .panel .artist-line{ color:var(--muted); font-size:14px; margin-bottom:18px; }
   .panel .desc-line{ font-size:14px; line-height:1.5; margin-bottom:18px; }
+  .panel .incipit{ font-size:13.5px; line-height:1.6; color:var(--ink); margin:0 0 4px;
+    max-height:34vh; overflow:auto; padding:12px 14px; background:var(--wall);
+    border-left:3px solid var(--brass); border-radius:0 6px 6px 0; }
+  .panel .incipit em{ color:var(--muted); }
   .panel hr{ border:none; border-top:1px solid var(--rule); margin:18px 0; }
   .panel dl{ display:grid; grid-template-columns:auto 1fr; gap:8px 14px; font-size:13px; margin:0 0 18px; }
   .panel dt{ color:var(--muted); text-transform:uppercase; letter-spacing:.06em; font-size:10.5px; padding-top:2px;}
@@ -232,20 +236,33 @@ function applyDot(i, status){
   });
 }
 
-// ---- Wikipedia link checker (#59) ----
-async function checkOne(it){
-  if(!it.wiki_title){ it._status = 'bad'; return false; }
+// ---- Wikipedia summary (incipit) + link checker (#59, #61) ----
+// The REST summary endpoint returns both the article's lead extract (the same
+// incipit the in-game "more" dialog shows) and whether it's a disambiguation
+// page — so one fetch both verifies the link and gives us the incipit (#61).
+async function fetchSummary(it){
+  if(it._summary !== undefined) return it._summary; // cached (incl. null on failure)
+  if(!it.wiki_title){ it._status = 'bad'; it._summary = null; return null; }
   const url = "https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(it.wiki_title);
   for(let a=0; a<3; a++){
     try{
       const r = await fetch(url, { headers: { 'Accept':'application/json' } });
-      if(r.status === 200){ const j = await r.json(); it._status = (j.type === 'disambiguation') ? 'bad' : 'ok'; return it._status==='ok'; }
-      if(r.status === 404){ it._status = 'bad'; return false; }
+      if(r.status === 200){
+        const j = await r.json();
+        it._status = (j.type === 'disambiguation') ? 'bad' : 'ok';
+        it._summary = { extract: j.extract || '', disambiguation: j.type === 'disambiguation' };
+        return it._summary;
+      }
+      if(r.status === 404){ it._status = 'bad'; it._summary = null; return null; }
       if(r.status === 429 || r.status >= 500){ await new Promise(s=>setTimeout(s,600*(a+1))); continue; }
-      it._status = 'bad'; return false;
+      it._status = 'bad'; it._summary = null; return null;
     }catch(e){ await new Promise(s=>setTimeout(s,400*(a+1))); }
   }
-  it._status = 'bad'; return false;
+  it._status = 'bad'; it._summary = null; return null;
+}
+async function checkOne(it){
+  const s = await fetchSummary(it);
+  return !!(s && !s.disambiguation);
 }
 
 let checking = false;
@@ -282,7 +299,9 @@ async function checkAllLinks(){
   checking = false;
 }
 
+let currentDetail = null;
 function openDetail(it){
+  currentDetail = it;
   const panel = document.getElementById('panel');
   const author = authorOf(it);
   const hasImg = !!it.image;
@@ -291,6 +310,10 @@ function openDetail(it){
   const subline = (author ? escapeHtml(author) + ' · ' : '') + formatYear(it.year);
   const descLine = it.description ? `<div class="desc-line">${escapeHtml(it.description)}</div>` : '';
   const statusTxt = it._status === 'ok' ? '✓ OK' : it._status === 'bad' ? '✗ missing / disambiguation' : 'not checked';
+  // Wikipedia incipit (#61): show the cached extract, else a loading line we fill in.
+  const incipitInner = it._summary
+    ? (it._summary.extract ? escapeHtml(it._summary.extract) : '<em>(no extract — likely a disambiguation or stub page)</em>')
+    : (it.wiki_title ? 'Loading Wikipedia incipit…' : '<em>(no wiki reference)</em>');
   panel.innerHTML = `
     ${imgSide}
     <div class="info-side">
@@ -299,6 +322,7 @@ function openDetail(it){
       <h2>${escapeHtml(it.title)}</h2>
       <div class="artist-line">${subline}</div>
       ${descLine}
+      <div class="incipit" id="incipit">${incipitInner}</div>
       <hr/>
       <dl>
         ${author ? `<dt>Author</dt><dd>${escapeHtml(author)}</dd>` : ''}
@@ -310,6 +334,19 @@ function openDetail(it){
     </div>`;
   document.getElementById('closeBtn').addEventListener('click', closeDetail);
   document.getElementById('overlay').classList.add('open');
+
+  // Lazily load the incipit if we haven't fetched this entry's summary yet (#61).
+  if(it._summary === undefined && it.wiki_title){
+    const openedFor = it;
+    fetchSummary(it).then(s => {
+      const el = document.getElementById('incipit');
+      if(!el || !document.getElementById('overlay').classList.contains('open')) return;
+      if(openedFor !== currentDetail) return; // a different entry is open now
+      el.innerHTML = s && s.extract ? escapeHtml(s.extract)
+        : '<em>(no extract — likely a disambiguation or stub page)</em>';
+      applyDot(it._i, it._status); // we now know the link status too
+    });
+  }
 }
 function closeDetail(){ document.getElementById('overlay').classList.remove('open'); }
 document.getElementById('overlay').addEventListener('click', e => { if(e.target.id === 'overlay') closeDetail(); });
