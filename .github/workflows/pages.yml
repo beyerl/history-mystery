@@ -17,6 +17,7 @@ on:
       - 'ArtMystery/wwwroot/**'
       - 'ArtMusicMystery/wwwroot/**'
       - 'TechnoMystery/wwwroot/**'
+      - 'GameMystery/wwwroot/**'
       - 'tools/build-web.mjs'
       - 'MysteryQuizzes/wwwroot/**'
       - 'mobile/apps.json'
@@ -59,7 +60,7 @@ jobs:
         env:
           API_BASE_ADDRESS: ${{ secrets.API_BASE_ADDRESS }}
         run: |
-          for app in history herstory metal art artmusic techno; do
+          for app in history herstory metal art artmusic techno game; do
             node tools/build-web.mjs "$app" "dist/$app"
           done
           # The MysteryQuizzes overview (#12) is the site root, linking to the

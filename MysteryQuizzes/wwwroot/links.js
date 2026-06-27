@@ -90,4 +90,18 @@ export const quizzes = [
             titleFont: "'Bahnschrift', 'Eurostile', system-ui, sans-serif",
         },
     },
+    {
+        name: 'Game Mystery',
+        tagline: 'See a video game and place it on the timeline of gaming history.',
+        url: './game/',
+        icon: './assets/game.png',
+        earlyAccess: true,
+        theme: {
+            accent: '#34d6ff',
+            accent2: '#ff3df0',
+            top: '#10162a',
+            bottom: '#070b16',
+            titleFont: "'Press Start 2P', 'Consolas', monospace",
+        },
+    },
 ];
