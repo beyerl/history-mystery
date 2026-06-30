@@ -8,6 +8,10 @@
 //   'answer-result'      (document) -> stop
 //   'game-over'          (document) -> stop and ignore further questions
 //
+// It reports playback back out on the document so the (decoupled) board can react:
+//   'audio-buffering' { buffering: bool } -> show/hide a loading spinner on the card
+//   'audio-playing'                       -> the current track has actually started
+//
 // Quizzes opt in via config.audio = { enabled: true, videoField: 'videos' }.
 // Optional config.audio.startFraction (0..1) starts every track that far into
 // its duration (e.g. 0.3 = 30% in), so the snippet drops straight into the body
@@ -142,10 +146,27 @@ class YoutubeAudioPlayer extends HTMLElement {
         }
     }
 
+    handleStateChange(e) {
+        this.emitPlaybackState(e?.data);
+        this.applyStartOffset(e);
+    }
+
+    // Report buffering/playing on the document so the board can show a loading
+    // spinner on the current card and time the opening preview to real playback.
+    // Kept decoupled: the player never touches card rendering itself.
+    emitPlaybackState(state) {
+        const PlayerState = window.YT?.PlayerState || {};
+        const buffering = state === PlayerState.BUFFERING;
+        document.dispatchEvent(new CustomEvent('audio-buffering', { detail: { buffering } }));
+        if (state === PlayerState.PLAYING) {
+            document.dispatchEvent(new CustomEvent('audio-playing'));
+        }
+    }
+
     // When a newly loaded track first reaches PLAYING, seek it to the configured
     // start fraction of its (now-known) duration. Guarded so it runs once per
     // load and never on a pause/resume.
-    handleStateChange(e) {
+    applyStartOffset(e) {
         if (!this._startFraction || this._offsetApplied) return;
         if (e?.data !== window.YT?.PlayerState?.PLAYING) return;
         const duration = this._player?.getDuration?.() || 0;
@@ -166,6 +187,9 @@ class YoutubeAudioPlayer extends HTMLElement {
         if (this._player && this._ready) {
             try { this._player.stopVideo(); } catch { /* player may be torn down */ }
         }
+        // Stopping does not reliably emit a state change, so clear any spinner the
+        // board may still be showing for the track we just stopped.
+        document.dispatchEvent(new CustomEvent('audio-buffering', { detail: { buffering: false } }));
     }
 
     // Pause/resume the current track without losing its position. Used by the

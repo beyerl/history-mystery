@@ -48,6 +48,11 @@ class DragDropList extends HTMLElement {
   }
 
   connectedCallback() {
+    // Audio variant: the hidden player reports buffering on the document; show a
+    // small loading spinner on whichever card is currently sounding. Harmless for
+    // non-audio quizzes (the event simply never fires).
+    this._onAudioBuffering = (e) => this.setBuffering(!!e.detail?.buffering);
+    document.addEventListener('audio-buffering', this._onAudioBuffering);
     if (!this.events) {
       return;
     }
@@ -65,6 +70,8 @@ class DragDropList extends HTMLElement {
   disconnectedCallback() {
     this.clearSlowModeTimer();
     this.clearIntroTimer();
+    document.removeEventListener('audio-buffering', this._onAudioBuffering);
+    this.clearSongStartWaiter();
   }
 
   initializeEvents() {
@@ -124,6 +131,9 @@ class DragDropList extends HTMLElement {
     if (event && event.title && event.year) {
       topSlot.innerHTML = `<div class="top-slot" data-year="${event.year}">
       <div class="drag-element">${this.createPillContent(event)}</div></div>`;
+      // The card to guess is the one whose song now plays; buffering spinners go
+      // here until the next card is presented.
+      this.setSoundingElement(topSlot.querySelector('.drag-element'));
       Sortable.create(topSlot, {
         group: 'dragDropList'
       });
@@ -158,11 +168,20 @@ class DragDropList extends HTMLElement {
       if (!this.isConnected) return; // player navigated away mid-preview
       const slot = slots[i];
       slot?.classList.add('intro-active');
+      this.setSoundingElement(slot?.querySelector('.pill'));
+      // Start listening for real playback before asking the player to load, so a
+      // fast-starting track is not missed.
+      const started = this.waitForSongStart(5000);
       this.dispatchEvent(new CustomEvent('question-presented', {
         detail: { question: placedEvents[i] },
         bubbles: true,
         composed: true,
       }));
+      // Only begin the fixed preview window once the song actually plays, so
+      // buffering does not eat into it — but cap the wait at 5s so a track that
+      // never reports playing still gets previewed and the intro keeps moving.
+      await started;
+      if (!this.isConnected) return;
       await this.waitIntro(seconds * 1000);
       slot?.classList.remove('intro-active');
     }
@@ -182,6 +201,64 @@ class DragDropList extends HTMLElement {
     if (this._introTimeoutId) {
       clearTimeout(this._introTimeoutId);
       this._introTimeoutId = null;
+    }
+  }
+
+  // Resolve once the hidden player reports the current track is playing, or after
+  // maxWaitMs if it never does (e.g. an unplayable/slow track), so the opening
+  // preview is anchored to real audio without ever stalling the intro.
+  waitForSongStart(maxWaitMs) {
+    return new Promise(resolve => {
+      this.clearSongStartWaiter();
+      const finish = () => {
+        this.clearSongStartWaiter();
+        resolve();
+      };
+      this._songStartHandler = finish;
+      document.addEventListener('audio-playing', finish, { once: true });
+      this._songStartTimeoutId = setTimeout(finish, maxWaitMs);
+    });
+  }
+
+  clearSongStartWaiter() {
+    if (this._songStartHandler) {
+      document.removeEventListener('audio-playing', this._songStartHandler);
+      this._songStartHandler = null;
+    }
+    if (this._songStartTimeoutId) {
+      clearTimeout(this._songStartTimeoutId);
+      this._songStartTimeoutId = null;
+    }
+  }
+
+  // Track which card's song is currently sounding so the buffering spinner is
+  // shown on it. Moving to a new card clears any spinner left on the old one.
+  setSoundingElement(element) {
+    if (this._soundingElement && this._soundingElement !== element) {
+      this._soundingElement.querySelector('.buffering-spinner')?.remove();
+    }
+    this._soundingElement = element || null;
+    this.renderBuffering();
+  }
+
+  setBuffering(buffering) {
+    this._buffering = buffering;
+    this.renderBuffering();
+  }
+
+  renderBuffering() {
+    const host = this._soundingElement;
+    if (!host) return;
+    let spinner = host.querySelector('.buffering-spinner');
+    if (this._buffering) {
+      if (!spinner) {
+        spinner = document.createElement('div');
+        spinner.className = 'buffering-spinner';
+        spinner.setAttribute('aria-label', translationService.t('common.loading'));
+        host.appendChild(spinner);
+      }
+    } else {
+      spinner?.remove();
     }
   }
 

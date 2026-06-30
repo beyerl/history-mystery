@@ -89,6 +89,34 @@
     flex: 0 0 auto;
 }
 
+/* Audio variant: a small loading spinner shown on the currently sounding card
+   while its YouTube track is buffering. Positioned in the corner so it does not
+   disturb the card's layout. */
+.drag-element,
+.slot .pill {
+    position: relative;
+}
+
+.buffering-spinner {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    margin-top: -8px;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--color-brown);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: buffering-spin 0.8s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes buffering-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .pill {
     box-sizing: border-box;
     border: 1px solid var(--border-color-grey);
