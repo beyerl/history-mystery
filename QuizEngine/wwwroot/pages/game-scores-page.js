@@ -7,6 +7,7 @@ import { translationService } from '../business-logic/translation-service.js';
 import { configService } from '../business-logic/config-service.js';
 import { QuestionService } from '../business-logic/question-service.js';
 import { InfoModal } from '../components/info-modal.js';
+import { ImageOverlay } from '../components/image-overlay.js';
 
 class GameScoresPage extends HTMLElement {
     gameId;
@@ -48,6 +49,16 @@ class GameScoresPage extends HTMLElement {
                 gap: 10px;
                 margin-bottom: 5px;
             }
+            /* Picture quizzes (e.g. Game Mystery) carry an `image`; show the same
+               reference thumbnail here as on the cards, tappable for full screen. */
+            .mistake-element .mistake-thumb {
+                max-height: 48px;
+                max-width: 64px;
+                object-fit: cover;
+                border-radius: 4px;
+                cursor: pointer;
+                flex: 0 0 auto;
+            }
         </style>
         <div class="padding-x-5">
             <div class="card w-100">
@@ -77,6 +88,7 @@ class GameScoresPage extends HTMLElement {
                     <h1>${t('scores.mistakes')}</h1>
                     ${mistakes.map(event => `
                         <div class="mistake-element">
+                            ${event.image ? `<img class="mistake-thumb" src="${this.escapeHtml(event.image)}" alt="${this.escapeHtml(event.title)}" loading="lazy" data-image="${this.escapeHtml(event.image)}" data-title="${this.escapeHtml(event.title)}">` : ''}
                             <div class="year">${event.year}${configService.valueSuffix}</div>
                             <div class="title">${this.escapeHtml(event.title)}</div>
                             ${configService.infoProvider ? `<button class="btn btn-primary btn-sm more" data-event='${this.escapeHtml(JSON.stringify(event))}'>${t('common.more')}</button>` : ''}
@@ -111,8 +123,21 @@ class GameScoresPage extends HTMLElement {
                 this.openEventModal(eventData);
             });
         });
+        this.querySelectorAll('.mistake-thumb').forEach(thumb => {
+            thumb.addEventListener('click', () => {
+                this.openImageOverlay(thumb.getAttribute('data-image'), thumb.getAttribute('data-title'));
+            });
+        });
 
         this.pollGameState();
+    }
+
+    openImageOverlay(imageUrl, title) {
+        document.querySelector('image-overlay')?.remove();
+        const overlay = new ImageOverlay();
+        overlay.setAttribute('data-image', imageUrl);
+        if (title) overlay.setAttribute('data-title', title);
+        document.body.appendChild(overlay);
     }
 
     openEventModal(eventData) {
